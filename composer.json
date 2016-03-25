@@ -1,0 +1,33 @@
+{
+  "name": "felixarntz/attachment-taxonomies",
+  "description": "This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.",
+  "version": "1.0.0",
+  "license": "GPL-3.0",
+  "type": "wordpress-plugin",
+  "keywords": [
+    "wordpress",
+    "plugin",
+    "attachment",
+    "media",
+    "taxonomy"
+  ],
+  "homepage": "http://wordpress.org/plugins/attachment-taxonomies/",
+  "authors": [
+    {
+      "name": "Felix Arntz",
+      "email": "felix-arntz@leaves-and-love.net",
+      "homepage": "http://leaves-and-love.net",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "felix-arntz@leaves-and-love.net",
+    "issues": "https://github.com/felixarntz/attachment-taxonomies/issues"
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "require": {
+    "composer/installers": "~1.0"
+  }
+}
