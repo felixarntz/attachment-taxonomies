@@ -27,10 +27,16 @@ final class Attachment_Tag extends Attachment_Taxonomy {
 		return array(
 			'hierarchical'		=> false,
 			'query_var'			=> 'attachment_tag',
-			'rewrite'			=> $rewrite['post_tag'], //TODO
+			'rewrite'			=> true,
 			'public'			=> true,
 			'show_ui'			=> true,
 			'show_admin_column'	=> true,
+			'capabilities'		=> array(
+				'manage_terms'		=> 'upload_files',
+				'edit_terms'		=> 'upload_files',
+				'delete_terms'		=> 'upload_files',
+				'assign_terms'		=> 'upload_files',
+			),
 		);
 	}
 }

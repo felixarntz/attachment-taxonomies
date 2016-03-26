@@ -33,6 +33,12 @@ abstract class Attachment_Taxonomy {
 		register_taxonomy( $slug, 'attachment', $args );
 	}
 
+	public function unregister() {
+		$slug = $this->get_slug();
+
+		unregister_taxonomy( $slug );
+	}
+
 	public abstract function get_slug();
 
 	protected abstract function get_labels();

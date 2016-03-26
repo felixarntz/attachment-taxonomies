@@ -38,6 +38,7 @@ final class Attachment_Taxonomies {
 	private $is_mu_plugin = false;
 	private $base_path_relative = '';
 	private $taxonomies = array();
+	private $existing_taxonomies = array();
 
 	private function __construct() {
 		$file = wp_normalize_path( __FILE__ );
@@ -52,6 +53,7 @@ final class Attachment_Taxonomies {
 
 		require_once $this->get_path( 'inc/Taxonomies_Core.php' );
 		require_once $this->get_path( 'inc/Taxonomy.php' );
+		require_once $this->get_path( 'inc/Existing_Taxonomy.php' );
 		require_once $this->get_path( 'inc/Category.php' );
 		require_once $this->get_path( 'inc/Tag.php' );
 	}
@@ -64,46 +66,84 @@ final class Attachment_Taxonomies {
 		}
 
 		$core = Attachment_Taxonomies_Core::instance();
-		add_action( 'registered_taxonomy', array( $core, 'registered_taxonomy' ), 10, 3 );
+		//add_action( 'registered_taxonomy', array( $core, 'registered_taxonomy' ), 10, 3 );
+		//add_action( 'unregistered_taxonomy', array( $core, 'unregistered_taxonomy' ), 10, 1 );
 		add_action( 'wp_enqueue_media', array( $core, 'enqueue_script' ) );
 
 		$this->add_taxonomy( new Attachment_Category() );
 		$this->add_taxonomy( new Attachment_Tag() );
 	}
 
-	public function add_taxonomy( $taxonomy ) {
-		if ( ! is_a( $taxonomy, 'Attachment_Taxonomy' ) ) {
+	public function add_taxonomy( $taxonomy, $existing = false ) {
+		if ( $existing && ! is_a( $taxonomy, 'Attachment_Existing_Taxonomy' ) ) {
+			return false;
+		} elseif ( ! $existing && ! is_a( $taxonomy, 'Attachment_Taxonomy' ) ) {
 			return false;
 		}
 
 		$taxonomy_slug = $taxonomy->get_slug();
 
-		if ( isset( $this->taxonomies[ $taxonomy_slug ] ) ) {
+		$holder = 'taxonomies';
+		if ( $existing ) {
+			$holder = 'existing_taxonomies';
+		}
+
+		if ( isset( $this->{$holder}[ $taxonomy_slug ] ) ) {
 			return false;
 		}
 
-		$this->taxonomies[ $taxonomy_slug ] = $taxonomy;
-		add_action( 'init', array( $this->taxonomies[ $taxonomy_slug ], 'register' ) );
+		$this->{$holder}[ $taxonomy_slug ] = $taxonomy;
+		if ( doing_action( 'init' ) || did_action( 'init' ) ) {
+			$this->{$holder}[ $taxonomy_slug ]->register();
+		} else {
+			add_action( 'init', array( $this->{$holder}[ $taxonomy_slug ], 'register' ) );
+		}
 
 		return true;
 	}
 
-	public function get_taxonomy( $taxonomy_slug ) {
-		if ( ! isset( $this->taxonomies[ $taxonomy_slug ] ) ) {
+	public function get_taxonomy( $taxonomy_slug, $existing = false ) {
+		$holder = 'taxonomies';
+		if ( $existing ) {
+			$holder = 'existing_taxonomies';
+		}
+
+		if ( ! isset( $this->{$holder}[ $taxonomy_slug ] ) ) {
 			return null;
 		}
-		return $this->taxonomies[ $taxonomy_slug ];
+		return $this->{$holder}[ $taxonomy_slug ];
 	}
 
-	public function remove_taxonomy( $taxonomy_slug ) {
-		if ( ! isset( $this->taxonomies[ $taxonomy_slug ] ) ) {
+	public function remove_taxonomy( $taxonomy_slug, $existing = false ) {
+		$holder = 'taxonomies';
+		if ( $existing ) {
+			$holder = 'existing_taxonomies';
+		}
+
+		if ( ! isset( $this->{$holder}[ $taxonomy_slug ] ) ) {
 			return false;
 		}
 
-		remove_action( 'init', array( $this->taxonomies[ $taxonomy_slug ], 'register' ) );
-		unset( $this->taxonomies[ $taxonomy_slug ] );
+		if ( doing_action( 'init' ) || did_action( 'init' ) ) {
+			$this->{$holder}[ $taxonomy_slug ]->unregister();
+		} else {
+			remove_action( 'init', array( $this->{$holder}[ $taxonomy_slug ], 'register' ) );
+		}
+		unset( $this->{$holder}[ $taxonomy_slug ] );
 
 		return true;
+	}
+
+	public function add_existing_taxonomy( $existing_taxonomy ) {
+		return $this->add_taxonomy( $existing_taxonomy, true );
+	}
+
+	public function get_existing_taxonomy( $existing_taxonomy_slug ) {
+		return $this->get_taxonomy( $existing_taxonomy_slug, true );
+	}
+
+	public function remove_existing_taxonomy( $existing_taxonomy_slug ) {
+		return $this->remove_taxonomy( $existing_taxonomy_slug, true );
 	}
 
 	public function get_path( $rel_path ) {

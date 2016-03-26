@@ -6,7 +6,7 @@ Author URI:        http://leaves-and-love.net
 Author:            Felix Arntz
 Donate link:       http://leaves-and-love.net/wordpress-plugins/
 Contributors:      flixos90
-Requires at least: 4.0
+Requires at least: 3.5
 Tested up to:      4.5
 Stable tag:        1.0.0
 Version:           1.0.0
@@ -14,17 +14,22 @@ License:           GPL v3
 License URI:       http://www.gnu.org/licenses/gpl-3.0.html
 Tags:              wordpress, plugin, attachment, media, taxonomy
 
-This framework plugin makes adding customizer panels, sections and fields to WordPress very simple, yet flexible.
+This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.
 
 == Description ==
+
+The plugin adds two taxonomies to the WordPress media library which are then available to categorize and tag your attachments. By default, these taxonomies, although sharing the same names and behavior, are separate from the default post taxonomies, but this can easily be changed if desired.
+
+The plugin follows WordPress Core principles and offers a lightweight alternative to similar approaches which often tend to be incredibly flexible, but at the same time complicated and bloated. And if you have a little knowledge of code, you should be able to adjust the plugin exactly to your needs if the default configuration doesn't satisfy you.
 
 = Features =
 
 * Adds categories and tags to the Media Library (independent from the regular post categories and tags)
-* Provides a flexible API to add other attachment taxonomies or disable the existing ones for developers
 * Lightweight plugin following WordPress Core principles
 * "Decisions, not Options"
 * Can easily be used as a must-use plugin
+* Provides a flexible API to add other attachment taxonomies or disable the existing ones for developers
+* Developers are free to use the plugin-provided object-oriented taxonomy approach or use familiar WordPress Core functions
 
 == Installation ==
 
@@ -40,7 +45,15 @@ If you don't know what a must-use plugin is, you might wanna read its [introduct
 1. Upload the entire `attachment-taxonomies` folder to the `/wp-content/mu-plugins/` directory (create the directory if it doesn't exist).
 2. Move the file `/wp-content/mu-plugins/attachment-taxonomies/attachment-taxonomies.php` out of its directory to `/wp-content/mu-plugins/attachment-taxonomies.php`.
 
+Note that, while must-use plugins have the advantage that they cannot be disabled from the admin area, they cannot be updated through WordPress, so you're recommended to keep them up to date manually.
+
+= Administration =
+
+Once the plugin is activated, you will see two new submenu items under Media (Categories and Tags). The plugin follows the WordPress Core philosophy "Decisions, not Options" - therefore there is no additional settings screen. However, the plugin is easily extendable and adjustable by developers (see [FAQ](http://wordpress.org/plugins/attachment-taxonomies/faq/)). So if the base configuration does not suit your needs, it shouldn't be too hard to change that.
+
 == Frequently Asked Questions ==
+
+Note that all code samples below should be run before the `init` action hook and not earlier than the `plugins_loaded` (or `muplugins_loaded` if you use the plugin as a must-use plugin) hook.
 
 = How can I add more attachment taxonomies? =
 
@@ -77,8 +90,6 @@ Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Location() );
 
 ```
 
-Note that this code must be run before the `init` action hook and not earlier than the `plugins_loaded` (or `muplugins_loaded` if you use the plugin as a must-use plugin) hook.
-
 = How can I remove the default attachment taxonomies? =
 
 To remove one of the default attachment taxonomies you should call the method `remove_taxonomy( $taxonomy_slug )` of the class `Attachment_Taxonomies`.
@@ -92,7 +103,21 @@ Attachment_Taxonomies::instance()->remove_taxonomy( 'attachment_category' );
 
 ```
 
-Note that this code must be run before the `init` action hook and not earlier than the `plugins_loaded` (or `muplugins_loaded` if you use the plugin as a must-use plugin) hook.
+= How can I use the regular post categories and post tags for attachments instead of the additional taxonomies ? =
+
+To accomplish that, first you need to remove the two taxonomies that the plugin adds (`attachment_category` and `attachment_tag`). See above for instructions on how to do that.
+
+Then you can simply use the WordPress Core function [`register_taxonomy_for_object_type()`](https://codex.wordpress.org/Function_Reference/register_taxonomy_for_object_type) and specify `'attachment'` as the second parameter. As an alternative, you can create your own instance of the `Attachment_Existing_Taxonomy` class provided by the plugin. Then you can add it using the method `add_existing_taxonomy( $taxonomy )` of the class `Attachment_Taxonomies`.
+
+Example Code (makes the regular category and tag taxonomies available for attachments):
+
+```
+<?php
+
+Attachment_Taxonomies::instance()->add_existing_taxonomy( new Attachment_Existing_Taxonomy( 'category' ) );
+Attachment_Taxonomies::instance()->add_existing_taxonomy( new Attachment_Existing_Taxonomy( 'post_tag' ) );
+
+``` 
 
 = Which filters are available in the plugin? =
 
