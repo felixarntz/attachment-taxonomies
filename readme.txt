@@ -66,25 +66,17 @@ Example Code (adds an attachment taxonomy called "Location"):
 <?php
 
 final class Attachment_Location extends Attachment_Taxonomy {
-	public function get_slug() {
-		return 'attachment_location';
-	}
-
-	public function get_labels() {
-		return array(
-			'name'				=> __( 'Locations', 'textdomain' ),
-			'singular_name'		=> __( 'Location', 'textdomain' ),
-			/* more labels here... */
-		);
-	}
-
-	public function get_args() {
-		return array(
-			'hierarchical'		=> true,
-			'query_var'			=> 'location',
-			/* more arguments here... */
-		);
-	}
+	protected $slug = 'attachment_location';
+	protected $labels = array(
+		'name'				=> __( 'Locations', 'textdomain' ),
+		'singular_name'		=> __( 'Location', 'textdomain' ),
+		/* more labels here... */
+	);
+	protected $args = array(
+		'hierarchical'		=> true,
+		'query_var'			=> 'location',
+		/* more arguments here... */
+	);
 }
 
 Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Location() );

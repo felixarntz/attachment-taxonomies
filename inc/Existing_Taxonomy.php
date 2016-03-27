@@ -13,9 +13,7 @@ if ( class_exists( 'Attachment_Existing_Taxonomy' ) ) {
 	return;
 }
 
-final class Attachment_Existing_Taxonomy {
-	private $slug = '';
-
+final class Attachment_Existing_Taxonomy extends Attachment_Taxonomy {
 	public function __construct( $slug ) {
 		$this->slug = $slug;
 	}
@@ -26,9 +24,5 @@ final class Attachment_Existing_Taxonomy {
 
 	public function unregister() {
 		unregister_taxonomy_for_object_type( $this->slug, 'attachment' );
-	}
-
-	public function get_slug() {
-		return $this->slug;
 	}
 }

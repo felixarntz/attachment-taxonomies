@@ -14,16 +14,20 @@ if ( class_exists( 'Attachment_Taxonomy' ) ) {
 }
 
 abstract class Attachment_Taxonomy {
+	protected $slug = '';
+	protected $labels = array();
+	protected $args = array();
+
 	public function register() {
 		$slug = $this->get_slug();
 
-		$labels = $this->get_labels();
+		$labels = $this->labels;
 
 		$labels = apply_filters( 'attachment_taxonomy_' . $slug . '_labels', $labels );
 
 		$labels = apply_filters( 'attachment_taxonomy_labels', $labels, $slug );
 
-		$args = $this->get_args();
+		$args = $this->args;
 		$args['labels'] = $labels;
 
 		$args = apply_filters( 'attachment_taxonomy_' . $slug . '_args', $args );
@@ -39,9 +43,7 @@ abstract class Attachment_Taxonomy {
 		unregister_taxonomy( $slug );
 	}
 
-	public abstract function get_slug();
-
-	protected abstract function get_labels();
-
-	protected abstract function get_args();
+	public function get_slug() {
+		return $this->slug;
+	}
 }
