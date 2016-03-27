@@ -7,9 +7,12 @@ Features
 --------
 
 * Adds categories and tags to the Media Library (independent from the regular post categories and tags)
-* Provides a flexible API to add other attachment taxonomies or disable the existing ones for developers
+* Inserts filter dropdowns for attachment taxonomies into the media toolbar and media modal
 * Lightweight plugin following WordPress Core principles
 * "Decisions, not Options"
+* Can easily be used as a must-use plugin
+* Provides a flexible API to add other attachment taxonomies or disable the existing ones for developers
+* Developers are free to use the plugin-provided object-oriented taxonomy approach or use familiar WordPress Core functions
 
 Installation and Setup
 ----------------------

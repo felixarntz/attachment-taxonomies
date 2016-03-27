@@ -1,7 +1,7 @@
 === Attachment Taxonomies ===
 
 Plugin Name:       Attachment Taxonomies
-Plugin URI:        http://wordpress.org/plugins/attachment-taxonomies/
+Plugin URI:        https://wordpress.org/plugins/attachment-taxonomies/
 Author URI:        http://leaves-and-love.net
 Author:            Felix Arntz
 Donate link:       http://leaves-and-love.net/wordpress-plugins/
