@@ -1,3 +1,7 @@
+[![Code Climate](https://codeclimate.com/github/felixarntz/attachment-taxonomies/badges/gpa.svg)](https://codeclimate.com/github/felixarntz/attachment-taxonomies)
+[![Latest Stable Version](https://poser.pugx.org/felixarntz/attachment-taxonomies/version)](https://packagist.org/packages/felixarntz/attachment-taxonomies)
+[![License](https://poser.pugx.org/felixarntz/attachment-taxonomies/license)](https://packagist.org/packages/felixarntz/attachment-taxonomies)
+
 Attachment Taxonomies
 =====================
 
