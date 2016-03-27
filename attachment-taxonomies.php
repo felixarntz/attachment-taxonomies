@@ -134,18 +134,6 @@ final class Attachment_Taxonomies {
 		return true;
 	}
 
-	public function add_existing_taxonomy( $existing_taxonomy ) {
-		return $this->add_taxonomy( $existing_taxonomy, true );
-	}
-
-	public function get_existing_taxonomy( $existing_taxonomy_slug ) {
-		return $this->get_taxonomy( $existing_taxonomy_slug, true );
-	}
-
-	public function remove_existing_taxonomy( $existing_taxonomy_slug ) {
-		return $this->remove_taxonomy( $existing_taxonomy_slug, true );
-	}
-
 	public function get_path( $rel_path ) {
 		return plugin_dir_path( __FILE__ ) . $this->base_path_relative . ltrim( $rel_path, '/' );
 	}

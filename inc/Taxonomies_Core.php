@@ -75,16 +75,9 @@ final class Attachment_Taxonomies_Core {
 				continue;
 			}
 
-			$js_slug = lcfirst( implode( array_map( 'ucfirst', explode( '_', $taxonomy_slug ) ) ) );
+			$js_slug = $this->make_js_slug( $taxonomy_slug );
 
-			$taxonomies[] = array(
-				'name'		=> $taxonomy->label,
-				'slug'		=> $js_slug,
-				'slugId'	=> str_replace( '_', '-', $taxonomy_slug ),
-				'queryVar'	=> $taxonomy->query_var,
-				'terms'		=> array_map( array( $this, 'get_term_array' ), $this->get_terms_for_taxonomy( $taxonomy_slug ) ),
-			);
-
+			$taxonomies[] = $this->prepare_taxonomy_for_js( $taxonomy_slug, $taxonomy );
 			$all_items[ $js_slug ] = $taxonomy->labels->all_items;
 			$filter_by_item[ $js_slug ] = $this->get_filter_by_label( $taxonomy );
 		}
@@ -126,6 +119,22 @@ final class Attachment_Taxonomies_Core {
 			}
 		</style>
 		<?php
+	}
+
+	private function prepare_taxonomy_for_js( $taxonomy_slug, $taxonomy ) {
+		$js_slug = $this->make_js_slug( $taxonomy_slug );
+
+		return array(
+			'name'		=> $taxonomy->label,
+			'slug'		=> $js_slug,
+			'slugId'	=> str_replace( '_', '-', $taxonomy_slug ),
+			'queryVar'	=> $taxonomy->query_var,
+			'terms'		=> array_map( array( $this, 'get_term_array' ), $this->get_terms_for_taxonomy( $taxonomy_slug ) ),
+		);
+	}
+
+	private function make_js_slug( $taxonomy_slug ) {
+		return lcfirst( implode( array_map( 'ucfirst', explode( '_', $taxonomy_slug ) ) ) );
 	}
 
 	private function get_terms_for_taxonomy( $taxonomy_slug ) {
