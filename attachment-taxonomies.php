@@ -43,7 +43,7 @@ final class Attachment_Taxonomies {
 	private function __construct() {
 		$file = wp_normalize_path( __FILE__ );
 		$mu_plugin_dir = wp_normalize_path( WPMU_PLUGIN_DIR );
-		if ( preg_match( '#^' . preg_quote( $mu_plugin_dir, '#' ) . '/#' ) ) {
+		if ( preg_match( '#^' . preg_quote( $mu_plugin_dir, '#' ) . '/#', $file ) ) {
 			$this->is_mu_plugin = true;
 			$this->base_path_relative = self::DIRNAME . '/';
 			add_action( 'muplugins_loaded', array( $this, 'bootstrap' ), 1 );
@@ -66,9 +66,9 @@ final class Attachment_Taxonomies {
 		}
 
 		$core = Attachment_Taxonomies_Core::instance();
-		//add_action( 'registered_taxonomy', array( $core, 'registered_taxonomy' ), 10, 3 );
-		//add_action( 'unregistered_taxonomy', array( $core, 'unregistered_taxonomy' ), 10, 1 );
+		add_action( 'restrict_manage_posts', array( $core, 'render_taxonomy_filters' ), 10, 1 );
 		add_action( 'wp_enqueue_media', array( $core, 'enqueue_script' ) );
+		add_action( 'wp_enqueue_media', array( $core, 'print_styles' ) );
 
 		$this->add_taxonomy( new Attachment_Category() );
 		$this->add_taxonomy( new Attachment_Tag() );
@@ -150,7 +150,7 @@ final class Attachment_Taxonomies {
 		return plugin_dir_path( __FILE__ ) . $this->base_path_relative . ltrim( $rel_path, '/' );
 	}
 
-	public function get_url( $rel_url ) {
+	public function get_url( $rel_path ) {
 		return plugin_dir_url( __FILE__ ) . $this->base_path_relative . ltrim( $rel_path, '/' );
 	}
 }

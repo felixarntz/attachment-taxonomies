@@ -17,11 +17,11 @@
 		createFilters: function() {
 			var filters = {};
 
-			if ( this.options.queryVar ) {
+			if ( this.options.queryVar && this.options.allLabel ) {
 				filters.all = {
-					text: wp.media.taxonomies.l10n.all,
+					text: this.options.allLabel,
 					props: {},
-					priority: 0
+					priority: 1
 				};
 				filters.all.props[ this.options.queryVar ] = null;
 
@@ -30,7 +30,7 @@
 						filters[ this.options.terms[ i ].slug ] = {
 							text: this.options.terms[ i ].name,
 							props: {},
-							priority: i + 1
+							priority: i + 2
 						};
 						filters[ this.options.terms[ i ].slug ].props[ this.options.queryVar ] = this.options.terms[ i ].slug;
 					}
@@ -53,15 +53,16 @@
 					attributes: {
 						'for': 'media-attachment-' + data[ i ].slugId + '-filters'
 					},
-					priority: -78
+					priority: -72
 				}).render() );
 				this.toolbar.set( data[ i ].slug + 'Filter', new wp.media.view.AttachmentFilters.Taxonomy({
 					controller: this.controller,
 					model: this.collection.props,
-					priority: -78,
+					priority: -72,
 					queryVar: data[ i ].queryVar,
 					terms: data[ i ].terms,
-					id: 'media-attachment-' + data[ i ].slugId + '-filters'
+					id: 'media-attachment-' + data[ i ].slugId + '-filters',
+					allLabel: wp.media.taxonomies.l10n.all[ data[ i ].slug ]
 				}).render() );
 			}
 		}
