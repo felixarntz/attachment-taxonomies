@@ -26,6 +26,7 @@ The plugin follows WordPress Core principles and offers a lightweight alternativ
 
 * Adds categories and tags to the Media Library (independent from the regular post categories and tags)
 * Inserts filter dropdowns for attachment taxonomies into the media toolbar and media modal
+* Allows to pick taxonomy terms for attachments from within the Attachment Selection & Edit modals
 * Lightweight plugin following WordPress Core principles
 * "Decisions, not Options"
 * Can easily be used as a must-use plugin
