@@ -52,6 +52,7 @@ final class Attachment_Taxonomies {
 		}
 
 		require_once $this->get_path( 'inc/Taxonomies_Core.php' );
+		require_once $this->get_path( 'inc/Taxonomy_Edit.php' );
 		require_once $this->get_path( 'inc/Taxonomy.php' );
 		require_once $this->get_path( 'inc/Existing_Taxonomy.php' );
 		require_once $this->get_path( 'inc/Category.php' );
@@ -69,6 +70,13 @@ final class Attachment_Taxonomies {
 		add_action( 'restrict_manage_posts', array( $core, 'render_taxonomy_filters' ), 10, 1 );
 		add_action( 'wp_enqueue_media', array( $core, 'enqueue_script' ) );
 		add_action( 'wp_enqueue_media', array( $core, 'print_styles' ) );
+
+		$edit = Attachment_Taxonomy_Edit::instance();
+		add_action( 'edit_attachment', array( $edit, 'save_ajax_attachment_taxonomies' ), 10, 1 );
+		add_action( 'add_attachment', array( $edit, 'save_ajax_attachment_taxonomies' ), 10, 1 );
+		add_action( 'wp_prepare_attachment_for_js', array( $edit, 'add_taxonomies_to_attachment_js' ), 10, 3 );
+		add_action( 'attachment_fields_to_edit', array( $edit, 'remove_taxonomies_from_attachment_compat' ), 10, 2 );
+		add_action( 'wp_enqueue_media', array( $edit, 'adjust_media_templates' ) );
 
 		$this->add_taxonomy( new Attachment_Category() );
 		$this->add_taxonomy( new Attachment_Tag() );

@@ -84,7 +84,7 @@ final class Attachment_Taxonomies_Core {
 
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_enqueue_script( 'attachment-taxonomies', Attachment_Taxonomies::instance()->get_url( 'assets/library' . $min . '.js' ), array( 'media-views' ), Attachment_Taxonomies::VERSION, true );
+		wp_enqueue_script( 'attachment-taxonomies', Attachment_Taxonomies::instance()->get_url( 'assets/library' . $min . '.js' ), array( 'jquery', 'media-views' ), Attachment_Taxonomies::VERSION, true );
 		wp_localize_script( 'attachment-taxonomies', '_attachment_taxonomies', array(
 			'data'			=> $taxonomies,
 			'l10n'			=> array(
@@ -116,6 +116,20 @@ final class Attachment_Taxonomies_Core {
 				width: <?php echo $percentage; ?>% !important;
 				width: -webkit-calc(<?php echo $percentage_calc; ?>% - 12px) !important;
 				width: calc(<?php echo $percentage_calc; ?>% - 12px) !important;
+			}
+
+			.attachment-taxonomy-input {
+				display: none;
+			}
+
+			.attachment-details .setting.attachment-taxonomy-select select,
+			.media-sidebar .setting.attachment-taxonomy-select select {
+				-webkit-box-sizing: border-box;
+				   -moz-box-sizing: border-box;
+				        box-sizing: border-box;
+				margin: 1px;
+				width: 65%;
+				float: right;
 			}
 		</style>
 		<?php

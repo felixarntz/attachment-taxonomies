@@ -1,11 +1,11 @@
-( function( wp ) {
+( function( wp, $ ) {
 
 	if ( 'undefined' === typeof window._attachment_taxonomies ) {
 		return;
 	}
 
 	if ( 'undefined' === typeof wp.media ) {
-		wp.media = {};
+		return;
 	}
 
 	wp.media.taxonomies = window._attachment_taxonomies;
@@ -68,4 +68,15 @@
 		}
 	});
 
-})( window.wp || {} );
+	$( document ).on( 'change', '.attachment-taxonomy-select > select', function( e ) {
+		var options = [];
+		for ( var i in e.target.options ) {
+			if ( e.target.options[ i ].selected ) {
+				options.push( e.target.options[ i ].value );
+			}
+		}
+
+		$( e.target ).parent().prev( '.attachment-taxonomy-input' ).find( 'input' ).val( options.join( ',' ) ).trigger( 'change' );
+	});
+
+})( window.wp || {}, window.jQuery );
