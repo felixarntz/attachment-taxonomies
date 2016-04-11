@@ -13,9 +13,34 @@ if ( class_exists( 'Attachment_Tag' ) ) {
 	return;
 }
 
+/**
+ * Represents the attachment_tag taxonomy.
+ *
+ * @since 1.0.0
+ */
 final class Attachment_Tag extends Attachment_Taxonomy {
+	/**
+	 * Holds the taxonomy slug.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
 	protected $slug = 'attachment_tag';
+
+	/**
+	 * Holds the taxonomy labels.
+	 *
+	 * @since 1.0.0
+	 * @var array
+	 */
 	protected $labels = array(); // leave empty to use WordPress Core tag labels
+
+	/**
+	 * Holds the taxonomy arguments.
+	 *
+	 * @since 1.0.0
+	 * @var array
+	 */
 	protected $args = array(
 		'hierarchical'		=> false,
 		'query_var'			=> 'attachment_tag',
