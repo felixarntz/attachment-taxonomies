@@ -25,7 +25,7 @@ abstract class Attachment_Taxonomy {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	protected abstract $slug;
+	protected $slug = '';
 
 	/**
 	 * Holds the taxonomy labels.
@@ -33,7 +33,7 @@ abstract class Attachment_Taxonomy {
 	 * @since 1.0.0
 	 * @var array
 	 */
-	protected abstract $labels;
+	protected $labels = array();
 
 	/**
 	 * Holds the taxonomy arguments.
@@ -41,7 +41,7 @@ abstract class Attachment_Taxonomy {
 	 * @since 1.0.0
 	 * @var array
 	 */
-	protected abstract $args;
+	protected $args = array();
 
 	/**
 	 * Registers the taxonomy.
@@ -83,6 +83,8 @@ abstract class Attachment_Taxonomy {
 	 * @return array the taxonomy labels
 	 */
 	public function get_labels() {
+		$slug = $this->get_slug();
+
 		$labels = $this->labels;
 
 		/**
@@ -112,6 +114,8 @@ abstract class Attachment_Taxonomy {
 	 * @return array the taxonomy arguments
 	 */
 	public function get_args() {
+		$slug = $this->get_slug();
+
 		$args = $this->args;
 		$args['labels'] = $this->get_labels();
 

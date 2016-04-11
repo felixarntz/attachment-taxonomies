@@ -21,30 +21,6 @@ if ( class_exists( 'Attachment_Existing_Taxonomy' ) ) {
  */
 final class Attachment_Existing_Taxonomy extends Attachment_Taxonomy {
 	/**
-	 * Holds the taxonomy slug.
-	 *
-	 * @since 1.0.0
-	 * @var string
-	 */
-	protected $slug = '';
-
-	/**
-	 * Holds the taxonomy labels.
-	 *
-	 * @since 1.0.0
-	 * @var array
-	 */
-	protected $labels = array();
-
-	/**
-	 * Holds the taxonomy arguments.
-	 *
-	 * @since 1.0.0
-	 * @var array
-	 */
-	protected $args = array();
-
-	/**
 	 * Constructor - sets the taxonomy slug.
 	 *
 	 * @since 1.0.0
