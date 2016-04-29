@@ -29,5 +29,8 @@
   },
   "require": {
     "composer/installers": "~1.0"
+  },
+  "require-dev": {
+    "codeclimate/php-test-reporter": "dev-master"
   }
 }
