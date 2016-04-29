@@ -10,6 +10,6 @@ class AT_Tests_Taxonomy extends WP_UnitTestCase {
 		Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'post_tag' ), true );
 
 		$tax = Attachment_Taxonomies::instance()->get_taxonomy( 'post_tag', true );
-		assertInstanceOf( 'Attachment_Existing_Taxonomy' );
+		$this->assertInstanceOf( 'Attachment_Existing_Taxonomy', $tax );
 	}
 }
