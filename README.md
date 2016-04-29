@@ -1,4 +1,6 @@
+[![Build Status](https://api.travis-ci.org/felixarntz/attachment-taxonomies.png?branch=master)](https://travis-ci.org/felixarntz/attachment-taxonomies)
 [![Code Climate](https://codeclimate.com/github/felixarntz/attachment-taxonomies/badges/gpa.svg)](https://codeclimate.com/github/felixarntz/attachment-taxonomies)
+[![Test Coverage](https://codeclimate.com/github/felixarntz/attachment-taxonomies/badges/coverage.svg)](https://codeclimate.com/github/felixarntz/attachment-taxonomies/coverage)
 [![Latest Stable Version](https://poser.pugx.org/felixarntz/attachment-taxonomies/version)](https://packagist.org/packages/felixarntz/attachment-taxonomies)
 [![License](https://poser.pugx.org/felixarntz/attachment-taxonomies/license)](https://packagist.org/packages/felixarntz/attachment-taxonomies)
 
