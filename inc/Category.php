@@ -42,17 +42,21 @@ final class Attachment_Category extends Attachment_Taxonomy {
 	 * @var array
 	 */
 	protected $args = array(
-		'hierarchical'		=> true,
-		'query_var'			=> 'attachment_category',
-		'rewrite'			=> true,
-		'public'			=> true,
-		'show_ui'			=> true,
-		'show_admin_column'	=> true,
-		'capabilities'		=> array(
-			'manage_terms'		=> 'upload_files',
-			'edit_terms'		=> 'upload_files',
-			'delete_terms'		=> 'upload_files',
-			'assign_terms'		=> 'upload_files',
+		'public'				=> false,
+		'show_ui'				=> true,
+		'show_in_menu'			=> true,
+		'show_in_nav_menus'		=> false,
+		'show_tagcloud'			=> false,
+		'show_admin_column'		=> true,
+		'hierarchical'			=> true,
+		'update_count_callback'	=> '_update_generic_term_count',
+		'query_var'				=> 'attachment_category',
+		'rewrite'				=> false,
+		'capabilities'			=> array(
+			'manage_terms'			=> 'upload_files',
+			'edit_terms'			=> 'upload_files',
+			'delete_terms'			=> 'upload_files',
+			'assign_terms'			=> 'upload_files',
 		),
 	);
 }
