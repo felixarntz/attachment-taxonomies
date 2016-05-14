@@ -22,15 +22,8 @@ class AT_Tests_Core extends WP_UnitTestCase {
 	public function test_get_terms_for_taxonomy() {
 		$factory = method_exists( 'WP_UnitTestCase', 'factory' ) ? self::factory() : $this->factory;
 
-		$term1 = $factory->term->create_and_get( array( 'taxonomy' => 'attachment_category' ) );
-		$term2 = $factory->term->create_and_get( array( 'taxonomy' => 'attachment_category' ) );
-
-		if ( is_object( $term1 ) ) {
-			$term1 = $term1->term_id;
-		}
-		if ( is_object( $term2 ) ) {
-			$term2 = $term2->term_id;
-		}
+		$term1 = $factory->term->create( array( 'taxonomy' => 'attachment_category' ) );
+		$term2 = $factory->term->create( array( 'taxonomy' => 'attachment_category' ) );
 
 		$result = Attachment_Taxonomies_Core::instance()->get_terms_for_taxonomy( 'attachment_category' );
 		$this->assertCount( 2, $result );
