@@ -26,6 +26,8 @@ class AT_Tests_Core extends WP_UnitTestCase {
 		$term2 = $factory->term->create_and_get( array( 'taxonomy' => 'attachment_category' ) );
 
 		$result = Attachment_Taxonomies_Core::instance()->get_terms_for_taxonomy( 'attachment_category' );
-		$this->assertEqualSets( array( $term1, $term2 ), $result );
+		$this->assertCount( 2, $result );
+		$this->assertEquals( $term1->term_id, $result[0]->term_id );
+		$this->assertEquals( $term2->term_id, $result[1]->term_id );
 	}
 }
