@@ -15,7 +15,7 @@ class AT_Tests_Taxonomy extends WP_UnitTestCase {
 		$tag->register();
 
 		$tax = get_taxonomy( 'attachment_tag' );
-		$this->assertNotFalse( $tax );
+		$this->assertObjectHasAttribute( 'name', $tax );
 	}
 
 	public function test_unregister() {

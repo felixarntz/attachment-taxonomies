@@ -63,7 +63,30 @@ abstract class Attachment_Taxonomy {
 	public function unregister() {
 		$slug = $this->get_slug();
 
-		unregister_taxonomy( $slug );
+		if ( function_exists( 'unregister_taxonomy' ) ) {
+			unregister_taxonomy( $slug );
+			return;
+		}
+
+		global $wp, $wp_taxonomies;
+
+		$taxonomy_args = get_taxonomy( $this->slug );
+		if ( ! $taxonomy_args || $taxonomy_args->_builtin ) {
+			return;
+		}
+
+		if ( false !== $taxonomy_args->query_var ) {
+			$wp->remove_query_var( $taxonomy_args->query_var );
+		}
+
+		if ( false !== $taxonomy_args->rewrite ) {
+			remove_rewrite_tag( "%$taxonomy%" );
+			remove_permastruct( $this->slug );
+		}
+
+		remove_filter( 'wp_ajax_add-' . $this->slug, '_wp_ajax_add_hierarchical_term' );
+
+		unset( $wp_taxonomies[ $this->slug ] );
 	}
 
 	/**
