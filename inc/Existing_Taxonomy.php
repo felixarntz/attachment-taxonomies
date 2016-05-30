@@ -1,8 +1,10 @@
 <?php
 /**
+ * Attachment_Existing_Taxonomy class
+ *
  * @package AttachmentTaxonomies
- * @version 1.0.0
  * @author Felix Arntz <felix-arntz@leaves-and-love.net>
+ * @since 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

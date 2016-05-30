@@ -1,8 +1,10 @@
 <?php
 /**
+ * Attachment_Taxonomies_Core class
+ *
  * @package AttachmentTaxonomies
- * @version 1.0.0
  * @author Felix Arntz <felix-arntz@leaves-and-love.net>
+ * @since 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -162,7 +164,7 @@ final class Attachment_Taxonomies_Core {
 
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_enqueue_script( 'attachment-taxonomies', Attachment_Taxonomies::instance()->get_url( 'assets/library' . $min . '.js' ), array( 'jquery', 'media-views' ), Attachment_Taxonomies::VERSION, true );
+		wp_enqueue_script( 'attachment-taxonomies', Attachment_Taxonomies::instance()->get_url( 'assets/dist/js/library' . $min . '.js' ), array( 'jquery', 'media-views' ), Attachment_Taxonomies::VERSION, true );
 		wp_localize_script( 'attachment-taxonomies', '_attachment_taxonomies', array(
 			'data'			=> $taxonomies,
 			'l10n'			=> array(

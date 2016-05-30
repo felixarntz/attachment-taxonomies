@@ -1,20 +1,22 @@
 <?php
 /*
 Plugin Name: Attachment Taxonomies
-Plugin URI: http://wordpress.org/plugins/attachment-taxonomies/
+Plugin URI:  http://wordpress.org/plugins/attachment-taxonomies/
 Description: This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.
-Version: 1.0.0
-Author: Felix Arntz
-Author URI: http://leaves-and-love.net
-License: GNU General Public License v3
+Version:     1.0.0
+Author:      Felix Arntz
+Author URI:  https://leaves-and-love.net
+License:     GNU General Public License v3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: attachment-taxonomies
-Tags: wordpress, plugin, attachment, media, taxonomy
+Tags:        attachment, media, taxonomy
 */
 /**
+ * Attachment_Taxonomies class
+ *
  * @package AttachmentTaxonomies
- * @version 1.0.0
  * @author Felix Arntz <felix-arntz@leaves-and-love.net>
+ * @since 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
