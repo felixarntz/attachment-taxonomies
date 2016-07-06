@@ -9,7 +9,7 @@ Author URI:  https://leaves-and-love.net
 License:     GNU General Public License v3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: attachment-taxonomies
-Tags:        attachment, media, taxonomy
+Tags:        attachment, media, taxonomy, categories, tags
 */
 /**
  * Attachment_Taxonomies class

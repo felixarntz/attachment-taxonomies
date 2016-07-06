@@ -9,7 +9,9 @@
     "plugin",
     "attachment",
     "media",
-    "taxonomy"
+    "taxonomy",
+    "categories",
+    "tags"
   ],
   "homepage": "http://wordpress.org/plugins/attachment-taxonomies/",
   "authors": [
