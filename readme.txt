@@ -5,13 +5,13 @@ Plugin URI:        http://wordpress.org/plugins/attachment-taxonomies/
 Author:            Felix Arntz
 Author URI:        https://leaves-and-love.net
 Contributors:      flixos90
+Donate link:       https://leaves-and-love.net/wordpress-plugins/
 Requires at least: 3.5
 Tested up to:      4.5.3
 Stable tag:        1.0.0
 Version:           1.0.0
 License:           GNU General Public License v3
 License URI:       http://www.gnu.org/licenses/gpl-3.0.html
-Donate link:       https://leaves-and-love.net/wordpress-plugins/
 Tags:              attachment, media, taxonomy, categories, tags
 
 This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.

@@ -60,13 +60,13 @@ var readmeheader =	'Plugin Name:       ' + config.pluginName + '\n' +
 					'Author:            ' + config.author + '\n' +
 					'Author URI:        ' + config.authorURI + '\n' +
 					'Contributors:      ' + config.contributors + '\n' +
+					( config.donateLink ? 'Donate link:       ' + config.donateLink + '\n' : '' ) +
 					'Requires at least: ' + config.minRequired + '\n' +
 					'Tested up to:      ' + config.testedUpTo + '\n' +
 					'Stable tag:        ' + config.version + '\n' +
 					'Version:           ' + config.version + '\n' +
 					'License:           ' + config.license + '\n' +
 					'License URI:       ' + config.licenseURI + '\n' +
-					( config.donateLink ? 'Donate link:       ' + config.donateLink + '\n' : '' ) +
 					'Tags:              ' + config.tags;
 
 // header for minified assets
