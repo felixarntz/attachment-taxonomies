@@ -11,6 +11,7 @@ Stable tag:        1.0.0
 Version:           1.0.0
 License:           GNU General Public License v3
 License URI:       http://www.gnu.org/licenses/gpl-3.0.html
+Donate link:       https://leaves-and-love.net/wordpress-plugins/
 Tags:              attachment, media, taxonomy, categories, tags
 
 This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.
@@ -62,7 +63,7 @@ You can simply use the WordPress Core function [`register_taxonomy()`](https://c
 
 Example Code (adds an attachment taxonomy called "Location"):
 
-```
+`
 <?php
 
 final class Attachment_Location extends Attachment_Taxonomy {
@@ -81,7 +82,7 @@ final class Attachment_Location extends Attachment_Taxonomy {
 
 Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Location() );
 
-```
+`
 
 = How can I remove the default attachment taxonomies? =
 
@@ -89,12 +90,12 @@ To remove one of the default attachment taxonomies you should call the method `r
 
 Example Code (removes the attachment taxonomy "Category"):
 
-```
+`
 <?php
 
 Attachment_Taxonomies::instance()->remove_taxonomy( 'attachment_category' );
 
-```
+`
 
 = How can I use the regular post categories and post tags for attachments instead of the additional taxonomies ? =
 
@@ -104,13 +105,13 @@ Then you can simply use the WordPress Core function [`register_taxonomy_for_obje
 
 Example Code (makes the regular category and tag taxonomies available for attachments):
 
-```
+`
 <?php
 
 Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'category' ), true );
 Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'post_tag' ), true );
 
-``` 
+` 
 
 = Which filters are available in the plugin? =
 
