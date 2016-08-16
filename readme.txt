@@ -134,5 +134,8 @@ You can also contribute to the plugin by translating it. Simply visit [translate
 
 == Changelog ==
 
+= 1.0.1 =
+* Fixed: uploads in the post edit screen no longer freeze
+
 = 1.0.0 =
 * First stable version

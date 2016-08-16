@@ -193,18 +193,18 @@ final class Attachment_Taxonomy_Edit {
 			$terms = Attachment_Taxonomies_Core::instance()->get_terms_for_taxonomy( $taxonomy->name );
 			?>
 			<label class="setting attachment-taxonomy-input" data-setting="taxonomy-<?php echo $taxonomy->name; ?>-terms">
-				<input type="hidden" value="{{ Object.keys(data.taxonomies.<?php echo $taxonomy->name; ?>).join(',') }}" />
+				<input type="hidden" value="{{ data.taxonomies ? Object.keys(data.taxonomies.<?php echo $taxonomy->name; ?>).join(',') : '' }}" />
 			</label>
 			<label class="setting attachment-taxonomy-select">
 				<span class="name"><?php echo $taxonomy->labels->name; ?></span>
 				<select multiple="multiple">
 					<?php if ( $taxonomy->hierarchical ) : ?>
 						<?php foreach ( $terms as $term ) : ?>
-							<option value="<?php echo $term->term_id; ?>" {{ data.taxonomies.<?php echo $taxonomy->name; ?>[<?php echo $term->term_id; ?>] ? 'selected' : '' }}><?php echo $term->name; ?></option>
+							<option value="<?php echo $term->term_id; ?>" {{ ( data.taxonomies && data.taxonomies.<?php echo $taxonomy->name; ?>[<?php echo $term->term_id; ?>] ) ? 'selected' : '' }}><?php echo $term->name; ?></option>
 						<?php endforeach; ?>
 					<?php else : ?>
 						<?php foreach ( $terms as $term ) : ?>
-							<option value="<?php echo $term->slug; ?>" {{ data.taxonomies.<?php echo $taxonomy->name; ?>['<?php echo $term->slug; ?>'] ? 'selected' : '' }}><?php echo $term->name; ?></option>
+							<option value="<?php echo $term->slug; ?>" {{ ( data.taxonomies && data.taxonomies.<?php echo $taxonomy->name; ?>['<?php echo $term->slug; ?>'] ) ? 'selected' : '' }}><?php echo $term->name; ?></option>
 						<?php endforeach; ?>
 					<?php endif; ?>
 				</select>
