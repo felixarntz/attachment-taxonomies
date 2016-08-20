@@ -1,3 +1,5 @@
+[![WordPress plugin](https://img.shields.io/wordpress/plugin/v/attachment-taxonomies.svg?maxAge=2592000)](https://wordpress.org/plugins/attachment-taxonomies/)
+[![WordPress](https://img.shields.io/wordpress/v/attachment-taxonomies.svg?maxAge=2592000)](https://wordpress.org/plugins/attachment-taxonomies/)
 [![Build Status](https://api.travis-ci.org/felixarntz/attachment-taxonomies.png?branch=master)](https://travis-ci.org/felixarntz/attachment-taxonomies)
 [![Code Climate](https://codeclimate.com/github/felixarntz/attachment-taxonomies/badges/gpa.svg)](https://codeclimate.com/github/felixarntz/attachment-taxonomies)
 [![Test Coverage](https://codeclimate.com/github/felixarntz/attachment-taxonomies/badges/coverage.svg)](https://codeclimate.com/github/felixarntz/attachment-taxonomies/coverage)
