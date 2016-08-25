@@ -192,19 +192,19 @@ final class Attachment_Taxonomy_Edit {
 		foreach ( Attachment_Taxonomies_Core::instance()->get_taxonomies( 'objects' ) as $taxonomy ) {
 			$terms = Attachment_Taxonomies_Core::instance()->get_terms_for_taxonomy( $taxonomy->name );
 			?>
-			<label class="setting attachment-taxonomy-input" data-setting="taxonomy-<?php echo $taxonomy->name; ?>-terms">
-				<input type="hidden" value="{{ data.taxonomies ? Object.keys(data.taxonomies.<?php echo $taxonomy->name; ?>).join(',') : '' }}" />
+			<label class="setting attachment-taxonomy-input" data-setting="taxonomy-<?php echo sanitize_html_class( $taxonomy->name ); ?>-terms">
+				<input type="hidden" value="{{ data.taxonomies ? Object.keys(data.taxonomies.<?php echo esc_attr( $taxonomy->name ); ?>).join(',') : '' }}" />
 			</label>
 			<label class="setting attachment-taxonomy-select">
-				<span class="name"><?php echo $taxonomy->labels->name; ?></span>
+				<span class="name"><?php echo esc_html( $taxonomy->labels->name ); ?></span>
 				<select multiple="multiple">
 					<?php if ( $taxonomy->hierarchical ) : ?>
 						<?php foreach ( $terms as $term ) : ?>
-							<option value="<?php echo $term->term_id; ?>" {{ ( data.taxonomies && data.taxonomies.<?php echo $taxonomy->name; ?>[<?php echo $term->term_id; ?>] ) ? 'selected' : '' }}><?php echo $term->name; ?></option>
+							<option value="<?php echo esc_attr( $term->term_id ); ?>" {{ ( data.taxonomies && data.taxonomies.<?php echo esc_attr( $taxonomy->name ); ?>[<?php echo esc_attr( $term->term_id ); ?>] ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
 						<?php endforeach; ?>
 					<?php else : ?>
 						<?php foreach ( $terms as $term ) : ?>
-							<option value="<?php echo $term->slug; ?>" {{ ( data.taxonomies && data.taxonomies.<?php echo $taxonomy->name; ?>['<?php echo $term->slug; ?>'] ) ? 'selected' : '' }}><?php echo $term->name; ?></option>
+							<option value="<?php echo esc_attr( $term->slug ); ?>" {{ ( data.taxonomies && data.taxonomies.<?php echo esc_attr( $taxonomy->name ); ?>['<?php echo esc_attr( $term->slug ); ?>'] ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
 						<?php endforeach; ?>
 					<?php endif; ?>
 				</select>
