@@ -119,10 +119,9 @@ final class Attachment_Taxonomies_Core {
 			}
 
 			$value = isset( $_REQUEST[ $taxonomy->query_var ] ) ? $_REQUEST[ $taxonomy->query_var ] : '';
-
 			?>
-			<label for="attachment-<?php echo sanitize_html_class( $taxonomy->slug ); ?>-filter" class="screen-reader-text"><?php echo esc_html( $this->get_filter_by_label( $taxonomy ) ); ?></label>
-			<select class="attachment-filters" name="<?php echo esc_attr( $taxonomy->query_var ); ?>" id="attachment-<?php echo sanitize_html_class( $taxonomy->slug ); ?>-filter">
+			<label for="attachment-<?php echo sanitize_html_class( $taxonomy->query_var ); ?>-filter" class="screen-reader-t ext"><?php echo esc_html( $this->get_filter_by_label( $taxonomy ) ); ?></label>
+			<select class="attachment-filters" name="<?php echo esc_attr( $taxonomy->query_var ); ?>" id="attachment-<?php echo sanitize_html_class( $taxonomy->query_var ); ?>-filter">
 				<option value="" <?php selected( '', $value ); ?>><?php echo esc_html( $taxonomy->labels->all_items ); ?></option>
 				<?php foreach ( $this->get_terms_for_taxonomy( $taxonomy_slug ) as $term ) : ?>
 					<option value="<?php echo esc_attr( $term->slug ); ?>" <?php selected( $term->slug, $value ); ?>><?php echo esc_html( $term->name ); ?></option>
