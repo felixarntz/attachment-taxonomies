@@ -103,7 +103,7 @@ final class Attachment_Taxonomies {
 		$mu_plugin_dir = wp_normalize_path( WPMU_PLUGIN_DIR );
 		if ( preg_match( '#^' . preg_quote( $mu_plugin_dir, '#' ) . '/#', $file ) ) {
 			$this->is_mu_plugin = true;
-			if ( file_exists( __DIR__ . '../attachment-taxonomies.php' ) ) {
+			if ( file_exists( $mu_plugin_dir . '/attachment-taxonomies.php' ) ) {
 				$this->base_path_relative = 'attachment-taxonomies/';
 			}
 			add_action( 'muplugins_loaded', array( $this, 'bootstrap' ), 1 );
