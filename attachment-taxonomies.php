@@ -146,8 +146,20 @@ final class Attachment_Taxonomies {
 		add_filter( 'attachment_fields_to_edit', array( $edit, 'remove_taxonomies_from_attachment_compat' ), 10, 2 );
 		add_action( 'wp_enqueue_media', array( $edit, 'adjust_media_templates' ) );
 
-		$this->add_taxonomy( new Attachment_Category() );
-		$this->add_taxonomy( new Attachment_Tag() );
+		/**
+		 * Filters the taxonomy class names that will be instantiated by default.
+		 *
+		 * @since 1.0.2
+		 *
+		 * @param array $taxonomy_class_names Array of taxonomy class names.
+		 */
+		$taxonomy_class_names = apply_filters( 'attachment_taxonomy_class_names', array( 'Attachment_Category', 'Attachment_Tag' ) );
+
+		$taxonomy_class_names = array_unique( $taxonomy_class_names );
+
+		foreach ( $taxonomy_class_names as $class_name ) {
+			$this->add_taxonomy( new $class_name() );
+		}
 	}
 
 	/**
