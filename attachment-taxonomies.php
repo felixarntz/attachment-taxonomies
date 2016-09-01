@@ -85,14 +85,6 @@ final class Attachment_Taxonomies {
 	private $taxonomies = array();
 
 	/**
-	 * Stores existing taxonomies which are added through the plugin's API.
-	 *
-	 * @since 1.0.0
-	 * @var array
-	 */
-	private $existing_taxonomies = array();
-
-	/**
 	 * Constructor - determines whether the plugin is used as a must-use plugin or not.
 	 * Then it loads the plugin files and hooks in the bootstrapping action.
 	 *
@@ -171,32 +163,29 @@ final class Attachment_Taxonomies {
 	 *
 	 * @since 1.0.0
 	 * @param Attachment_Taxonomy $taxonomy the taxonomy object
-	 * @param boolean             $existing whether the taxonomy already exists (for another post type)
+	 * @param boolean             $deprecated Deprecated argument.
 	 * @return boolean true if successful, otherwise false
 	 */
-	public function add_taxonomy( $taxonomy, $existing = false ) {
-		if ( $existing && ! is_a( $taxonomy, 'Attachment_Existing_Taxonomy' ) ) {
-			return false;
-		} elseif ( ! $existing && ! is_a( $taxonomy, 'Attachment_Taxonomy' ) ) {
+	public function add_taxonomy( $taxonomy, $deprecated = null ) {
+		if ( is_bool( $deprecated ) || $deprecated ) {
+			$this->deprecated_argument( __METHOD__, '1.0.2' );
+		}
+
+		if ( ! is_a( $taxonomy, 'Attachment_Taxonomy' ) ) {
 			return false;
 		}
 
 		$taxonomy_slug = $taxonomy->get_slug();
 
-		$holder = 'taxonomies';
-		if ( $existing ) {
-			$holder = 'existing_taxonomies';
-		}
-
-		if ( isset( $this->{$holder}[ $taxonomy_slug ] ) ) {
+		if ( isset( $this->taxonomies[ $taxonomy_slug ] ) ) {
 			return false;
 		}
 
-		$this->{$holder}[ $taxonomy_slug ] = $taxonomy;
+		$this->taxonomies[ $taxonomy_slug ] = $taxonomy;
 		if ( doing_action( 'init' ) || did_action( 'init' ) ) {
-			$this->{$holder}[ $taxonomy_slug ]->register();
+			$this->taxonomies[ $taxonomy_slug ]->register();
 		} else {
-			add_action( 'init', array( $this->{$holder}[ $taxonomy_slug ], 'register' ) );
+			add_action( 'init', array( $this->taxonomies[ $taxonomy_slug ], 'register' ) );
 		}
 
 		return true;
@@ -207,19 +196,19 @@ final class Attachment_Taxonomies {
 	 *
 	 * @since 1.0.0
 	 * @param string  $taxonomy_slug the taxonomy slug
-	 * @param boolean $existing whether the taxonomy already exists (for another post type)
+	 * @param boolean $deprecated Deprecated argument.
 	 * @return Attachment_Taxonomy|null the object (class derived from Attachment_Taxonomy) or null if it does not exist
 	 */
-	public function get_taxonomy( $taxonomy_slug, $existing = false ) {
-		$holder = 'taxonomies';
-		if ( $existing ) {
-			$holder = 'existing_taxonomies';
+	public function get_taxonomy( $taxonomy_slug, $deprecated = null ) {
+		if ( is_bool( $deprecated ) || $deprecated ) {
+			$this->deprecated_argument( __METHOD__, '1.0.2' );
 		}
 
-		if ( ! isset( $this->{$holder}[ $taxonomy_slug ] ) ) {
+		if ( ! isset( $this->taxonomies[ $taxonomy_slug ] ) ) {
 			return null;
 		}
-		return $this->{$holder}[ $taxonomy_slug ];
+
+		return $this->taxonomies[ $taxonomy_slug ];
 	}
 
 	/**
@@ -227,25 +216,24 @@ final class Attachment_Taxonomies {
 	 *
 	 * @since 1.0.0
 	 * @param string  $taxonomy_slug the taxonomy slug
-	 * @param boolean $existing whether the taxonomy already exists (for another post type)
+	 * @param boolean $deprecated Deprecated argument.
 	 * @return boolean true if successful, otherwise false
 	 */
-	public function remove_taxonomy( $taxonomy_slug, $existing = false ) {
-		$holder = 'taxonomies';
-		if ( $existing ) {
-			$holder = 'existing_taxonomies';
+	public function remove_taxonomy( $taxonomy_slug, $deprecated = null ) {
+		if ( is_bool( $deprecated ) || $deprecated ) {
+			$this->deprecated_argument( __METHOD__, '1.0.2' );
 		}
 
-		if ( ! isset( $this->{$holder}[ $taxonomy_slug ] ) ) {
+		if ( ! isset( $this->taxonomies[ $taxonomy_slug ] ) ) {
 			return false;
 		}
 
 		if ( doing_action( 'init' ) || did_action( 'init' ) ) {
-			$this->{$holder}[ $taxonomy_slug ]->unregister();
+			$this->taxonomies[ $taxonomy_slug ]->unregister();
 		} else {
-			remove_action( 'init', array( $this->{$holder}[ $taxonomy_slug ], 'register' ) );
+			remove_action( 'init', array( $this->taxonomies[ $taxonomy_slug ], 'register' ) );
 		}
-		unset( $this->{$holder}[ $taxonomy_slug ] );
+		unset( $this->taxonomies[ $taxonomy_slug ] );
 
 		return true;
 	}
@@ -274,6 +262,25 @@ final class Attachment_Taxonomies {
 	 */
 	public function get_url( $rel_path ) {
 		return plugin_dir_url( __FILE__ ) . $this->base_path_relative . ltrim( $rel_path, '/' );
+	}
+
+	/**
+	 * Marks a function argument as deprecated and informs when it has been used.
+	 *
+	 * @since 1.0.2
+	 * @param string $function The function that was called.
+	 * @param string $version  The version of Attachment Taxonomies that deprecated the argument used.
+	 * @param string $message  Optional. A message regarding the change. Default null.
+	 */
+	private function deprecated_argument( $function, $version, $message = null ) {
+		/* This filter is documented in wp-includes/functions.php */
+		if ( WP_DEBUG && apply_filters( 'deprecated_argument_trigger_error', true ) ) {
+			if ( ! is_null( $message ) ) {
+				trigger_error( sprintf( __( '%1$s was called with an argument that is <strong>deprecated</strong> since Attachment Taxonomies version %2$s! %3$s', 'attachment-taxonomies' ), $function, $version, $message ) );
+			} else {
+				trigger_error( sprintf( __( '%1$s was called with an argument that is <strong>deprecated</strong> since Attachment Taxonomies version %2$s with no alternative available.', 'attachment-taxonomies' ), $function, $version ) );
+			}
+		}
 	}
 }
 
