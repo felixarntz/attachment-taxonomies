@@ -155,7 +155,7 @@ final class Attachment_Taxonomies {
 		 */
 		$taxonomy_class_names = apply_filters( 'attachment_taxonomy_class_names', array( 'Attachment_Category', 'Attachment_Tag' ) );
 
-		$taxonomy_class_names = array_unique( $taxonomy_class_names );
+		$taxonomy_class_names = array_filter( array_unique( $taxonomy_class_names ), 'class_exists' );
 
 		foreach ( $taxonomy_class_names as $class_name ) {
 			$this->add_taxonomy( new $class_name() );
