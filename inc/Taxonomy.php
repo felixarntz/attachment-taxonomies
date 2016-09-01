@@ -22,25 +22,28 @@ if ( class_exists( 'Attachment_Taxonomy' ) ) {
  */
 abstract class Attachment_Taxonomy {
 	/**
-	 * Holds the taxonomy slug.
+	 * The taxonomy slug.
 	 *
 	 * @since 1.0.0
+	 * @access protected
 	 * @var string
 	 */
 	protected $slug = '';
 
 	/**
-	 * Holds the taxonomy labels.
+	 * The taxonomy labels.
 	 *
 	 * @since 1.0.0
+	 * @access protected
 	 * @var array
 	 */
 	protected $labels = array();
 
 	/**
-	 * Holds the taxonomy arguments.
+	 * The taxonomy arguments.
 	 *
 	 * @since 1.0.0
+	 * @access protected
 	 * @var array
 	 */
 	protected $args = array();
@@ -49,6 +52,7 @@ abstract class Attachment_Taxonomy {
 	 * Registers the taxonomy.
 	 *
 	 * @since 1.0.0
+	 * @access public
 	 */
 	public function register() {
 		$slug = $this->get_slug();
@@ -61,6 +65,7 @@ abstract class Attachment_Taxonomy {
 	 * Unregisters the taxonomy.
 	 *
 	 * @since 1.0.0
+	 * @access public
 	 */
 	public function unregister() {
 		$slug = $this->get_slug();
@@ -86,7 +91,9 @@ abstract class Attachment_Taxonomy {
 	 * Returns the taxonomy slug.
 	 *
 	 * @since 1.0.0
-	 * @return string the taxonomy slug
+	 * @access public
+	 *
+	 * @return string The taxonomy slug.
 	 */
 	public function get_slug() {
 		return $this->slug;
@@ -96,7 +103,9 @@ abstract class Attachment_Taxonomy {
 	 * Returns the taxonomy labels.
 	 *
 	 * @since 1.0.0
-	 * @return array the taxonomy labels
+	 * @access public
+	 *
+	 * @return array The taxonomy labels.
 	 */
 	public function get_labels() {
 		$slug = $this->get_slug();
@@ -109,7 +118,8 @@ abstract class Attachment_Taxonomy {
 		 * The dynamic portion of the hook name, `$slug` refers to the taxonomy slug.
 		 *
 		 * @since 1.0.0
-		 * @param array $labels the taxonomy labels
+		 *
+		 * @param array $labels The taxonomy labels.
 		 */
 		$labels = apply_filters( "attachment_taxonomy_{$slug}_labels", $labels );
 
@@ -117,8 +127,9 @@ abstract class Attachment_Taxonomy {
 		 * Filter the attachment taxonomy labels.
 		 *
 		 * @since 1.0.0
-		 * @param array  $labels the taxonomy labels
-		 * @param string $slug   the taxonomy slug
+		 *
+		 * @param array  $labels The taxonomy labels.
+		 * @param string $slug   The taxonomy slug.
 		 */
 		return apply_filters( 'attachment_taxonomy_labels', $labels, $slug );
 	}
@@ -127,7 +138,9 @@ abstract class Attachment_Taxonomy {
 	 * Returns the taxonomy arguments.
 	 *
 	 * @since 1.0.0
-	 * @return array the taxonomy arguments
+	 * @access public
+	 *
+	 * @return array The taxonomy arguments.
 	 */
 	public function get_args() {
 		$slug = $this->get_slug();
@@ -141,7 +154,8 @@ abstract class Attachment_Taxonomy {
 		 * The dynamic portion of the hook name, `$slug` refers to the taxonomy slug.
 		 *
 		 * @since 1.0.0
-		 * @param array $args the taxonomy arguments
+		 *
+		 * @param array $args The taxonomy arguments.
 		 */
 		$args = apply_filters( "attachment_taxonomy_{$slug}_args", $args );
 
@@ -149,8 +163,9 @@ abstract class Attachment_Taxonomy {
 		 * Filter the attachment taxonomy arguments.
 		 *
 		 * @since 1.0.0
-		 * @param array  $args the taxonomy arguments
-		 * @param string $slug the taxonomy slug
+		 *
+		 * @param array  $args The taxonomy arguments.
+		 * @param string $slug The taxonomy slug.
 		 */
 		return apply_filters( 'attachment_taxonomy_args', $args, $slug );
 	}

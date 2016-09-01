@@ -22,18 +22,23 @@ if ( class_exists( 'Attachment_Taxonomies_Core' ) ) {
  */
 final class Attachment_Taxonomies_Core {
 	/**
-	 * Stores the Singleton instance.
+	 * The Singleton instance.
 	 *
 	 * @since 1.0.0
+	 * @access private
+	 * @static
 	 * @var Attachment_Taxonomies_Core|null
 	 */
 	private static $instance = null;
 
 	/**
-	 * Returns the Singleton instance.
+	 * The Singleton instance.
 	 *
 	 * @since 1.0.0
-	 * @return Attachment_Taxonomies_Core the class instance
+	 * @access public
+	 * @static
+	 *
+	 * @return Attachment_Taxonomies_Core The Singleton class instance.
 	 */
 	public static function instance() {
 		if ( null === self::$instance ) {
@@ -43,9 +48,10 @@ final class Attachment_Taxonomies_Core {
 	}
 
 	/**
-	 * Constructor - private because of Singleton pattern.
+	 * Constructor.
 	 *
 	 * @since 1.0.0
+	 * @access private
 	 */
 	private function __construct() {}
 
@@ -53,7 +59,9 @@ final class Attachment_Taxonomies_Core {
 	 * Checks whether there are any attachment taxonomies registered.
 	 *
 	 * @since 1.0.0
-	 * @return boolean true if there are attachment taxonomies, otherwise false
+	 * @access public
+	 *
+	 * @return bool True if there are attachment taxonomies, otherwise false.
 	 */
 	public function has_taxonomies() {
 		$taxonomies = $this->get_taxonomies();
@@ -64,8 +72,10 @@ final class Attachment_Taxonomies_Core {
 	 * Returns attachment taxonomies.
 	 *
 	 * @since 1.0.0
-	 * @param string $mode either 'names' (for an array of taxonomy slugs) or 'objects' (for an array of objects)
-	 * @return array a list of taxonomy names or objects
+	 * @access public
+	 *
+	 * @param string $mode Either 'names' (for an array of taxonomy slugs) or 'objects' (for an array of objects).
+	 * @return array A list of taxonomy names or objects.
 	 */
 	public function get_taxonomies( $mode = 'names' ) {
 		return get_object_taxonomies( 'attachment', $mode );
@@ -77,8 +87,10 @@ final class Attachment_Taxonomies_Core {
 	 * Empty terms are also included.
 	 *
 	 * @since 1.0.0
-	 * @param string $taxonomy_slug the taxonomy to get the terms for
-	 * @return array|WP_Error a list of term objects or an error if the taxonomy does not exist
+	 * @access public
+	 *
+	 * @param string $taxonomy_slug The taxonomy to get the terms for.
+	 * @return array|WP_Error A list of term objects or an error if the taxonomy does not exist.
 	 */
 	public function get_terms_for_taxonomy( $taxonomy_slug ) {
 		$args = array(
@@ -102,7 +114,9 @@ final class Attachment_Taxonomies_Core {
 	 * This method is hooked into the `restrict_manage_posts` action.
 	 *
 	 * @since 1.0.0
-	 * @param string $post_type the current post type
+	 * @access public
+	 *
+	 * @param string $post_type The current post type.
 	 */
 	public function render_taxonomy_filters( $post_type ) {
 		if ( 'attachment' !== $post_type && 'upload' !== get_current_screen()->base ) {
@@ -141,6 +155,7 @@ final class Attachment_Taxonomies_Core {
 	 * This method is hooked into the `wp_enqueue_media` action.
 	 *
 	 * @since 1.0.0
+	 * @access public
 	 */
 	public function enqueue_script() {
 		if ( ! $this->has_taxonomies() ) {
@@ -183,6 +198,7 @@ final class Attachment_Taxonomies_Core {
 	 * This method is hooked into the `wp_enqueue_media` action.
 	 *
 	 * @since 1.0.0
+	 * @access public
 	 */
 	public function print_styles() {
 		$taxonomies = $this->get_taxonomies();
@@ -231,9 +247,11 @@ final class Attachment_Taxonomies_Core {
 	 * Also includes the terms of this taxonomy.
 	 *
 	 * @since 1.0.0
-	 * @param  string $taxonomy_slug the taxonomy slug
-	 * @param  object $taxonomy      the taxonomy object
-	 * @return array an associative array for the taxonomy
+	 * @access private
+	 *
+	 * @param string $taxonomy_slug The taxonomy slug.
+	 * @param object $taxonomy      The taxonomy object.
+	 * @return array An associative array for the taxonomy.
 	 */
 	private function prepare_taxonomy_for_js( $taxonomy_slug, $taxonomy ) {
 		$js_slug = $this->make_js_slug( $taxonomy_slug );
@@ -253,8 +271,10 @@ final class Attachment_Taxonomies_Core {
 	 * This is basically a transformation into camel case.
 	 *
 	 * @since 1.0.0
-	 * @param string $taxonomy_slug the taxonomy slug to transform
-	 * @return string the camel case taxonomy slug
+	 * @access private
+	 *
+	 * @param string $taxonomy_slug The taxonomy slug to transform.
+	 * @return string The camel case taxonomy slug.
 	 */
 	private function make_js_slug( $taxonomy_slug ) {
 		return lcfirst( implode( array_map( 'ucfirst', explode( '_', $taxonomy_slug ) ) ) );
@@ -264,8 +284,10 @@ final class Attachment_Taxonomies_Core {
 	 * Transforms a term object into an array.
 	 *
 	 * @since 1.0.0
-	 * @param object $term a term object (`WP_Term` if WordPress >= 4.4)
-	 * @return array a term array
+	 * @access private
+	 *
+	 * @param object $term A term object (`WP_Term` if WordPress >= 4.4).
+	 * @return array A term array.
 	 */
 	private function get_term_array( $term ) {
 		if ( ! class_exists( 'WP_Term' ) || ! is_a( $term, 'WP_Term' ) ) {
@@ -284,8 +306,10 @@ final class Attachment_Taxonomies_Core {
 	 * If it is not defined, the default label will be used.
 	 *
 	 * @since 1.0.0
-	 * @param object $taxonomy the taxonomy object
-	 * @return string the "Filter by" label for that taxonomy
+	 * @access private
+	 *
+	 * @param object $taxonomy The taxonomy object.
+	 * @return string The "Filter by" label for that taxonomy.
 	 */
 	private function get_filter_by_label( $taxonomy ) {
 		if ( isset( $taxonomy->labels->filter_by_item ) ) {

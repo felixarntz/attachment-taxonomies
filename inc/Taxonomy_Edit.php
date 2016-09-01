@@ -23,9 +23,11 @@ if ( class_exists( 'Attachment_Taxonomy_Edit' ) ) {
  */
 final class Attachment_Taxonomy_Edit {
 	/**
-	 * Stores the Singleton instance.
+	 * The Singleton instance.
 	 *
 	 * @since 1.0.0
+	 * @access private
+	 * @static
 	 * @var Attachment_Taxonomy_Edit|null
 	 */
 	private static $instance = null;
@@ -34,7 +36,10 @@ final class Attachment_Taxonomy_Edit {
 	 * Returns the Singleton instance.
 	 *
 	 * @since 1.0.0
-	 * @return Attachment_Taxonomy_Edit the class instance
+	 * @access public
+	 * @static
+	 *
+	 * @return Attachment_Taxonomy_Edit The  Singleton class instance.
 	 */
 	public static function instance() {
 		if ( null === self::$instance ) {
@@ -44,9 +49,10 @@ final class Attachment_Taxonomy_Edit {
 	}
 
 	/**
-	 * Constructor - private because of Singleton pattern.
+	 * Constructor.
 	 *
 	 * @since 1.0.0
+	 * @access private
 	 */
 	private function __construct() {}
 
@@ -59,7 +65,9 @@ final class Attachment_Taxonomy_Edit {
 	 * This method is hooked into the `add_attachment` and `edit_attachment` actions.
 	 *
 	 * @since 1.0.0
-	 * @param integer $attachment_id the attachment ID
+	 * @access public
+	 *
+	 * @param integer $attachment_id The attachment ID.
 	 */
 	public function save_ajax_attachment_taxonomies( $attachment_id ) {
 		if ( ! doing_action( 'wp_ajax_save-attachment' ) ) {
@@ -92,10 +100,12 @@ final class Attachment_Taxonomy_Edit {
 	 * This method is hooked into the `wp_prepare_attachment_for_js` filter.
 	 *
 	 * @since 1.0.0
-	 * @param array   $response   the original attachment data
-	 * @param WP_Post $attachment the attachment post
-	 * @param array   $meta       the attachment meta
-	 * @return array the modified attachment data
+	 * @access public
+	 *
+	 * @param array   $response   The original attachment data.
+	 * @param WP_Post $attachment The attachment post.
+	 * @param array   $meta       The attachment meta.
+	 * @return array The modified attachment data.
 	 */
 	public function add_taxonomies_to_attachment_js( $response, $attachment, $meta ) {
 		$response['taxonomies'] = array();
@@ -126,9 +136,11 @@ final class Attachment_Taxonomy_Edit {
 	 * This method is hooked into the `attachment_fields_to_edit` filter.
 	 *
 	 * @since 1.0.0
-	 * @param  [type] $form_fields [description]
-	 * @param  [type] $attachment  [description]
-	 * @return [type]              [description]
+	 * @access public
+	 *
+	 * @param array   $form_fields The original form fields array.
+	 * @param WP_Post $attachment  The attachment post.
+	 * @return array The modified form fields array.
 	 */
 	public function remove_taxonomies_from_attachment_compat( $form_fields, $attachment ) {
 		foreach ( Attachment_Taxonomies_Core::instance()->get_taxonomies( 'names' ) as $taxonomy_slug ) {
@@ -146,6 +158,7 @@ final class Attachment_Taxonomy_Edit {
 	 * This method is hooked into the `wp_enqueue_media` action.
 	 *
 	 * @since 1.0.0
+	 * @access public
 	 */
 	public function adjust_media_templates() {
 		if ( ! Attachment_Taxonomies_Core::instance()->has_taxonomies() ) {
@@ -166,6 +179,7 @@ final class Attachment_Taxonomy_Edit {
 	 * This approach is kind of hacky, but there is no other way to adjust this output.
 	 *
 	 * @since 1.0.0
+	 * @access public
 	 */
 	public function print_media_templates() {
 		ob_start();
@@ -185,7 +199,9 @@ final class Attachment_Taxonomy_Edit {
 	 * Returns the media template output for attachment taxonomy term dropdowns.
 	 *
 	 * @since 1.0.0
-	 * @return string the HTML output for Backbone
+	 * @access private
+	 *
+	 * @return string The HTML output for Backbone.
 	 */
 	private function get_taxonomy_media_template_output() {
 		ob_start();

@@ -22,25 +22,28 @@ if ( class_exists( 'Attachment_Category' ) ) {
  */
 final class Attachment_Category extends Attachment_Taxonomy {
 	/**
-	 * Holds the taxonomy slug.
+	 * The taxonomy slug.
 	 *
 	 * @since 1.0.0
+	 * @access protected
 	 * @var string
 	 */
 	protected $slug = 'attachment_category';
 
 	/**
-	 * Holds the taxonomy labels.
+	 * The taxonomy labels.
 	 *
 	 * @since 1.0.0
+	 * @access protected
 	 * @var array
 	 */
 	protected $labels = array(); // leave empty to use WordPress Core category labels
 
 	/**
-	 * Holds the taxonomy arguments.
+	 * The taxonomy arguments.
 	 *
 	 * @since 1.0.0
+	 * @access protected
 	 * @var array
 	 */
 	protected $args = array(
