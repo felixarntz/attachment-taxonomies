@@ -33,6 +33,7 @@
     "composer/installers": "~1.0"
   },
   "require-dev": {
-    "codeclimate/php-test-reporter": "dev-master"
+    "codeclimate/php-test-reporter": "dev-master",
+    "phpunit/phpunit": ">4.8.20 <6.0"
   }
 }
