@@ -134,6 +134,14 @@ You can also contribute to the plugin by translating it. Simply visit [translate
 
 == Changelog ==
 
+= 1.1.0 =
+* Added: New filter `attachment_taxonomy_class_names` can be used to filter the class names for the taxonomies that should be registered by default.
+* Tweaked: Properly escape attributes in admin UI and style rules. Props tareiking.
+* Tweaked: Store custom and existing taxonomies in the same internal container and deprecate the now unnecessary `$existing` parameter across several functions.
+* Tweaked: Follow WordPress Documentation Standards.
+* Fixed: Initialization no longer fails when using as an mu-plugin without moving the main file one level above. Props tareiking.
+* Fixed: Correct property is used when referring to the taxonomy query var and the taxonomy slug respectively. Props tareiking.
+
 = 1.0.1 =
 * Fixed: uploads in the post edit screen no longer freeze
 

@@ -153,7 +153,7 @@ final class Attachment_Taxonomies {
 		/**
 		 * Filters the taxonomy class names that will be instantiated by default.
 		 *
-		 * @since 1.0.2
+		 * @since 1.1.0
 		 *
 		 * @param array $taxonomy_class_names Array of taxonomy class names.
 		 */
@@ -174,7 +174,7 @@ final class Attachment_Taxonomies {
 	 * is set to true).
 	 *
 	 * @since 1.0.0
-	 * @since 1.0.2 The second parameter has been deprecated.
+	 * @since 1.1.0 The second parameter has been deprecated.
 	 * @access public
 	 *
 	 * @param Attachment_Taxonomy $taxonomy   The taxonomy object.
@@ -183,7 +183,7 @@ final class Attachment_Taxonomies {
 	 */
 	public function add_taxonomy( $taxonomy, $deprecated = null ) {
 		if ( is_bool( $deprecated ) || $deprecated ) {
-			$this->deprecated_argument( __METHOD__, '1.0.2' );
+			$this->deprecated_argument( __METHOD__, '1.1.0' );
 		}
 
 		if ( ! is_a( $taxonomy, 'Attachment_Taxonomy' ) ) {
@@ -210,7 +210,7 @@ final class Attachment_Taxonomies {
 	 * Returns the taxonomy object for a specific taxonomy.
 	 *
 	 * @since 1.0.0
-	 * @since 1.0.2 The second parameter has been deprecated.
+	 * @since 1.1.0 The second parameter has been deprecated.
 	 * @access public
 	 *
 	 * @param string $taxonomy_slug The taxonomy slug.
@@ -219,7 +219,7 @@ final class Attachment_Taxonomies {
 	 */
 	public function get_taxonomy( $taxonomy_slug, $deprecated = null ) {
 		if ( is_bool( $deprecated ) || $deprecated ) {
-			$this->deprecated_argument( __METHOD__, '1.0.2' );
+			$this->deprecated_argument( __METHOD__, '1.1.0' );
 		}
 
 		if ( ! isset( $this->taxonomies[ $taxonomy_slug ] ) ) {
@@ -233,7 +233,7 @@ final class Attachment_Taxonomies {
 	 * Removes a specific taxonomy.
 	 *
 	 * @since 1.0.0
-	 * @since 1.0.2 The second parameter has been deprecated.
+	 * @since 1.1.0 The second parameter has been deprecated.
 	 * @access public
 	 *
 	 * @param string $taxonomy_slug The taxonomy slug.
@@ -242,7 +242,7 @@ final class Attachment_Taxonomies {
 	 */
 	public function remove_taxonomy( $taxonomy_slug, $deprecated = null ) {
 		if ( is_bool( $deprecated ) || $deprecated ) {
-			$this->deprecated_argument( __METHOD__, '1.0.2' );
+			$this->deprecated_argument( __METHOD__, '1.1.0' );
 		}
 
 		if ( ! isset( $this->taxonomies[ $taxonomy_slug ] ) ) {
@@ -292,7 +292,7 @@ final class Attachment_Taxonomies {
 	/**
 	 * Marks a function argument as deprecated and informs when it has been used.
 	 *
-	 * @since 1.0.2
+	 * @since 1.1.0
 	 * @access private
 	 *
 	 * @param string $function The function that was called.
