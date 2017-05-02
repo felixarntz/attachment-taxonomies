@@ -81,19 +81,18 @@ var assetheader =	'/*!\n' +
 
 var gulp = require( 'gulp' );
 
-var sass = require( 'gulp-sass' );
-var csscomb = require( 'gulp-csscomb' );
-var minifyCSS = require( 'gulp-minify-css' );
-var jshint = require( 'gulp-jshint' );
-var concat = require( 'gulp-concat' );
-var uglify = require( 'gulp-uglify' );
 var gutil = require( 'gulp-util' );
 var rename = require( 'gulp-rename' );
 var replace = require( 'gulp-replace' );
 var sort = require( 'gulp-sort' );
 var banner = require( 'gulp-banner' );
-var composer = require( 'gulp-composer' );
-var bower = require( 'bower' );
+var sass = require( 'gulp-sass' );
+var csscomb = require( 'gulp-csscomb' );
+var cleanCss = require( 'gulp-clean-css' );
+var rtlcss = require( 'gulp-rtlcss' );
+var concat = require( 'gulp-concat' );
+var jshint = require( 'gulp-jshint' );
+var uglify = require( 'gulp-uglify' );
 
 var paths = {
 	php: {
@@ -134,12 +133,13 @@ gulp.task( 'build', [ 'author-replace', 'readme-replace' ], function() {
 gulp.task( 'sass', function( done ) {
 	gulp.src( paths.sass.files )
 		.pipe( sass({
-			errLogToConsole: true
+			errLogToConsole: true,
+			outputStyle: 'expanded'
 		}) )
 		.pipe( csscomb() )
 		.pipe( banner( assetheader ) )
 		.pipe( gulp.dest( paths.sass.dst ) )
-		.pipe( minifyCSS({
+		.pipe( cleanCss({
 			keepSpecialComments: 0
 		}) )
 		.pipe( banner( assetheader ) )
@@ -189,12 +189,4 @@ gulp.task( 'readme-replace', function( done ) {
 		.pipe( replace( /\=\=\= (.+) \=\=\=([\s\S]+)\=\= Description \=\=/m, '=== ' + config.pluginName + ' ===\n\n' + readmeheader + '\n\n' + config.description + '\n\n== Description ==' ) )
 		.pipe( gulp.dest( './' ) )
 		.on( 'end', done );
-});
-
-// install Bower components
-gulp.task( 'bower-install', function() {
-	return bower.commands.install()
-		.on( 'log', function( data ) {
-			gutil.log( 'bower', gutil.colors.cyan( data.id ), data.message );
-		});
 });
