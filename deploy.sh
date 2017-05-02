@@ -85,17 +85,17 @@ fi
 cd $SVNPATH/trunk/
 
 printf "Ignoring GitHub specific files and deployment script..."
-svn propset --quiet svn:ignore ".bowerrc
-.codeclimate.yml
+svn propset --quiet svn:ignore ".codeclimate.yml
 .git
 .gitignore
 .travis.yml
-bower.json
 composer.json
 composer.lock
 deploy.sh
 gulpfile.js
 package.json
+phpcs.xml
+phpmd.xml
 phpunit.xml
 README.md
 tests" .

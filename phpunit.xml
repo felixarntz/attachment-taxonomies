@@ -23,6 +23,7 @@
 	<filter>
 		<whitelist>
 			<directory>./inc</directory>
+			<file>./attachment-taxonomies.php</file>
 		</whitelist>
 	</filter>
 </phpunit>
