@@ -29,17 +29,17 @@ matrix:
     - php: 7.1
       env: WP_VERSION=3.7
     - php: 7.0
-      env: WP_VERSION=4.7
+      env: WP_VERSION=4.8
     - php: 5.6
-      env: WP_VERSION=4.7
+      env: WP_VERSION=4.8
     - php: 5.5
-      env: WP_VERSION=4.7
+      env: WP_VERSION=4.8
     - php: 5.4
-      env: WP_VERSION=4.7
+      env: WP_VERSION=4.8
     - php: 5.3
-      env: WP_VERSION=4.7
+      env: WP_VERSION=4.8
     - php: hhvm
-      env: WP_VERSION=4.7
+      env: WP_VERSION=4.8
 before_script:
 - |
   if [[ "$COVERAGE" != "1" ]]; then
