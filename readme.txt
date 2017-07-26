@@ -139,6 +139,7 @@ You can also contribute to the plugin by translating it. Simply visit [translate
 * Tweaked: Properly escape attributes in admin UI and style rules. Props tareiking.
 * Tweaked: Store custom and existing taxonomies in the same internal container and deprecate the now unnecessary `$existing` parameter across several functions.
 * Tweaked: Follow WordPress Documentation Standards.
+* Tweaked: Modernize Travis-CI configuration and code climate checks.
 * Fixed: Initialization no longer fails when using as an mu-plugin without moving the main file one level above. Props tareiking.
 * Fixed: Correct property is used when referring to the taxonomy query var and the taxonomy slug respectively. Props tareiking.
 
