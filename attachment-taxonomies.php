@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Attachment Taxonomies
-Plugin URI:  http://wordpress.org/plugins/attachment-taxonomies/
+Plugin URI:  https://wordpress.org/plugins/attachment-taxonomies/
 Description: This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.
 Version:     1.0.1
 Author:      Felix Arntz
