@@ -4,10 +4,6 @@
 
 	<rule ref="WordPress">
 		<exclude name="Generic.Files.LowercasedFilename"/>
-		<!-- The following rules are excluded because the plugin header conflicts. -->
-		<exclude name="Squiz.Commenting.BlockComment"/>
-		<exclude name="Squiz.Commenting.FileComment"/>
-		<!-- End of the temporarily excluded rules. -->
 		<exclude name="WordPress.CSRF.NonceVerification"/>
 		<exclude name="WordPress.Files.FileName"/>
 		<exclude name="WordPress.PHP.DevelopmentFunctions"/>
