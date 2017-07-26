@@ -42,17 +42,17 @@ var config = {
 /* ---- DO NOT EDIT BELOW THIS LINE ---- */
 
 // WP plugin header for main plugin file
-var pluginheader = 	'Plugin Name: ' + config.pluginName + '\n' +
-					'Plugin URI:  ' + config.pluginURI + '\n' +
-					'Description: ' + config.description + '\n' +
-					'Version:     ' + config.version + '\n' +
-					'Author:      ' + config.author + '\n' +
-					'Author URI:  ' + config.authorURI + '\n' +
-					'License:     ' + config.license + '\n' +
-					'License URI: ' + config.licenseURI + '\n' +
-					'Text Domain: ' + config.pluginSlug + '\n' +
-					( config.network ? 'Network:     true' + '\n' : '' ) +
-					'Tags:        ' + config.tags;
+var pluginheader = 	' * Plugin Name: ' + config.pluginName + '\n' +
+					' * Plugin URI:  ' + config.pluginURI + '\n' +
+					' * Description: ' + config.description + '\n' +
+					' * Version:     ' + config.version + '\n' +
+					' * Author:      ' + config.author + '\n' +
+					' * Author URI:  ' + config.authorURI + '\n' +
+					' * License:     ' + config.license + '\n' +
+					' * License URI: ' + config.licenseURI + '\n' +
+					' * Text Domain: ' + config.pluginSlug + '\n' +
+					( config.network ? ' * Network:     true' + '\n' : '' ) +
+					' * Tags:        ' + config.tags;
 
 // WP plugin header for readme.txt
 var readmeheader =	'Plugin Name:       ' + config.pluginName + '\n' +
@@ -178,7 +178,7 @@ gulp.task( 'author-replace', function( done ) {
 // replace the plugin header in the main plugin file
 gulp.task( 'header-replace', function( done ) {
 	gulp.src( './' + config.pluginSlug + '.php' )
-		.pipe( replace( /((?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:\/\/.*))/, '/*\n' + pluginheader + '\n*/' ) )
+		.pipe( replace( /(?:\s\*\s@wordpress-plugin\s(?:[^*]|(?:\*+[^*\/]))*\*+\/)/, ' * @wordpress-plugin\n' + pluginheader + '\n */' ) )
 		.pipe( gulp.dest( './' ) )
 		.on( 'end', done );
 });
