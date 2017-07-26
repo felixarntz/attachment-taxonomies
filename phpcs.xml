@@ -3,6 +3,9 @@
 	<description>A custom set of PHPCS rules for Attachment Taxonomies.</description>
 
 	<rule ref="WordPress">
+		<exclude name="Generic.Files.LowercasedFilename"/>
+		<exclude name="WordPress.CSRF.NonceVerification"/>
+		<exclude name="WordPress.Files.FileName"/>
 		<exclude name="WordPress.XSS.EscapeOutput"/>
 		<exclude name="WordPress.VIP.SuperGlobalInputUsage"/>
 		<exclude name="WordPress.VIP.ValidatedSanitizedInput"/>

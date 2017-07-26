@@ -113,9 +113,9 @@ final class Attachment_Taxonomy_Edit {
 			$response['taxonomies'][ $taxonomy_slug ] = array();
 			foreach ( (array) wp_get_object_terms( $attachment->ID, $taxonomy_slug ) as $term ) {
 				$term_data = array(
-					'id'		=> $term->term_id,
-					'slug'		=> $term->slug,
-					'name'		=> $term->name,
+					'id'   => $term->term_id,
+					'slug' => $term->slug,
+					'name' => $term->name,
 				);
 				if ( is_taxonomy_hierarchical( $taxonomy_slug ) ) {
 					$response['taxonomies'][ $taxonomy_slug ][ $term->term_id ] = $term_data;

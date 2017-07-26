@@ -94,7 +94,7 @@ final class Attachment_Taxonomies_Core {
 	 */
 	public function get_terms_for_taxonomy( $taxonomy_slug ) {
 		$args = array(
-			'hide_empty'	=> false,
+			'hide_empty' => false,
 		);
 
 		if ( version_compare( get_bloginfo( 'version' ), '4.5', '<' ) ) {
@@ -180,10 +180,10 @@ final class Attachment_Taxonomies_Core {
 
 		wp_enqueue_script( 'attachment-taxonomies', Attachment_Taxonomies::instance()->get_url( 'assets/dist/js/library' . $min . '.js' ), array( 'jquery', 'media-views' ), Attachment_Taxonomies::VERSION, true );
 		wp_localize_script( 'attachment-taxonomies', '_attachment_taxonomies', array(
-			'data'			=> $taxonomies,
-			'l10n'			=> array(
-				'all'			=> $all_items,
-				'filterBy'		=> $filter_by_item,
+			'data' => $taxonomies,
+			'l10n' => array(
+				'all'      => $all_items,
+				'filterBy' => $filter_by_item,
 			),
 		) );
 	}
@@ -230,8 +230,8 @@ final class Attachment_Taxonomies_Core {
 			.attachment-details .setting.attachment-taxonomy-select select,
 			.media-sidebar .setting.attachment-taxonomy-select select {
 				-webkit-box-sizing: border-box;
-				   -moz-box-sizing: border-box;
-				        box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
 				margin: 1px;
 				width: 65%;
 				float: right;
@@ -256,11 +256,11 @@ final class Attachment_Taxonomies_Core {
 		$js_slug = $this->make_js_slug( $taxonomy_slug );
 
 		return array(
-			'name'		=> $taxonomy->label,
-			'slug'		=> $js_slug,
-			'slugId'	=> str_replace( '_', '-', $taxonomy_slug ),
-			'queryVar'	=> $taxonomy->query_var,
-			'terms'		=> array_map( array( $this, 'get_term_array' ), $this->get_terms_for_taxonomy( $taxonomy_slug ) ),
+			'name'     => $taxonomy->label,
+			'slug'     => $js_slug,
+			'slugId'   => str_replace( '_', '-', $taxonomy_slug ),
+			'queryVar' => $taxonomy->query_var,
+			'terms'    => array_map( array( $this, 'get_term_array' ), $this->get_terms_for_taxonomy( $taxonomy_slug ) ),
 		);
 	}
 

@@ -37,7 +37,7 @@ final class Attachment_Tag extends Attachment_Taxonomy {
 	 * @access protected
 	 * @var array
 	 */
-	protected $labels = array(); // leave empty to use WordPress Core tag labels
+	protected $labels = array(); // Empty to use WordPress Core tag labels.
 
 	/**
 	 * The taxonomy arguments.
@@ -47,21 +47,21 @@ final class Attachment_Tag extends Attachment_Taxonomy {
 	 * @var array
 	 */
 	protected $args = array(
-		'public'				=> false,
-		'show_ui'				=> true,
-		'show_in_menu'			=> true,
-		'show_in_nav_menus'		=> false,
-		'show_tagcloud'			=> false,
-		'show_admin_column'		=> true,
-		'hierarchical'			=> false,
-		'update_count_callback'	=> '_update_generic_term_count',
-		'query_var'				=> 'attachment_tag',
-		'rewrite'				=> false,
-		'capabilities'			=> array(
-			'manage_terms'			=> 'upload_files',
-			'edit_terms'			=> 'upload_files',
-			'delete_terms'			=> 'upload_files',
-			'assign_terms'			=> 'upload_files',
+		'public'                => false,
+		'show_ui'               => true,
+		'show_in_menu'          => true,
+		'show_in_nav_menus'     => false,
+		'show_tagcloud'         => false,
+		'show_admin_column'     => true,
+		'hierarchical'          => false,
+		'update_count_callback' => '_update_generic_term_count',
+		'query_var'             => 'attachment_tag',
+		'rewrite'               => false,
+		'capabilities'          => array(
+			'manage_terms' => 'upload_files',
+			'edit_terms'   => 'upload_files',
+			'delete_terms' => 'upload_files',
+			'assign_terms' => 'upload_files',
 		),
 	);
 }
