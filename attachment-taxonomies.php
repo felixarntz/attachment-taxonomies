@@ -303,8 +303,10 @@ final class Attachment_Taxonomies {
 		/* This filter is documented in wp-includes/functions.php */
 		if ( WP_DEBUG && apply_filters( 'deprecated_argument_trigger_error', true ) ) {
 			if ( ! is_null( $message ) ) {
+				/* translators: 1: function name, 2: version number, 3: message */
 				trigger_error( sprintf( __( '%1$s was called with an argument that is <strong>deprecated</strong> since Attachment Taxonomies version %2$s! %3$s', 'attachment-taxonomies' ), $function, $version, $message ) );
 			} else {
+				/* translators: 1: function name, 2: version number */
 				trigger_error( sprintf( __( '%1$s was called with an argument that is <strong>deprecated</strong> since Attachment Taxonomies version %2$s with no alternative available.', 'attachment-taxonomies' ), $function, $version ) );
 			}
 		}
