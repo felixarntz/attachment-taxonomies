@@ -113,6 +113,18 @@ Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonom
 
 ` 
 
+= How do I use the enhanced version of the `[gallery]` shortcode? =
+
+The `[gallery]` shortcode can now be passed taxonomy attributes. They have to have the attachment taxonomy slug as the attribute name and a comma-separated list of term slugs or term IDs as value. You may also specify a new "limit" attribute to limit the amount of images shown. This is especially recommended if the attachment taxonomy term you are querying for contains a lot of images.
+
+Example Code (shows images with attachment categories 1 or 2 or attachment tag 5 with a limit of 20 images shown):
+
+`
+[gallery attachment_category="1,2" attachment_tag="5" limit="20"]
+`
+
+Note that there is currently no UI in the backend for this, and the preview in the editor will not work properly. It will show up correctly in the frontend though.
+
 = Which filters are available in the plugin? =
 
 The plugin provides some filters to adjust taxonomy arguments and labels.
@@ -135,6 +147,7 @@ You can also contribute to the plugin by translating it. Simply visit [translate
 == Changelog ==
 
 = 1.1.0 =
+* Added: The `[gallery]` shortcode now supports passing taxonomy arguments: The slug of a taxonomy can be given alongside with a comma-separated list of term slugs or IDs.
 * Added: New filter `attachment_taxonomy_class_names` can be used to filter the class names for the taxonomies that should be registered by default.
 * Tweaked: Properly escape attributes in admin UI and style rules. Props tareiking.
 * Tweaked: Store custom and existing taxonomies in the same internal container and deprecate the now unnecessary `$existing` parameter across several functions.

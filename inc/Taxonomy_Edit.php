@@ -39,7 +39,7 @@ final class Attachment_Taxonomy_Edit {
 	 * @access public
 	 * @static
 	 *
-	 * @return Attachment_Taxonomy_Edit The  Singleton class instance.
+	 * @return Attachment_Taxonomy_Edit The Singleton class instance.
 	 */
 	public static function instance() {
 		if ( null === self::$instance ) {

@@ -87,15 +87,17 @@ final class Attachment_Taxonomies_Core {
 	 * Empty terms are also included.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 The $args parameter has been added.
 	 * @access public
 	 *
 	 * @param string $taxonomy_slug The taxonomy to get the terms for.
+	 * @param array  $args          Optional. Additional query arguments. Default empty array.
 	 * @return array|WP_Error A list of term objects or an error if the taxonomy does not exist.
 	 */
-	public function get_terms_for_taxonomy( $taxonomy_slug ) {
-		$args = array(
+	public function get_terms_for_taxonomy( $taxonomy_slug, $args = array() ) {
+		$args = wp_parse_args( $args, array(
 			'hide_empty' => false,
-		);
+		) );
 
 		if ( version_compare( get_bloginfo( 'version' ), '4.5', '<' ) ) {
 			return get_terms( $taxonomy_slug, $args );
