@@ -1,5 +1,5 @@
 /*!
- * Attachment Taxonomies (http://wordpress.org/plugins/attachment-taxonomies/)
+ * Attachment Taxonomies (https://wordpress.org/plugins/attachment-taxonomies/)
  * By Felix Arntz (https://leaves-and-love.net)
  * Licensed under GNU General Public License v3 (http://www.gnu.org/licenses/gpl-3.0.html)
  */

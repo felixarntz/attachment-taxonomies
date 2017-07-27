@@ -8,8 +8,8 @@ Contributors:      flixos90
 Donate link:       https://leaves-and-love.net/wordpress-plugins/
 Requires at least: 3.5
 Tested up to:      4.8
-Stable tag:        1.0.1
-Version:           1.0.1
+Stable tag:        1.1.0
+Version:           1.1.0
 License:           GNU General Public License v3
 License URI:       http://www.gnu.org/licenses/gpl-3.0.html
 Tags:              attachment, media, taxonomy, categories, tags
@@ -27,10 +27,13 @@ The plugin follows WordPress Core principles and offers a lightweight alternativ
 * Adds categories and tags to the Media Library (independent from the regular post categories and tags)
 * Inserts filter dropdowns for attachment taxonomies into the media toolbar and media modal
 * Allows to pick taxonomy terms for attachments from within the Attachment Selection & Edit modals
+* Adds a setting for the default attachment category
+* Enhances the `[gallery]` shortcode so that images of a specific attachment taxonomy can be included automatically
 * Lightweight plugin following WordPress Core principles
 * "Decisions, not Options"
 * Can easily be used as a must-use plugin
 * Provides a flexible API to add other attachment taxonomies or disable the existing ones for developers
+* Provides an easy-to-use `has_default` argument that can be used when registering an attachment taxonomy in order to automatically add a setting for the default taxonomy term
 * Developers are free to use the plugin-provided object-oriented taxonomy approach or use familiar WordPress Core functions
 
 == Installation ==
