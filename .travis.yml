@@ -5,8 +5,6 @@ cache:
     - vendor
     - $HOME/.composer/cache
 matrix:
-  allow_failures:
-    - php: hhvm
   include:
     - php: 7.1
       env: WP_VERSION=master WP_MULTISITE=1 PHPLINT=1 COVERAGE=1
@@ -37,8 +35,6 @@ matrix:
     - php: 5.4
       env: WP_VERSION=4.8
     - php: 5.3
-      env: WP_VERSION=4.8
-    - php: hhvm
       env: WP_VERSION=4.8
 before_script:
 - |
