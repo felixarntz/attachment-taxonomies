@@ -54,6 +54,7 @@ final class Attachment_Category extends Attachment_Taxonomy {
 		'show_tagcloud'         => false,
 		'show_admin_column'     => true,
 		'hierarchical'          => true,
+		'has_default'           => true,
 		'update_count_callback' => '_update_generic_term_count',
 		'query_var'             => 'attachment_category',
 		'rewrite'               => false,

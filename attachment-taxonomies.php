@@ -117,6 +117,7 @@ final class Attachment_Taxonomies {
 		require_once $this->get_path( 'inc/Taxonomies_Core.php' );
 		require_once $this->get_path( 'inc/Taxonomy_Edit.php' );
 		require_once $this->get_path( 'inc/Taxonomy_Shortcode.php' );
+		require_once $this->get_path( 'inc/Taxonomy_Default_Terms.php' );
 		require_once $this->get_path( 'inc/Taxonomy.php' );
 		require_once $this->get_path( 'inc/Existing_Taxonomy.php' );
 		require_once $this->get_path( 'inc/Category.php' );
@@ -153,6 +154,13 @@ final class Attachment_Taxonomies {
 
 		$shortcode = Attachment_Taxonomy_Shortcode::instance();
 		add_filter( 'shortcode_atts_gallery', array( $shortcode, 'support_gallery_taxonomy_attributes' ), 10, 3 );
+
+		$default_terms = Attachment_Taxonomy_Default_Terms::instance();
+		add_action( 'edit_attachment', array( $default_terms, 'ensure_default_attachment_taxonomy_terms' ), 100, 1 );
+		add_action( 'add_attachment', array( $default_terms, 'ensure_default_attachment_taxonomy_terms' ), 100, 1 );
+		add_action( 'rest_api_init', array( $default_terms, 'register_settings' ), 10, 0 );
+		add_action( 'admin_init', array( $default_terms, 'register_settings' ), 10, 0 );
+		add_action( 'admin_init', array( $default_terms, 'add_settings_fields' ), 10, 0 );
 
 		/**
 		 * Filters the taxonomy class names that will be instantiated by default.

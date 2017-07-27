@@ -54,6 +54,7 @@ final class Attachment_Tag extends Attachment_Taxonomy {
 		'show_tagcloud'         => false,
 		'show_admin_column'     => true,
 		'hierarchical'          => false,
+		'has_default'           => false,
 		'update_count_callback' => '_update_generic_term_count',
 		'query_var'             => 'attachment_tag',
 		'rewrite'               => false,

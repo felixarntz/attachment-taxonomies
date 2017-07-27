@@ -147,6 +147,7 @@ You can also contribute to the plugin by translating it. Simply visit [translate
 == Changelog ==
 
 = 1.1.0 =
+* Added: There is now a settings field for the default attachment category. For other attachment taxonomies they can easily be added by passing a `has_default` argument of `true` when registering the taxonomy.
 * Added: The `[gallery]` shortcode now supports passing taxonomy arguments: The slug of a taxonomy can be given alongside with a comma-separated list of term slugs or IDs.
 * Added: New filter `attachment_taxonomy_class_names` can be used to filter the class names for the taxonomies that should be registered by default.
 * Tweaked: Properly escape attributes in admin UI and style rules. Props tareiking.
