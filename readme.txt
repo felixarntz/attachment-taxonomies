@@ -151,6 +151,7 @@ You can also contribute to the plugin by translating it. Simply visit [translate
 
 = 1.1.1 =
 * Fixed: Gallery shortcode without taxonomy attributes now works correctly again
+* Fixed: No longer are duplicate attachment IDs requested in the gallery shortcode
 
 = 1.1.0 =
 * Added: There is now a settings field for the default attachment category. For other attachment taxonomies they can easily be added by passing a `has_default` argument of `true` when registering the taxonomy.

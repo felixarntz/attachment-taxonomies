@@ -103,7 +103,7 @@ final class Attachment_Taxonomy_Shortcode {
 			}
 		}
 
-		$attachment_ids = $this->get_shortcode_attachment_ids( $all_term_ids, $limit );
+		$attachment_ids = $this->get_shortcode_attachment_ids( $all_term_ids, $limit, $original_ids );
 		if ( ! empty( $attachment_ids ) ) {
 			$out['include'] = array_merge( $original_ids, $attachment_ids );
 		}
@@ -158,9 +158,10 @@ final class Attachment_Taxonomy_Shortcode {
 	 *
 	 * @param array $all_term_ids Array of `$taxonomy_slug => $term_ids` pairs.
 	 * @param int   $limit        Optional. Limit for the query. Default is -1 (no limit).
+	 * @param array $exclude_ids  Optional. Attachment IDs to exclude. Default empty array.
 	 * @return array Array of attachment IDs.
 	 */
-	private function get_shortcode_attachment_ids( $all_term_ids, $limit = -1 ) {
+	private function get_shortcode_attachment_ids( $all_term_ids, $limit = -1, $exclude_ids = array() ) {
 		$tax_query = array();
 		if ( count( $all_term_ids ) > 1 ) {
 			$tax_query['relation'] = 'OR';
@@ -176,7 +177,7 @@ final class Attachment_Taxonomy_Shortcode {
 			);
 		}
 
-		return get_posts( array(
+		$args = array(
 			'posts_per_page'         => $limit,
 			'fields'                 => 'ids',
 			'post_status'            => 'inherit',
@@ -185,6 +186,12 @@ final class Attachment_Taxonomy_Shortcode {
 			'tax_query'              => $tax_query,
 			'update_post_term_cache' => false,
 			'update_post_meta_cache' => false,
-		) );
+		);
+
+		if ( ! empty( $exclude_ids ) ) {
+			$args['post__not_in'] = $exclude_ids;
+		}
+
+		return get_posts( $args );
 	}
 }
