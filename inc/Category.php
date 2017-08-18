@@ -59,10 +59,10 @@ final class Attachment_Category extends Attachment_Taxonomy {
 		'query_var'             => 'attachment_category',
 		'rewrite'               => false,
 		'capabilities'          => array(
-			'manage_terms' => 'upload_files',
-			'edit_terms'   => 'upload_files',
-			'delete_terms' => 'upload_files',
-			'assign_terms' => 'upload_files',
+			'manage_terms' => 'manage_attachment_categories',
+			'edit_terms'   => 'edit_attachment_categories',
+			'delete_terms' => 'delete_attachment_categories',
+			'assign_terms' => 'assign_attachment_categories',
 		),
 	);
 }

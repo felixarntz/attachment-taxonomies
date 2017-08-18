@@ -150,6 +150,7 @@ You can also contribute to the plugin by translating it. Simply visit [translate
 == Changelog ==
 
 = 1.1.1 =
+* Enhanced: The plugin's attachment taxonomies now use dedicated capabilities that map to core capabilities
 * Fixed: Gallery shortcode without taxonomy attributes now works correctly again
 * Fixed: No longer are duplicate attachment IDs requested in the gallery shortcode
 

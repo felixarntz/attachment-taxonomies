@@ -59,10 +59,10 @@ final class Attachment_Tag extends Attachment_Taxonomy {
 		'query_var'             => 'attachment_tag',
 		'rewrite'               => false,
 		'capabilities'          => array(
-			'manage_terms' => 'upload_files',
-			'edit_terms'   => 'upload_files',
-			'delete_terms' => 'upload_files',
-			'assign_terms' => 'upload_files',
+			'manage_terms' => 'manage_attachment_tags',
+			'edit_terms'   => 'edit_attachment_tags',
+			'delete_terms' => 'delete_attachment_tags',
+			'assign_terms' => 'assign_attachment_tags',
 		),
 	);
 }
