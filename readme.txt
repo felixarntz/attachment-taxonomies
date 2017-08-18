@@ -149,6 +149,9 @@ You can also contribute to the plugin by translating it. Simply visit [translate
 
 == Changelog ==
 
+= 1.1.1 =
+* Fixed: Gallery shortcode without taxonomy attributes now works correctly again
+
 = 1.1.0 =
 * Added: There is now a settings field for the default attachment category. For other attachment taxonomies they can easily be added by passing a `has_default` argument of `true` when registering the taxonomy.
 * Added: The `[gallery]` shortcode now supports passing taxonomy arguments: The slug of a taxonomy can be given alongside with a comma-separated list of term slugs or IDs.

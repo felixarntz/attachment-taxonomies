@@ -86,6 +86,10 @@ final class Attachment_Taxonomy_Shortcode {
 			$all_term_ids[ $taxonomy_slug ] = $term_ids;
 		}
 
+		if ( empty( $all_term_ids ) ) {
+			return $out;
+		}
+
 		$original_ids = array();
 		if ( ! empty( $out['include'] ) ) {
 			$original_ids = wp_parse_id_list( $out['include'] );
