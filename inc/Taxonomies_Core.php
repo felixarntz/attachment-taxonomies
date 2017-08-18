@@ -25,7 +25,6 @@ final class Attachment_Taxonomies_Core {
 	 * The Singleton instance.
 	 *
 	 * @since 1.0.0
-	 * @access private
 	 * @static
 	 * @var Attachment_Taxonomies_Core|null
 	 */
@@ -35,7 +34,6 @@ final class Attachment_Taxonomies_Core {
 	 * The Singleton instance.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 * @static
 	 *
 	 * @return Attachment_Taxonomies_Core The Singleton class instance.
@@ -51,7 +49,6 @@ final class Attachment_Taxonomies_Core {
 	 * Constructor.
 	 *
 	 * @since 1.0.0
-	 * @access private
 	 */
 	private function __construct() {}
 
@@ -59,7 +56,6 @@ final class Attachment_Taxonomies_Core {
 	 * Checks whether there are any attachment taxonomies registered.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 *
 	 * @return bool True if there are attachment taxonomies, otherwise false.
 	 */
@@ -72,7 +68,6 @@ final class Attachment_Taxonomies_Core {
 	 * Returns attachment taxonomies.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 *
 	 * @param string $mode Either 'names' (for an array of taxonomy slugs) or 'objects' (for an array of objects).
 	 * @return array A list of taxonomy names or objects.
@@ -88,7 +83,6 @@ final class Attachment_Taxonomies_Core {
 	 *
 	 * @since 1.0.0
 	 * @since 1.1.0 The $args parameter has been added.
-	 * @access public
 	 *
 	 * @param string $taxonomy_slug The taxonomy to get the terms for.
 	 * @param array  $args          Optional. Additional query arguments. Default empty array.
@@ -116,7 +110,6 @@ final class Attachment_Taxonomies_Core {
 	 * This method is hooked into the `restrict_manage_posts` action.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 *
 	 * @param string $post_type The current post type.
 	 */
@@ -156,7 +149,6 @@ final class Attachment_Taxonomies_Core {
 	 * This method is hooked into the `wp_enqueue_media` action.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 */
 	public function enqueue_script() {
 		if ( ! $this->has_taxonomies() ) {
@@ -199,7 +191,6 @@ final class Attachment_Taxonomies_Core {
 	 * This method is hooked into the `wp_enqueue_media` action.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 */
 	public function print_styles() {
 		$taxonomies = $this->get_taxonomies();
@@ -248,7 +239,6 @@ final class Attachment_Taxonomies_Core {
 	 * Also includes the terms of this taxonomy.
 	 *
 	 * @since 1.0.0
-	 * @access private
 	 *
 	 * @param string $taxonomy_slug The taxonomy slug.
 	 * @param object $taxonomy      The taxonomy object.
@@ -272,7 +262,6 @@ final class Attachment_Taxonomies_Core {
 	 * This is basically a transformation into camel case.
 	 *
 	 * @since 1.0.0
-	 * @access private
 	 *
 	 * @param string $taxonomy_slug The taxonomy slug to transform.
 	 * @return string The camel case taxonomy slug.
@@ -285,7 +274,6 @@ final class Attachment_Taxonomies_Core {
 	 * Transforms a term object into an array.
 	 *
 	 * @since 1.0.0
-	 * @access private
 	 *
 	 * @param object $term A term object (`WP_Term` if WordPress >= 4.4).
 	 * @return array A term array.
@@ -307,7 +295,6 @@ final class Attachment_Taxonomies_Core {
 	 * If it is not defined, the default label will be used.
 	 *
 	 * @since 1.0.0
-	 * @access private
 	 *
 	 * @param object $taxonomy The taxonomy object.
 	 * @return string The "Filter by" label for that taxonomy.

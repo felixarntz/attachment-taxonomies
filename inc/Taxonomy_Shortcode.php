@@ -25,7 +25,6 @@ final class Attachment_Taxonomy_Shortcode {
 	 * The Singleton instance.
 	 *
 	 * @since 1.1.0
-	 * @access private
 	 * @static
 	 * @var Attachment_Taxonomy_Shortcode|null
 	 */
@@ -35,7 +34,6 @@ final class Attachment_Taxonomy_Shortcode {
 	 * Returns the Singleton instance.
 	 *
 	 * @since 1.1.0
-	 * @access public
 	 * @static
 	 *
 	 * @return Attachment_Taxonomy_Shortcode The Singleton class instance.
@@ -51,7 +49,6 @@ final class Attachment_Taxonomy_Shortcode {
 	 * Constructor.
 	 *
 	 * @since 1.1.0
-	 * @access private
 	 */
 	private function __construct() {}
 
@@ -62,7 +59,6 @@ final class Attachment_Taxonomy_Shortcode {
 	 * the resulting attachments will be added to the 'include' attribute.
 	 *
 	 * @since 1.1.0
-	 * @access public
 	 *
 	 * @param array $out   Combined and filtered attribute list.
 	 * @param array $pairs Entire list of supported attributes and their defaults.
@@ -115,7 +111,6 @@ final class Attachment_Taxonomy_Shortcode {
 	 * Parses an attribute of one or more term slugs or IDs into an array of valid term IDs.
 	 *
 	 * @since 1.1.0
-	 * @access private
 	 *
 	 * @param string $taxonomy_slug Taxonomy slug.
 	 * @param string $attr          Shortcode attribute with term slugs or IDs.
@@ -154,7 +149,6 @@ final class Attachment_Taxonomy_Shortcode {
 	 * Queries attachments with specific taxonomies and terms.
 	 *
 	 * @since 1.1.0
-	 * @access private
 	 *
 	 * @param array $all_term_ids Array of `$taxonomy_slug => $term_ids` pairs.
 	 * @param int   $limit        Optional. Limit for the query. Default is -1 (no limit).

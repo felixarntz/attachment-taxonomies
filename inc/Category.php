@@ -25,7 +25,6 @@ final class Attachment_Category extends Attachment_Taxonomy {
 	 * The taxonomy slug.
 	 *
 	 * @since 1.0.0
-	 * @access protected
 	 * @var string
 	 */
 	protected $slug = 'attachment_category';
@@ -34,7 +33,6 @@ final class Attachment_Category extends Attachment_Taxonomy {
 	 * The taxonomy labels.
 	 *
 	 * @since 1.0.0
-	 * @access protected
 	 * @var array
 	 */
 	protected $labels = array(); // Empty to use WordPress Core category labels.
@@ -43,7 +41,6 @@ final class Attachment_Category extends Attachment_Taxonomy {
 	 * The taxonomy arguments.
 	 *
 	 * @since 1.0.0
-	 * @access protected
 	 * @var array
 	 */
 	protected $args = array(

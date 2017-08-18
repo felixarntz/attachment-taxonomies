@@ -151,6 +151,8 @@ You can also contribute to the plugin by translating it. Simply visit [translate
 
 = 1.1.1 =
 * Enhanced: The plugin's attachment taxonomies now use dedicated capabilities that map to core capabilities
+* Tweaked: Remove access docblock annotations per WordPress coding standards
+* Fixed: Taxonomy fields in media modal are now readonly if the user does not have sufficient capabilities
 * Fixed: Gallery shortcode without taxonomy attributes now works correctly again
 * Fixed: No longer are duplicate attachment IDs requested in the gallery shortcode
 

@@ -25,7 +25,6 @@ abstract class Attachment_Taxonomy {
 	 * The taxonomy slug.
 	 *
 	 * @since 1.0.0
-	 * @access protected
 	 * @var string
 	 */
 	protected $slug = '';
@@ -34,7 +33,6 @@ abstract class Attachment_Taxonomy {
 	 * The taxonomy labels.
 	 *
 	 * @since 1.0.0
-	 * @access protected
 	 * @var array
 	 */
 	protected $labels = array();
@@ -43,7 +41,6 @@ abstract class Attachment_Taxonomy {
 	 * The taxonomy arguments.
 	 *
 	 * @since 1.0.0
-	 * @access protected
 	 * @var array
 	 */
 	protected $args = array();
@@ -52,7 +49,6 @@ abstract class Attachment_Taxonomy {
 	 * Registers the taxonomy.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 */
 	public function register() {
 		$slug = $this->get_slug();
@@ -65,7 +61,6 @@ abstract class Attachment_Taxonomy {
 	 * Unregisters the taxonomy.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 */
 	public function unregister() {
 		$slug = $this->get_slug();
@@ -91,7 +86,6 @@ abstract class Attachment_Taxonomy {
 	 * Returns the taxonomy slug.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 *
 	 * @return string The taxonomy slug.
 	 */
@@ -103,7 +97,6 @@ abstract class Attachment_Taxonomy {
 	 * Returns the taxonomy labels.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 *
 	 * @return array The taxonomy labels.
 	 */
@@ -138,7 +131,6 @@ abstract class Attachment_Taxonomy {
 	 * Returns the taxonomy arguments.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 *
 	 * @return array The taxonomy arguments.
 	 */

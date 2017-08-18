@@ -26,7 +26,6 @@ final class Attachment_Existing_Taxonomy extends Attachment_Taxonomy {
 	 * Constructor - sets the taxonomy slug.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 *
 	 * @param string $slug The taxonomy slug.
 	 */
@@ -38,7 +37,6 @@ final class Attachment_Existing_Taxonomy extends Attachment_Taxonomy {
 	 * Registers the taxonomy for attachments.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 */
 	public function register() {
 		register_taxonomy_for_object_type( $this->slug, 'attachment' );
@@ -48,7 +46,6 @@ final class Attachment_Existing_Taxonomy extends Attachment_Taxonomy {
 	 * Unregisters the taxonomy for attachments.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 */
 	public function unregister() {
 		unregister_taxonomy_for_object_type( $this->slug, 'attachment' );

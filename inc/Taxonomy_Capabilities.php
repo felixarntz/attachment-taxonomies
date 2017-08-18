@@ -25,7 +25,6 @@ final class Attachment_Taxonomy_Capabilities {
 	 * The Singleton instance.
 	 *
 	 * @since 1.1.0
-	 * @access private
 	 * @static
 	 * @var Attachment_Taxonomy_Capabilities|null
 	 */
@@ -35,7 +34,6 @@ final class Attachment_Taxonomy_Capabilities {
 	 * Returns the Singleton instance.
 	 *
 	 * @since 1.1.0
-	 * @access public
 	 * @static
 	 *
 	 * @return Attachment_Taxonomy_Capabilities The Singleton class instance.
@@ -51,7 +49,6 @@ final class Attachment_Taxonomy_Capabilities {
 	 * Constructor.
 	 *
 	 * @since 1.1.0
-	 * @access private
 	 */
 	private function __construct() {}
 
@@ -59,7 +56,6 @@ final class Attachment_Taxonomy_Capabilities {
 	 * Maps capabilities for the plugin's attachment taxonomies to respective core capabilities.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 *
 	 * @param array  $caps    Capabilities that should be checked.
 	 * @param string $cap     Original capability to map.

@@ -41,7 +41,6 @@ final class Attachment_Taxonomies {
 	 * The Singleton instance.
 	 *
 	 * @since 1.0.0
-	 * @access private
 	 * @static
 	 * @var Attachment_Taxonomies|null
 	 */
@@ -51,7 +50,6 @@ final class Attachment_Taxonomies {
 	 * Returns the Singleton instance.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 * @static
 	 *
 	 * @return Attachment_Taxonomies The Singleton class instance.
@@ -67,7 +65,6 @@ final class Attachment_Taxonomies {
 	 * Whether the plugin is a must-use plugin.
 	 *
 	 * @since 1.0.0
-	 * @access private
 	 * @var bool
 	 */
 	private $is_mu_plugin = false;
@@ -78,7 +75,6 @@ final class Attachment_Taxonomies {
 	 * This is empty for a regular plugin, but contains the directory name for a must-use plugin.
 	 *
 	 * @since 1.0.0
-	 * @access private
 	 * @var string
 	 */
 	private $base_path_relative = '';
@@ -87,7 +83,6 @@ final class Attachment_Taxonomies {
 	 * The custom taxonomies which are added through the plugin's API.
 	 *
 	 * @since 1.0.0
-	 * @access private
 	 * @var array
 	 */
 	private $taxonomies = array();
@@ -99,7 +94,6 @@ final class Attachment_Taxonomies {
 	 * Then it loads the plugin files and hooks in the bootstrapping action.
 	 *
 	 * @since 1.0.0
-	 * @access private
 	 */
 	private function __construct() {
 		$file = wp_normalize_path( __FILE__ );
@@ -132,7 +126,6 @@ final class Attachment_Taxonomies {
 	 * Furthermore the two custom attachment taxonomies the plugin defines by default are added.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 */
 	public function bootstrap() {
 		if ( $this->is_mu_plugin ) {
@@ -191,7 +184,6 @@ final class Attachment_Taxonomies {
 	 *
 	 * @since 1.0.0
 	 * @since 1.1.0 The second parameter has been deprecated.
-	 * @access public
 	 *
 	 * @param Attachment_Taxonomy $taxonomy   The taxonomy object.
 	 * @param bool                $deprecated Deprecated argument.
@@ -227,7 +219,6 @@ final class Attachment_Taxonomies {
 	 *
 	 * @since 1.0.0
 	 * @since 1.1.0 The second parameter has been deprecated.
-	 * @access public
 	 *
 	 * @param string $taxonomy_slug The taxonomy slug.
 	 * @param bool   $deprecated Deprecated argument.
@@ -250,7 +241,6 @@ final class Attachment_Taxonomies {
 	 *
 	 * @since 1.0.0
 	 * @since 1.1.0 The second parameter has been deprecated.
-	 * @access public
 	 *
 	 * @param string $taxonomy_slug The taxonomy slug.
 	 * @param bool   $deprecated Deprecated argument.
@@ -281,7 +271,6 @@ final class Attachment_Taxonomies {
 	 * This also works when the plugin is used as a must-use plugin.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 *
 	 * @param string $rel_path Path relative from the plugin's directory.
 	 * @return string The full path.
@@ -296,7 +285,6 @@ final class Attachment_Taxonomies {
 	 * This also works when the plugin is used as a must-use plugin.
 	 *
 	 * @since 1.0.0
-	 * @access public
 	 *
 	 * @param string $rel_path Path relative from the plugin's directory.
 	 * @return string The full URL.
@@ -309,7 +297,6 @@ final class Attachment_Taxonomies {
 	 * Marks a function argument as deprecated and informs when it has been used.
 	 *
 	 * @since 1.1.0
-	 * @access private
 	 *
 	 * @param string $function The function that was called.
 	 * @param string $version  The version of Attachment Taxonomies that deprecated the argument used.

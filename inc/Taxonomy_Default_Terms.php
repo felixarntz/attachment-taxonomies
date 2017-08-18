@@ -25,7 +25,6 @@ final class Attachment_Taxonomy_Default_Terms {
 	 * The Singleton instance.
 	 *
 	 * @since 1.1.0
-	 * @access private
 	 * @static
 	 * @var Attachment_Taxonomy_Default_Terms|null
 	 */
@@ -35,7 +34,6 @@ final class Attachment_Taxonomy_Default_Terms {
 	 * Returns the Singleton instance.
 	 *
 	 * @since 1.1.0
-	 * @access public
 	 * @static
 	 *
 	 * @return Attachment_Taxonomy_Default_Terms The Singleton class instance.
@@ -51,7 +49,6 @@ final class Attachment_Taxonomy_Default_Terms {
 	 * Constructor.
 	 *
 	 * @since 1.1.0
-	 * @access private
 	 */
 	private function __construct() {}
 
@@ -59,7 +56,6 @@ final class Attachment_Taxonomy_Default_Terms {
 	 * Ensures the default term for each taxonomy that supports it is set on an attachment.
 	 *
 	 * @since 1.1.0
-	 * @access public
 	 *
 	 * @param int $attachment_id Attachment ID.
 	 */
@@ -99,7 +95,6 @@ final class Attachment_Taxonomy_Default_Terms {
 	 * Registers settings for each taxonomy that supports a default term.
 	 *
 	 * @since 1.1.0
-	 * @access public
 	 */
 	public function register_settings() {
 		foreach ( Attachment_Taxonomies_Core::instance()->get_taxonomies( 'objects' ) as $taxonomy ) {
@@ -128,7 +123,6 @@ final class Attachment_Taxonomy_Default_Terms {
 	 * Adds settings fields for each taxonomy that supports a default term.
 	 *
 	 * @since 1.1.0
-	 * @access public
 	 */
 	public function add_settings_fields() {
 		foreach ( Attachment_Taxonomies_Core::instance()->get_taxonomies( 'objects' ) as $taxonomy ) {
@@ -156,7 +150,6 @@ final class Attachment_Taxonomy_Default_Terms {
 	 * Renders a default term settings field.
 	 *
 	 * @since 1.1.0
-	 * @access public
 	 *
 	 * @param array $args {
 	 *     Settings field arguments.
@@ -187,7 +180,6 @@ final class Attachment_Taxonomy_Default_Terms {
 	 * Returns the taxonomy label to use for its setting.
 	 *
 	 * @since 1.1.0
-	 * @access private
 	 *
 	 * @param WP_Taxonomy $taxonomy Taxonomy object.
 	 * @return string Taxonomy label.
