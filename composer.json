@@ -1,7 +1,7 @@
 {
   "name": "felixarntz/attachment-taxonomies",
   "description": "This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "license": "GPL-3.0",
   "type": "wordpress-plugin",
   "keywords": [

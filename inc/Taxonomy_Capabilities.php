@@ -4,7 +4,7 @@
  *
  * @package AttachmentTaxonomies
  * @author Felix Arntz <felix-arntz@leaves-and-love.net>
- * @since 1.1.0
+ * @since 1.1.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,13 +18,13 @@ if ( class_exists( 'Attachment_Taxonomy_Capabilities' ) ) {
 /**
  * Handles capabilities for attachment taxonomies.
  *
- * @since 1.1.0
+ * @since 1.1.1
  */
 final class Attachment_Taxonomy_Capabilities {
 	/**
 	 * The Singleton instance.
 	 *
-	 * @since 1.1.0
+	 * @since 1.1.1
 	 * @static
 	 * @var Attachment_Taxonomy_Capabilities|null
 	 */
@@ -33,7 +33,7 @@ final class Attachment_Taxonomy_Capabilities {
 	/**
 	 * Returns the Singleton instance.
 	 *
-	 * @since 1.1.0
+	 * @since 1.1.1
 	 * @static
 	 *
 	 * @return Attachment_Taxonomy_Capabilities The Singleton class instance.
@@ -48,14 +48,14 @@ final class Attachment_Taxonomy_Capabilities {
 	/**
 	 * Constructor.
 	 *
-	 * @since 1.1.0
+	 * @since 1.1.1
 	 */
 	private function __construct() {}
 
 	/**
 	 * Maps capabilities for the plugin's attachment taxonomies to respective core capabilities.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.1
 	 *
 	 * @param array  $caps    Capabilities that should be checked.
 	 * @param string $cap     Original capability to map.
