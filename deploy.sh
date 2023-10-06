@@ -87,7 +87,6 @@ cd $SVNPATH/trunk/
 printf "Ignoring GitHub specific files and deployment script..."
 svn propset --quiet svn:ignore ".git
 .gitignore
-.travis.yml
 composer.json
 composer.lock
 deploy.sh
