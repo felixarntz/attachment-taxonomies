@@ -6,10 +6,10 @@ Author:            Felix Arntz
 Author URI:        https://felix-arntz.me
 Contributors:      flixos90
 Donate link:       https://felix-arntz.me/wordpress-plugins/
-Requires at least: 3.5
-Tested up to:      4.8
+Requires at least: 6.0
+Tested up to:      6.4
+Requires PHP:      7.0
 Stable tag:        1.1.1
-Version:           1.1.1
 License:           GNU General Public License v3
 License URI:       http://www.gnu.org/licenses/gpl-3.0.html
 Tags:              attachment, media, taxonomy, categories, tags

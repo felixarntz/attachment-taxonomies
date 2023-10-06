@@ -26,13 +26,16 @@
     "email": "hello@felix-arntz.me",
     "issues": "https://github.com/felixarntz/attachment-taxonomies/issues"
   },
-  "config": {
-    "preferred-install": "dist"
-  },
   "require": {
-    "composer/installers": "~1.0"
+    "composer/installers": "~1.0",
+    "php": ">=7.0"
   },
   "require-dev": {
     "phpunit/phpunit": ">4.8.20 <6.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
   }
 }
