@@ -98,7 +98,7 @@ final class Attachment_Taxonomies {
 	 * @since 1.0.0
 	 */
 	private function __construct() {
-		$file = wp_normalize_path( __FILE__ );
+		$file          = wp_normalize_path( __FILE__ );
 		$mu_plugin_dir = wp_normalize_path( WPMU_PLUGIN_DIR );
 		if ( preg_match( '#^' . preg_quote( $mu_plugin_dir, '#' ) . '/#', $file ) ) {
 			$this->is_mu_plugin = true;
@@ -186,16 +186,12 @@ final class Attachment_Taxonomies {
 	 *
 	 * @since 1.0.0
 	 * @since 1.1.0 The second parameter has been deprecated.
+	 * @since 1.2.0 The second parameter has been removed.
 	 *
-	 * @param Attachment_Taxonomy $taxonomy   The taxonomy object.
-	 * @param bool                $deprecated Deprecated argument.
+	 * @param Attachment_Taxonomy $taxonomy The taxonomy object.
 	 * @return bool True if successful, otherwise false.
 	 */
-	public function add_taxonomy( $taxonomy, $deprecated = null ) {
-		if ( is_bool( $deprecated ) || $deprecated ) {
-			$this->deprecated_argument( __METHOD__, '1.1.0' );
-		}
-
+	public function add_taxonomy( $taxonomy ) {
 		if ( ! is_a( $taxonomy, 'Attachment_Taxonomy' ) ) {
 			return false;
 		}
@@ -221,16 +217,12 @@ final class Attachment_Taxonomies {
 	 *
 	 * @since 1.0.0
 	 * @since 1.1.0 The second parameter has been deprecated.
+	 * @since 1.2.0 The second parameter has been removed.
 	 *
 	 * @param string $taxonomy_slug The taxonomy slug.
-	 * @param bool   $deprecated Deprecated argument.
 	 * @return Attachment_Taxonomy|null The object (class derived from Attachment_Taxonomy) or null if it does not exist.
 	 */
-	public function get_taxonomy( $taxonomy_slug, $deprecated = null ) {
-		if ( is_bool( $deprecated ) || $deprecated ) {
-			$this->deprecated_argument( __METHOD__, '1.1.0' );
-		}
-
+	public function get_taxonomy( $taxonomy_slug ) {
 		if ( ! isset( $this->taxonomies[ $taxonomy_slug ] ) ) {
 			return null;
 		}
@@ -243,16 +235,12 @@ final class Attachment_Taxonomies {
 	 *
 	 * @since 1.0.0
 	 * @since 1.1.0 The second parameter has been deprecated.
+	 * @since 1.2.0 The second parameter has been removed.
 	 *
 	 * @param string $taxonomy_slug The taxonomy slug.
-	 * @param bool   $deprecated Deprecated argument.
 	 * @return bool True if successful, otherwise false.
 	 */
-	public function remove_taxonomy( $taxonomy_slug, $deprecated = null ) {
-		if ( is_bool( $deprecated ) || $deprecated ) {
-			$this->deprecated_argument( __METHOD__, '1.1.0' );
-		}
-
+	public function remove_taxonomy( $taxonomy_slug ) {
 		if ( ! isset( $this->taxonomies[ $taxonomy_slug ] ) ) {
 			return false;
 		}
@@ -293,28 +281,6 @@ final class Attachment_Taxonomies {
 	 */
 	public function get_url( $rel_path ) {
 		return plugin_dir_url( __FILE__ ) . $this->base_path_relative . ltrim( $rel_path, '/' );
-	}
-
-	/**
-	 * Marks a function argument as deprecated and informs when it has been used.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param string $function The function that was called.
-	 * @param string $version  The version of Attachment Taxonomies that deprecated the argument used.
-	 * @param string $message  Optional. A message regarding the change. Default null.
-	 */
-	private function deprecated_argument( $function, $version, $message = null ) {
-		/* This filter is documented in wp-includes/functions.php */
-		if ( WP_DEBUG && apply_filters( 'deprecated_argument_trigger_error', true ) ) {
-			if ( ! is_null( $message ) ) {
-				/* translators: 1: function name, 2: version number, 3: message */
-				trigger_error( sprintf( __( '%1$s was called with an argument that is <strong>deprecated</strong> since Attachment Taxonomies version %2$s! %3$s', 'attachment-taxonomies' ), $function, $version, $message ) );
-			} else {
-				/* translators: 1: function name, 2: version number */
-				trigger_error( sprintf( __( '%1$s was called with an argument that is <strong>deprecated</strong> since Attachment Taxonomies version %2$s with no alternative available.', 'attachment-taxonomies' ), $function, $version ) );
-			}
-		}
 	}
 }
 
