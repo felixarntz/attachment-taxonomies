@@ -85,8 +85,7 @@ fi
 cd $SVNPATH/trunk/
 
 printf "Ignoring GitHub specific files and deployment script..."
-svn propset --quiet svn:ignore ".codeclimate.yml
-.git
+svn propset --quiet svn:ignore ".git
 .gitignore
 .travis.yml
 composer.json

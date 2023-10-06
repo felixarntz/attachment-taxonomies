@@ -18,12 +18,12 @@ local.properties
 .cproject
 .buildpath
 nbproject/
-node_modules/*
 
 ############
 ## Vendor
 ############
 
+node_modules/
 vendor/
 !assets/vendor/
 
@@ -45,7 +45,6 @@ tmp/
 *.tmp
 *.bak
 *.log
-*.lock
 *.[Cc]ache
 *.cpr
 *.orig
