@@ -3,9 +3,9 @@
 Plugin Name:       Attachment Taxonomies
 Plugin URI:        https://wordpress.org/plugins/attachment-taxonomies/
 Author:            Felix Arntz
-Author URI:        https://leaves-and-love.net
+Author URI:        https://felix-arntz.me
 Contributors:      flixos90
-Donate link:       https://leaves-and-love.net/wordpress-plugins/
+Donate link:       https://felix-arntz.me/wordpress-plugins/
 Requires at least: 3.5
 Tested up to:      4.8
 Stable tag:        1.1.1

@@ -3,7 +3,7 @@
  * Attachment_Taxonomies class
  *
  * @package AttachmentTaxonomies
- * @author Felix Arntz <felix-arntz@leaves-and-love.net>
+ * @author Felix Arntz <hello@felix-arntz.me>
  * @since 1.0.0
  *
  * @wordpress-plugin
@@ -12,7 +12,7 @@
  * Description: This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.
  * Version:     1.1.1
  * Author:      Felix Arntz
- * Author URI:  https://leaves-and-love.net
+ * Author URI:  https://felix-arntz.me
  * License:     GNU General Public License v3
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: attachment-taxonomies

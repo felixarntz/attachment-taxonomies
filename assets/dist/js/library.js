@@ -1,6 +1,6 @@
 /*!
  * Attachment Taxonomies (https://wordpress.org/plugins/attachment-taxonomies/)
- * By Felix Arntz (https://leaves-and-love.net)
+ * By Felix Arntz (https://felix-arntz.me)
  * Licensed under GNU General Public License v3 (http://www.gnu.org/licenses/gpl-3.0.html)
  */
 ( function( wp, $ ) {

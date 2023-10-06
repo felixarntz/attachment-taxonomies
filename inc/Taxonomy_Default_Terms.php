@@ -3,7 +3,7 @@
  * Attachment_Taxonomy_Default_Terms class
  *
  * @package AttachmentTaxonomies
- * @author Felix Arntz <felix-arntz@leaves-and-love.net>
+ * @author Felix Arntz <hello@felix-arntz.me>
  * @since 1.1.0
  */
 
