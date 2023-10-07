@@ -116,7 +116,7 @@ final class Attachment_Taxonomies {
 			true
 		);
 
-		$bootstrap = function() {
+		$bootstrap = function () {
 			$this->add_hooks();
 			$this->add_default_taxonomies();
 		};
@@ -142,11 +142,7 @@ final class Attachment_Taxonomies {
 	 * @param Attachment_Taxonomy $taxonomy The taxonomy object.
 	 * @return bool True if successful, otherwise false.
 	 */
-	public function add_taxonomy( $taxonomy ) {
-		if ( ! $taxonomy instanceof Attachment_Taxonomy ) {
-			return false;
-		}
-
+	public function add_taxonomy( Attachment_Taxonomy $taxonomy ) {
 		$taxonomy_slug = $taxonomy->get_slug();
 
 		if ( isset( $this->taxonomies[ $taxonomy_slug ] ) ) {

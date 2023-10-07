@@ -39,6 +39,8 @@ final class Attachment_Taxonomy_Shortcode {
 	 * @static
 	 *
 	 * @return Attachment_Taxonomy_Shortcode The Singleton class instance.
+	 *
+	 * @throws Exception Thrown when called before plugin initialization.
 	 */
 	public static function instance() {
 		_deprecated_function( __METHOD__, 'Attachment Taxonomies 1.2.0' );

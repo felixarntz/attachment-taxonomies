@@ -34,6 +34,8 @@ final class Attachment_Taxonomies_Hooks {
 	 * Constructor.
 	 *
 	 * @since 1.2.0
+	 *
+	 * @param Attachment_Taxonomies_Plugin_Env $plugin_env The plugin environment instance.
 	 */
 	public function __construct( Attachment_Taxonomies_Plugin_Env $plugin_env ) {
 		$this->plugin_env = $plugin_env;

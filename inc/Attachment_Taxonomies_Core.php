@@ -39,6 +39,8 @@ final class Attachment_Taxonomies_Core {
 	 * @static
 	 *
 	 * @return Attachment_Taxonomies_Core The Singleton class instance.
+	 *
+	 * @throws Exception Thrown when called before plugin initialization.
 	 */
 	public static function instance() {
 		_deprecated_function( __METHOD__, 'Attachment Taxonomies 1.2.0' );
@@ -63,6 +65,8 @@ final class Attachment_Taxonomies_Core {
 	 *
 	 * @since 1.0.0
 	 * @since 1.2.0 Constructor is now public with $plugin_env parameter added.
+	 *
+	 * @param Attachment_Taxonomies_Plugin_Env $plugin_env The plugin environment instance.
 	 */
 	public function __construct( Attachment_Taxonomies_Plugin_Env $plugin_env ) {
 		$this->plugin_env = $plugin_env;
