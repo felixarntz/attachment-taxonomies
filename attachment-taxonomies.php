@@ -110,15 +110,15 @@ final class Attachment_Taxonomies {
 			add_action( 'plugins_loaded', array( $this, 'bootstrap' ), 1 );
 		}
 
-		require_once $this->get_path( 'inc/Taxonomies_Core.php' );
-		require_once $this->get_path( 'inc/Taxonomy_Edit.php' );
-		require_once $this->get_path( 'inc/Taxonomy_Capabilities.php' );
-		require_once $this->get_path( 'inc/Taxonomy_Shortcode.php' );
-		require_once $this->get_path( 'inc/Taxonomy_Default_Terms.php' );
-		require_once $this->get_path( 'inc/Taxonomy.php' );
-		require_once $this->get_path( 'inc/Existing_Taxonomy.php' );
-		require_once $this->get_path( 'inc/Category.php' );
-		require_once $this->get_path( 'inc/Tag.php' );
+		require_once __DIR__ . '/inc/Taxonomies_Core.php';
+		require_once __DIR__ . '/inc/Taxonomy_Edit.php';
+		require_once __DIR__ . '/inc/Taxonomy_Capabilities.php';
+		require_once __DIR__ . '/inc/Taxonomy_Shortcode.php';
+		require_once __DIR__ . '/inc/Taxonomy_Default_Terms.php';
+		require_once __DIR__ . '/inc/Taxonomy.php';
+		require_once __DIR__ . '/inc/Existing_Taxonomy.php';
+		require_once __DIR__ . '/inc/Category.php';
+		require_once __DIR__ . '/inc/Tag.php';
 	}
 
 	/**
