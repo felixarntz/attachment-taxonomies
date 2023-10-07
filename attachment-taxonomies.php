@@ -116,60 +116,15 @@ final class Attachment_Taxonomies {
 			true
 		);
 
+		$bootstrap = function() {
+			$this->add_hooks();
+			$this->add_default_taxonomies();
+		};
+
 		if ( $this->plugin_env->is_mu_plugin() ) {
-			add_action( 'muplugins_loaded', array( $this, 'bootstrap' ), 1 );
+			add_action( 'muplugins_loaded', $bootstrap, 1 );
 		} else {
-			add_action( 'plugins_loaded', array( $this, 'bootstrap' ), 1 );
-		}
-	}
-
-	/**
-	 * Bootstraps the plugin.
-	 *
-	 * This method adds the necessary actions and filters.
-	 * Furthermore the two custom attachment taxonomies the plugin defines by default are added.
-	 *
-	 * @since 1.0.0
-	 */
-	public function bootstrap() {
-		$core = Attachment_Taxonomies_Core::instance();
-		add_action( 'restrict_manage_posts', array( $core, 'render_taxonomy_filters' ), 10, 1 );
-		add_action( 'wp_enqueue_media', array( $core, 'enqueue_script' ) );
-		add_action( 'wp_enqueue_media', array( $core, 'print_styles' ) );
-
-		$edit = Attachment_Taxonomy_Edit::instance();
-		add_action( 'edit_attachment', array( $edit, 'save_ajax_attachment_taxonomies' ), 10, 1 );
-		add_action( 'add_attachment', array( $edit, 'save_ajax_attachment_taxonomies' ), 10, 1 );
-		add_filter( 'wp_prepare_attachment_for_js', array( $edit, 'add_taxonomies_to_attachment_js' ), 10, 2 );
-		add_filter( 'attachment_fields_to_edit', array( $edit, 'remove_taxonomies_from_attachment_compat' ), 10, 1 );
-		add_action( 'wp_enqueue_media', array( $edit, 'adjust_media_templates' ) );
-
-		$capabilities = Attachment_Taxonomy_Capabilities::instance();
-		add_filter( 'map_meta_cap', array( $capabilities, 'map_meta_cap' ), 10, 3 );
-
-		$shortcode = Attachment_Taxonomy_Shortcode::instance();
-		add_filter( 'shortcode_atts_gallery', array( $shortcode, 'support_gallery_taxonomy_attributes' ), 10, 3 );
-
-		$default_terms = Attachment_Taxonomy_Default_Terms::instance();
-		add_action( 'edit_attachment', array( $default_terms, 'ensure_default_attachment_taxonomy_terms' ), 100, 1 );
-		add_action( 'add_attachment', array( $default_terms, 'ensure_default_attachment_taxonomy_terms' ), 100, 1 );
-		add_action( 'rest_api_init', array( $default_terms, 'register_settings' ), 10, 0 );
-		add_action( 'admin_init', array( $default_terms, 'register_settings' ), 10, 0 );
-		add_action( 'admin_init', array( $default_terms, 'add_settings_fields' ), 10, 0 );
-
-		/**
-		 * Filters the taxonomy class names that will be instantiated by default.
-		 *
-		 * @since 1.1.0
-		 *
-		 * @param array $taxonomy_class_names Array of taxonomy class names.
-		 */
-		$taxonomy_class_names = apply_filters( 'attachment_taxonomy_class_names', array( 'Attachment_Category', 'Attachment_Tag' ) );
-
-		$taxonomy_class_names = array_filter( array_unique( $taxonomy_class_names ), 'class_exists' );
-
-		foreach ( $taxonomy_class_names as $class_name ) {
-			$this->add_taxonomy( new $class_name() );
+			add_action( 'plugins_loaded', $bootstrap, 1 );
 		}
 	}
 
@@ -277,6 +232,70 @@ final class Attachment_Taxonomies {
 	 */
 	public function get_url( $rel_path ) {
 		return $this->plugin_env->url( $rel_path );
+	}
+
+	/**
+	 * Bootstraps the plugin.
+	 *
+	 * @since 1.0.0
+	 * @deprecated 1.2.0
+	 */
+	public function bootstrap() {
+		_deprecated_function( __METHOD__, 'Attachment Taxonomies 1.2.0' );
+	}
+
+	/**
+	 * Adds relevant WordPress hooks.
+	 *
+	 * @since 1.2.0
+	 */
+	private function add_hooks() {
+		$core = Attachment_Taxonomies_Core::instance();
+		add_action( 'restrict_manage_posts', array( $core, 'render_taxonomy_filters' ), 10, 1 );
+		add_action( 'wp_enqueue_media', array( $core, 'enqueue_script' ) );
+		add_action( 'wp_enqueue_media', array( $core, 'print_styles' ) );
+
+		$edit = Attachment_Taxonomy_Edit::instance();
+		add_action( 'edit_attachment', array( $edit, 'save_ajax_attachment_taxonomies' ), 10, 1 );
+		add_action( 'add_attachment', array( $edit, 'save_ajax_attachment_taxonomies' ), 10, 1 );
+		add_filter( 'wp_prepare_attachment_for_js', array( $edit, 'add_taxonomies_to_attachment_js' ), 10, 2 );
+		add_filter( 'attachment_fields_to_edit', array( $edit, 'remove_taxonomies_from_attachment_compat' ), 10, 1 );
+		add_action( 'wp_enqueue_media', array( $edit, 'adjust_media_templates' ) );
+
+		$capabilities = Attachment_Taxonomy_Capabilities::instance();
+		add_filter( 'map_meta_cap', array( $capabilities, 'map_meta_cap' ), 10, 3 );
+
+		$shortcode = Attachment_Taxonomy_Shortcode::instance();
+		add_filter( 'shortcode_atts_gallery', array( $shortcode, 'support_gallery_taxonomy_attributes' ), 10, 3 );
+
+		$default_terms = Attachment_Taxonomy_Default_Terms::instance();
+		add_action( 'edit_attachment', array( $default_terms, 'ensure_default_attachment_taxonomy_terms' ), 100, 1 );
+		add_action( 'add_attachment', array( $default_terms, 'ensure_default_attachment_taxonomy_terms' ), 100, 1 );
+		add_action( 'rest_api_init', array( $default_terms, 'register_settings' ), 10, 0 );
+		add_action( 'admin_init', array( $default_terms, 'register_settings' ), 10, 0 );
+		add_action( 'admin_init', array( $default_terms, 'add_settings_fields' ), 10, 0 );
+	}
+
+	/**
+	 * Adds the plugin's default taxonomies.
+	 *
+	 * @since 1.2.0
+	 */
+	private function add_default_taxonomies() {
+		/**
+		 * Filters the taxonomy class names that will be instantiated by default.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param array $taxonomy_class_names Array of taxonomy class names.
+		 */
+		$taxonomy_class_names = apply_filters( 'attachment_taxonomy_class_names', array( 'Attachment_Category', 'Attachment_Tag' ) );
+
+		$taxonomy_class_names = array_filter( array_unique( $taxonomy_class_names ), 'class_exists' );
+
+		foreach ( $taxonomy_class_names as $class_name ) {
+			$this->add_taxonomy( new $class_name() );
+		}
 	}
 }
 
