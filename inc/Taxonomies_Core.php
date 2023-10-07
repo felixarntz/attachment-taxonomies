@@ -171,20 +171,35 @@ final class Attachment_Taxonomies_Core {
 			$filter_by_item[ $js_slug ] = $this->get_filter_by_label( $taxonomy );
 		}
 
-		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		/*
+		 * Get script data.
+		 * Add legacy dependencies manually since they are not supported by `@wordpress/scripts` mapping.
+		 */
+		$script_data                   = require Attachment_Taxonomies::instance()->get_path( 'build/index.asset.php' );
+		$script_data['dependencies'][] = 'jquery';
+		$script_data['dependencies'][] = 'media-views';
 
-		wp_enqueue_script( 'attachment-taxonomies', Attachment_Taxonomies::instance()->get_url( 'assets/dist/js/library' . $min . '.js' ), array( 'jquery', 'media-views' ), Attachment_Taxonomies::VERSION, true );
-		wp_localize_script(
+		wp_enqueue_script(
 			'attachment-taxonomies',
-			'_attachment_taxonomies',
-			array(
-				'data' => $taxonomies,
-				'l10n' => array(
-					'all'      => $all_items,
-					'filterBy' => $filter_by_item,
-				),
+			Attachment_Taxonomies::instance()->get_url( 'build/index.js' ),
+			$script_data['dependencies'],
+			$script_data['version'],
+			array( 'in_footer' => true )
+		);
+
+		$inline_script = sprintf(
+			'window._attachmentTaxonomiesExtendMediaLibrary( wp.media, jQuery, %s );',
+			wp_json_encode(
+				array(
+					'data' => $taxonomies,
+					'l10n' => array(
+						'all'      => $all_items,
+						'filterBy' => $filter_by_item,
+					),
+				)
 			)
 		);
+		wp_add_inline_script( 'attachment-taxonomies', $inline_script );
 	}
 
 	/**

@@ -6,26 +6,22 @@ import {
 	extendAttachmentsBrowser,
 } from './utils';
 
-( function ( wp, $ ) {
-	if ( ! window._attachment_taxonomies ) {
-		return;
-	}
-
-	if ( ! wp.media ) {
-		return;
-	}
-
-	wp.media.taxonomies = window._attachment_taxonomies;
-	window._attachment_taxonomies = undefined;
-
-	wp.media.view.AttachmentFilters.Taxonomy = createAttachmentTaxonomyFilter(
-		wp.media.view.AttachmentFilters
+/**
+ * Initializes the JS logic to extend the WordPress media library.
+ *
+ * @param {Object} wpMedia    See `wp.media`.
+ * @param {Object} $          Reference to jQuery.
+ * @param {Object} taxonomies Taxonomies data passed from PHP.
+ */
+function extendMediaLibrary( wpMedia, $, taxonomies ) {
+	wpMedia.view.AttachmentFilters.Taxonomy = createAttachmentTaxonomyFilter(
+		wpMedia.view.AttachmentFilters
 	);
-	wp.media.view.AttachmentsBrowser = extendAttachmentsBrowser(
-		wp.media.view.AttachmentsBrowser,
-		wp.media.view.AttachmentFilters.Taxonomy,
-		wp.media.view.Label,
-		wp.media.taxonomies
+	wpMedia.view.AttachmentsBrowser = extendAttachmentsBrowser(
+		wpMedia.view.AttachmentsBrowser,
+		wpMedia.view.AttachmentFilters.Taxonomy,
+		wpMedia.view.Label,
+		taxonomies
 	);
 
 	$( document ).on(
@@ -47,4 +43,6 @@ import {
 				.trigger( 'change' );
 		}
 	);
-} )( window.wp || {}, window.jQuery );
+}
+
+window._attachmentTaxonomiesExtendMediaLibrary = extendMediaLibrary;
