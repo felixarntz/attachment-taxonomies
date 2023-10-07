@@ -8,7 +8,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	die();
+	exit; // Exit if accessed directly.
 }
 
 if ( class_exists( 'Attachment_Taxonomy_Capabilities' ) ) {
