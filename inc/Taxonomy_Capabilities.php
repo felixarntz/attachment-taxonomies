@@ -70,21 +70,47 @@ final class Attachment_Taxonomy_Capabilities {
 			case 'manage_attachment_tags':
 			case 'edit_attachment_tags':
 			case 'delete_attachment_tags':
-				$caps = array( 'upload_files', 'manage_categories' );
-				break;
+				return $this->get_manage_base_caps();
 			case 'assign_attachment_categories':
 			case 'assign_attachment_tags':
-				$post_type = get_post_type_object( 'attachment' );
-				if ( ! $post_type ) {
-					// This should never happen.
-					$caps = array( 'upload_files', 'edit_others_posts' );
-				} else {
-					$caps = map_meta_cap( $post_type->cap->edit_posts, $user_id );
-					$caps[] = 'upload_files';
-				}
-				break;
+				return $this->get_assign_base_caps( $user_id );
 		}
 
+		return $caps;
+	}
+
+	/**
+	 * Gets the base capabilities to manage attachment taxonomies (except assigning them).
+	 *
+	 * This is used to map the corresponding attachment taxonomy meta capabilities to base capabilities.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return array List of base capabilities.
+	 */
+	private function get_manage_base_caps() {
+		return array( 'upload_files', 'manage_categories' );
+	}
+
+	/**
+	 * Gets the base capabilities to assign attachment taxonomies to attachments.
+	 *
+	 * This is used to map the corresponding attachment taxonomy meta capabilities to base capabilities.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param int $user_id User ID to get the base capabilities for.
+	 * @return array List of base capabilities.
+	 */
+	private function get_assign_base_caps( $user_id ) {
+		$post_type = get_post_type_object( 'attachment' );
+		if ( ! $post_type ) {
+			// This should never happen.
+			return array( 'do_not_allow' );
+		}
+
+		$caps   = map_meta_cap( $post_type->cap->edit_posts, $user_id );
+		$caps[] = 'upload_files';
 		return $caps;
 	}
 }

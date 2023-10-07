@@ -70,15 +70,18 @@ final class Attachment_Taxonomy_Edit {
 			return;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! isset( $_REQUEST['changes'] ) ) {
 			return;
 		}
 
 		foreach ( Attachment_Taxonomies_Core::instance()->get_taxonomies( 'objects' ) as $taxonomy ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( ! isset( $_REQUEST['changes'][ 'taxonomy-' . $taxonomy->name . '-terms' ] ) ) {
 				continue;
 			}
 
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$terms = $_REQUEST['changes'][ 'taxonomy-' . $taxonomy->name . '-terms' ];
 			if ( $taxonomy->hierarchical ) {
 				$terms = array_filter( array_map( 'trim', explode( ',', $terms ) ) );
@@ -96,13 +99,13 @@ final class Attachment_Taxonomy_Edit {
 	 * This method is hooked into the `wp_prepare_attachment_for_js` filter.
 	 *
 	 * @since 1.0.0
+	 * @since 1.2.0 The $meta parameter has been removed.
 	 *
 	 * @param array   $response   The original attachment data.
 	 * @param WP_Post $attachment The attachment post.
-	 * @param array   $meta       The attachment meta.
 	 * @return array The modified attachment data.
 	 */
-	public function add_taxonomies_to_attachment_js( $response, $attachment, $meta ) {
+	public function add_taxonomies_to_attachment_js( $response, $attachment ) {
 		$response['taxonomies'] = array();
 		foreach ( Attachment_Taxonomies_Core::instance()->get_taxonomies( 'names' ) as $taxonomy_slug ) {
 			$response['taxonomies'][ $taxonomy_slug ] = array();
@@ -131,12 +134,12 @@ final class Attachment_Taxonomy_Edit {
 	 * This method is hooked into the `attachment_fields_to_edit` filter.
 	 *
 	 * @since 1.0.0
+	 * @since 1.2.0 The $attachment parameter was removed.
 	 *
-	 * @param array   $form_fields The original form fields array.
-	 * @param WP_Post $attachment  The attachment post.
+	 * @param array $form_fields The original form fields array.
 	 * @return array The modified form fields array.
 	 */
-	public function remove_taxonomies_from_attachment_compat( $form_fields, $attachment ) {
+	public function remove_taxonomies_from_attachment_compat( $form_fields ) {
 		foreach ( Attachment_Taxonomies_Core::instance()->get_taxonomies( 'names' ) as $taxonomy_slug ) {
 			if ( isset( $form_fields[ $taxonomy_slug ] ) ) {
 				unset( $form_fields[ $taxonomy_slug ] );
@@ -184,6 +187,7 @@ final class Attachment_Taxonomy_Edit {
 
 		$output = str_replace( '<div class="attachment-compat"></div>', $taxonomy_output . "\n" . '<div class="attachment-compat"></div>', $output );
 
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $output;
 	}
 
@@ -197,23 +201,22 @@ final class Attachment_Taxonomy_Edit {
 	private function get_taxonomy_media_template_output() {
 		ob_start();
 		foreach ( Attachment_Taxonomies_Core::instance()->get_taxonomies( 'objects' ) as $taxonomy ) {
-			$terms = Attachment_Taxonomies_Core::instance()->get_terms_for_taxonomy( $taxonomy->name );
-			$maybe_readonly = current_user_can( $taxonomy->cap->assign_terms ) ? '' : ' readonly';
-			$maybe_disabled = empty( $maybe_readonly ) ? '' : ' disabled';
+			$terms        = Attachment_Taxonomies_Core::instance()->get_terms_for_taxonomy( $taxonomy->name );
+			$user_has_cap = current_user_can( $taxonomy->cap->assign_terms );
 			?>
 			<label class="setting attachment-taxonomy-input" data-setting="taxonomy-<?php echo sanitize_html_class( $taxonomy->name ); ?>-terms">
 				<input type="hidden" value="{{ data.taxonomies ? Object.keys(data.taxonomies.<?php echo esc_attr( $taxonomy->name ); ?>).join(',') : '' }}" />
 			</label>
 			<label class="setting attachment-taxonomy-select">
 				<span class="name"><?php echo esc_html( $taxonomy->labels->name ); ?></span>
-				<select multiple="multiple"<?php echo $maybe_readonly; ?>>
+				<select multiple="multiple"<?php echo $user_has_cap ? '' : ' readonly'; ?>>
 					<?php if ( $taxonomy->hierarchical ) : ?>
 						<?php foreach ( $terms as $term ) : ?>
-							<option value="<?php echo esc_attr( $term->term_id ); ?>"<?php echo $maybe_disabled; ?> {{ ( data.taxonomies && data.taxonomies.<?php echo esc_attr( $taxonomy->name ); ?>[<?php echo esc_attr( $term->term_id ); ?>] ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
+							<option value="<?php echo esc_attr( $term->term_id ); ?>"<?php echo $user_has_cap ? '' : ' disabled'; ?> {{ ( data.taxonomies && data.taxonomies.<?php echo esc_attr( $taxonomy->name ); ?>[<?php echo esc_attr( $term->term_id ); ?>] ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
 						<?php endforeach; ?>
 					<?php else : ?>
 						<?php foreach ( $terms as $term ) : ?>
-							<option value="<?php echo esc_attr( $term->slug ); ?>"<?php echo $maybe_disabled; ?> {{ ( data.taxonomies && data.taxonomies.<?php echo esc_attr( $taxonomy->name ); ?>['<?php echo esc_attr( $term->slug ); ?>'] ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
+							<option value="<?php echo esc_attr( $term->slug ); ?>"<?php echo $user_has_cap ? '' : ' disabled'; ?> {{ ( data.taxonomies && data.taxonomies.<?php echo esc_attr( $taxonomy->name ); ?>['<?php echo esc_attr( $term->slug ); ?>'] ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
 						<?php endforeach; ?>
 					<?php endif; ?>
 				</select>

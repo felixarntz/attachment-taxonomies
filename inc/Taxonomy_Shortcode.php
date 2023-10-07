@@ -68,20 +68,7 @@ final class Attachment_Taxonomy_Shortcode {
 	public function support_gallery_taxonomy_attributes( $out, $pairs, $atts ) {
 		$taxonomy_slugs = Attachment_Taxonomies_Core::instance()->get_taxonomies();
 
-		$all_term_ids = array();
-		foreach ( $taxonomy_slugs as $taxonomy_slug ) {
-			if ( empty( $atts[ $taxonomy_slug ] ) ) {
-				continue;
-			}
-
-			$term_ids = $this->get_term_ids_from_attribute( $taxonomy_slug, $atts[ $taxonomy_slug ] );
-			if ( empty( $term_ids ) ) {
-				continue;
-			}
-
-			$all_term_ids[ $taxonomy_slug ] = $term_ids;
-		}
-
+		$all_term_ids = $this->get_all_term_ids( $taxonomy_slugs, $atts );
 		if ( empty( $all_term_ids ) ) {
 			return $out;
 		}
@@ -108,6 +95,34 @@ final class Attachment_Taxonomy_Shortcode {
 	}
 
 	/**
+	 * Gets all term IDs for the given taxonomy slugs based on the given shortcode attributes.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param array $taxonomy_slugs List of taxonomy slugs.
+	 * @param array $atts           User defined attributes in shortcode tag.
+	 * @return array Map of taxonomy slugs and their list of term IDs based on the shortcode attributes.
+	 */
+	private function get_all_term_ids( $taxonomy_slugs, $atts ) {
+		$all_term_ids = array();
+
+		foreach ( $taxonomy_slugs as $taxonomy_slug ) {
+			if ( empty( $atts[ $taxonomy_slug ] ) ) {
+				continue;
+			}
+
+			$term_ids = $this->get_term_ids_from_attribute( $taxonomy_slug, $atts[ $taxonomy_slug ] );
+			if ( empty( $term_ids ) ) {
+				continue;
+			}
+
+			$all_term_ids[ $taxonomy_slug ] = $term_ids;
+		}
+
+		return $all_term_ids;
+	}
+
+	/**
 	 * Parses an attribute of one or more term slugs or IDs into an array of valid term IDs.
 	 *
 	 * @since 1.1.0
@@ -118,7 +133,7 @@ final class Attachment_Taxonomy_Shortcode {
 	 */
 	private function get_term_ids_from_attribute( $taxonomy_slug, $attr ) {
 		$query_arg = 'slug';
-		$items = wp_parse_slug_list( $attr );
+		$items     = wp_parse_slug_list( $attr );
 
 		if ( empty( $items ) ) {
 			return array();
@@ -127,10 +142,10 @@ final class Attachment_Taxonomy_Shortcode {
 		$ids = array_filter( $items, 'is_numeric' );
 		if ( count( $ids ) === count( $items ) ) {
 			$query_arg = 'include';
-			$items = array_map( 'absint', $items );
+			$items     = array_map( 'absint', $items );
 		}
 
-		$query_args = array(
+		$query_args               = array(
 			'number'                 => 0,
 			'fields'                 => 'ids',
 			'update_term_meta_cache' => false,

@@ -75,10 +75,14 @@ final class Attachment_Taxonomy_Default_Terms {
 				continue;
 			}
 
-			$terms = wp_get_post_terms( $attachment_id, $taxonomy->name, array(
-				'fields'                 => 'ids',
-				'update_term_meta_cache' => false,
-			) );
+			$terms = wp_get_post_terms(
+				$attachment_id,
+				$taxonomy->name,
+				array(
+					'fields'                 => 'ids',
+					'update_term_meta_cache' => false,
+				)
+			);
 			if ( is_wp_error( $terms ) ) {
 				continue;
 			}
@@ -102,20 +106,24 @@ final class Attachment_Taxonomy_Default_Terms {
 				continue;
 			}
 
-			if ( 'category' === $taxonomy->name ) {
+			if ( ! isset( $taxonomy->name ) || 'category' === $taxonomy->name ) {
 				continue;
 			}
 
 			$label = $this->get_taxonomy_label_for_setting( $taxonomy );
 
-			register_setting( 'writing', 'default_' . $taxonomy->name, array(
-				'type'              => 'integer',
-				/* translators: %s: taxonomy label */
-				'description'       => sprintf( _x( 'Default %s.', 'REST API description', 'attachment-taxonomies' ), $label ),
-				'sanitize_callback' => 'absint',
-				'show_in_rest'      => true,
-				'default'           => 0,
-			) );
+			register_setting(
+				'writing',
+				'default_' . $taxonomy->name,
+				array(
+					'type'              => 'integer',
+					/* translators: %s: taxonomy label */
+					'description'       => sprintf( _x( 'Default %s.', 'REST API description', 'attachment-taxonomies' ), $label ),
+					'sanitize_callback' => 'absint',
+					'show_in_rest'      => true,
+					'default'           => 0,
+				)
+			);
 		}
 	}
 
@@ -130,7 +138,7 @@ final class Attachment_Taxonomy_Default_Terms {
 				continue;
 			}
 
-			if ( 'category' === $taxonomy->name ) {
+			if ( ! isset( $taxonomy->name ) || 'category' === $taxonomy->name ) {
 				continue;
 			}
 
@@ -139,10 +147,17 @@ final class Attachment_Taxonomy_Default_Terms {
 			/* translators: %s: taxonomy label */
 			$title = sprintf( _x( 'Default %s', 'settings field title', 'attachment-taxonomies' ), $label );
 
-			add_settings_field( 'default_' . $taxonomy->name, $title, array( $this, 'render_settings_field' ), 'writing', 'default', array(
-				'label_for' => 'default_' . $taxonomy->name,
-				'taxonomy'  => $taxonomy,
-			) );
+			add_settings_field(
+				'default_' . $taxonomy->name,
+				$title,
+				array( $this, 'render_settings_field' ),
+				'writing',
+				'default',
+				array(
+					'label_for' => 'default_' . $taxonomy->name,
+					'taxonomy'  => $taxonomy,
+				)
+			);
 		}
 	}
 
@@ -161,19 +176,21 @@ final class Attachment_Taxonomy_Default_Terms {
 	public function render_settings_field( $args ) {
 		$taxonomy = $args['taxonomy'];
 
-		wp_dropdown_categories( array(
-			'id'                => ! empty( $args['label_for'] ) ? $args['label_for'] : 'default_' . $taxonomy->name,
-			'name'              => 'default_' . $taxonomy->name,
-			'value_field'       => 'term_id',
-			'selected'          => get_option( 'default_' . $taxonomy->name ),
-			'taxonomy'          => $taxonomy->name,
-			'hierarchical'      => $taxonomy->hierarchical,
-			'hide_empty'        => false,
-			'orderby'           => 'name',
-			'order'             => 'ASC',
-			'show_option_none'  => _x( 'None', 'default term dropdown', 'attachment-taxonomies' ),
-			'option_none_value' => 0,
-		) );
+		wp_dropdown_categories(
+			array(
+				'id'                => ! empty( $args['label_for'] ) ? $args['label_for'] : 'default_' . $taxonomy->name,
+				'name'              => 'default_' . $taxonomy->name,
+				'value_field'       => 'term_id',
+				'selected'          => get_option( 'default_' . $taxonomy->name ),
+				'taxonomy'          => $taxonomy->name,
+				'hierarchical'      => $taxonomy->hierarchical,
+				'hide_empty'        => false,
+				'orderby'           => 'name',
+				'order'             => 'ASC',
+				'show_option_none'  => _x( 'None', 'default term dropdown', 'attachment-taxonomies' ),
+				'option_none_value' => 0,
+			)
+		);
 	}
 
 	/**

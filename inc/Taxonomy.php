@@ -137,7 +137,7 @@ abstract class Attachment_Taxonomy {
 	public function get_args() {
 		$slug = $this->get_slug();
 
-		$args = $this->args;
+		$args           = $this->args;
 		$args['labels'] = $this->get_labels();
 
 		/**

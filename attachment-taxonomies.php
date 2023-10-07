@@ -144,8 +144,8 @@ final class Attachment_Taxonomies {
 		$edit = Attachment_Taxonomy_Edit::instance();
 		add_action( 'edit_attachment', array( $edit, 'save_ajax_attachment_taxonomies' ), 10, 1 );
 		add_action( 'add_attachment', array( $edit, 'save_ajax_attachment_taxonomies' ), 10, 1 );
-		add_filter( 'wp_prepare_attachment_for_js', array( $edit, 'add_taxonomies_to_attachment_js' ), 10, 3 );
-		add_filter( 'attachment_fields_to_edit', array( $edit, 'remove_taxonomies_from_attachment_compat' ), 10, 2 );
+		add_filter( 'wp_prepare_attachment_for_js', array( $edit, 'add_taxonomies_to_attachment_js' ), 10, 2 );
+		add_filter( 'attachment_fields_to_edit', array( $edit, 'remove_taxonomies_from_attachment_compat' ), 10, 1 );
 		add_action( 'wp_enqueue_media', array( $edit, 'adjust_media_templates' ) );
 
 		$capabilities = Attachment_Taxonomy_Capabilities::instance();

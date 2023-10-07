@@ -89,13 +89,12 @@ final class Attachment_Taxonomies_Core {
 	 * @return array|WP_Error A list of term objects or an error if the taxonomy does not exist.
 	 */
 	public function get_terms_for_taxonomy( $taxonomy_slug, $args = array() ) {
-		$args = wp_parse_args( $args, array(
-			'hide_empty' => false,
-		) );
-
-		if ( version_compare( get_bloginfo( 'version' ), '4.5', '<' ) ) {
-			return get_terms( $taxonomy_slug, $args );
-		}
+		$args = wp_parse_args(
+			$args,
+			array(
+				'hide_empty' => false,
+			)
+		);
 
 		$args['taxonomy'] = $taxonomy_slug;
 		return get_terms( $args );
@@ -118,6 +117,7 @@ final class Attachment_Taxonomies_Core {
 			return;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_REQUEST['attachment-filter'] ) && 'trash' === $_REQUEST['attachment-filter'] ) {
 			return;
 		}
@@ -127,6 +127,7 @@ final class Attachment_Taxonomies_Core {
 				continue;
 			}
 
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$value = isset( $_REQUEST[ $taxonomy->query_var ] ) ? $_REQUEST[ $taxonomy->query_var ] : '';
 			?>
 			<label for="attachment-<?php echo sanitize_html_class( $taxonomy_slug ); ?>-filter" class="screen-reader-text"><?php echo esc_html( $this->get_filter_by_label( $taxonomy ) ); ?></label>
@@ -155,8 +156,8 @@ final class Attachment_Taxonomies_Core {
 			return;
 		}
 
-		$taxonomies = array();
-		$all_items = array();
+		$taxonomies     = array();
+		$all_items      = array();
 		$filter_by_item = array();
 		foreach ( $this->get_taxonomies( 'objects' ) as $taxonomy_slug => $taxonomy ) {
 			if ( ! $taxonomy->query_var ) {
@@ -165,21 +166,25 @@ final class Attachment_Taxonomies_Core {
 
 			$js_slug = $this->make_js_slug( $taxonomy_slug );
 
-			$taxonomies[] = $this->prepare_taxonomy_for_js( $taxonomy_slug, $taxonomy );
-			$all_items[ $js_slug ] = $taxonomy->labels->all_items;
+			$taxonomies[]               = $this->prepare_taxonomy_for_js( $taxonomy_slug, $taxonomy );
+			$all_items[ $js_slug ]      = $taxonomy->labels->all_items;
 			$filter_by_item[ $js_slug ] = $this->get_filter_by_label( $taxonomy );
 		}
 
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 		wp_enqueue_script( 'attachment-taxonomies', Attachment_Taxonomies::instance()->get_url( 'assets/dist/js/library' . $min . '.js' ), array( 'jquery', 'media-views' ), Attachment_Taxonomies::VERSION, true );
-		wp_localize_script( 'attachment-taxonomies', '_attachment_taxonomies', array(
-			'data' => $taxonomies,
-			'l10n' => array(
-				'all'      => $all_items,
-				'filterBy' => $filter_by_item,
-			),
-		) );
+		wp_localize_script(
+			'attachment-taxonomies',
+			'_attachment_taxonomies',
+			array(
+				'data' => $taxonomies,
+				'l10n' => array(
+					'all'      => $all_items,
+					'filterBy' => $filter_by_item,
+				),
+			)
+		);
 	}
 
 	/**
@@ -205,7 +210,7 @@ final class Attachment_Taxonomies_Core {
 
 		$count = 2 + count( $taxonomies );
 
-		$percentage = intval( round( 84 / $count ) );
+		$percentage      = intval( round( 84 / $count ) );
 		$percentage_calc = intval( round( 96 / $count ) );
 
 		?>
@@ -252,7 +257,15 @@ final class Attachment_Taxonomies_Core {
 			'slug'     => $js_slug,
 			'slugId'   => str_replace( '_', '-', $taxonomy_slug ),
 			'queryVar' => $taxonomy->query_var,
-			'terms'    => array_map( array( $this, 'get_term_array' ), $this->get_terms_for_taxonomy( $taxonomy_slug ) ),
+			'terms'    => array_map(
+				function ( $term ) {
+					if ( ! $term instanceof WP_Term ) {
+						return get_object_vars( $term );
+					}
+					return $term->to_array();
+				},
+				$this->get_terms_for_taxonomy( $taxonomy_slug )
+			),
 		);
 	}
 
@@ -268,22 +281,6 @@ final class Attachment_Taxonomies_Core {
 	 */
 	private function make_js_slug( $taxonomy_slug ) {
 		return lcfirst( implode( array_map( 'ucfirst', explode( '_', $taxonomy_slug ) ) ) );
-	}
-
-	/**
-	 * Transforms a term object into an array.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param object $term A term object (`WP_Term` if WordPress >= 4.4).
-	 * @return array A term array.
-	 */
-	private function get_term_array( $term ) {
-		if ( ! class_exists( 'WP_Term' ) || ! is_a( $term, 'WP_Term' ) ) {
-			return get_object_vars( $term );
-		}
-
-		return $term->to_array();
 	}
 
 	/**
