@@ -25,7 +25,6 @@ nbproject/
 
 node_modules/
 vendor/
-!assets/vendor/
 
 ############
 ## OSes
