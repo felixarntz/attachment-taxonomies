@@ -25,6 +25,7 @@ final class Attachment_Taxonomy_Capabilities {
 	 * The Singleton instance.
 	 *
 	 * @since 1.1.1
+	 * @deprecated 1.2.0
 	 * @static
 	 * @var Attachment_Taxonomy_Capabilities|null
 	 */
@@ -34,13 +35,17 @@ final class Attachment_Taxonomy_Capabilities {
 	 * Returns the Singleton instance.
 	 *
 	 * @since 1.1.1
+	 * @deprecated 1.2.0
 	 * @static
 	 *
 	 * @return Attachment_Taxonomy_Capabilities The Singleton class instance.
 	 */
 	public static function instance() {
+		_deprecated_function( __METHOD__, 'Attachment Taxonomies 1.2.0' );
 		if ( null === self::$instance ) {
-			self::$instance = new self();
+			throw new Exception(
+				esc_html__( 'Class instance can only be retrieved once the Attachment Taxonomies plugin has been initialized.', 'attachment-taxonomies' )
+			);
 		}
 		return self::$instance;
 	}
@@ -49,8 +54,13 @@ final class Attachment_Taxonomy_Capabilities {
 	 * Constructor.
 	 *
 	 * @since 1.1.1
+	 * @since 1.2.0 Constructor is now public.
 	 */
-	private function __construct() {}
+	public function __construct() {
+		if ( null === self::$instance ) {
+			self::$instance = $this;
+		}
+	}
 
 	/**
 	 * Maps capabilities for the plugin's attachment taxonomies to respective core capabilities.

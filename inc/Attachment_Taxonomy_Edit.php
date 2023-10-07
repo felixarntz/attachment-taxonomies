@@ -26,6 +26,7 @@ final class Attachment_Taxonomy_Edit {
 	 * The Singleton instance.
 	 *
 	 * @since 1.0.0
+	 * @deprecated 1.2.0
 	 * @static
 	 * @var Attachment_Taxonomy_Edit|null
 	 */
@@ -35,23 +36,44 @@ final class Attachment_Taxonomy_Edit {
 	 * Returns the Singleton instance.
 	 *
 	 * @since 1.0.0
+	 * @deprecated 1.2.0
 	 * @static
 	 *
 	 * @return Attachment_Taxonomy_Edit The Singleton class instance.
 	 */
 	public static function instance() {
+		_deprecated_function( __METHOD__, 'Attachment Taxonomies 1.2.0' );
 		if ( null === self::$instance ) {
-			self::$instance = new self();
+			throw new Exception(
+				esc_html__( 'Class instance can only be retrieved once the Attachment Taxonomies plugin has been initialized.', 'attachment-taxonomies' )
+			);
 		}
 		return self::$instance;
 	}
 
 	/**
+	 * Plugin core instance.
+	 *
+	 * @since 1.2.0
+	 * @var Attachment_Taxonomies_Core
+	 */
+	private $core;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
+	 * @since 1.2.0 Constructor is now public with $core parameter added.
+	 *
+	 * @param Attachment_Taxonomies_Core $core Plugin core instance.
 	 */
-	private function __construct() {}
+	public function __construct( Attachment_Taxonomies_Core $core ) {
+		$this->core = $core;
+
+		if ( null === self::$instance ) {
+			self::$instance = $this;
+		}
+	}
 
 	/**
 	 * Sets terms for attachment taxonomies through the `save_attachment` AJAX action.
@@ -75,7 +97,7 @@ final class Attachment_Taxonomy_Edit {
 			return;
 		}
 
-		foreach ( Attachment_Taxonomies_Core::instance()->get_taxonomies( 'objects' ) as $taxonomy ) {
+		foreach ( $this->core->get_taxonomies( 'objects' ) as $taxonomy ) {
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( ! isset( $_REQUEST['changes'][ 'taxonomy-' . $taxonomy->name . '-terms' ] ) ) {
 				continue;
@@ -107,7 +129,7 @@ final class Attachment_Taxonomy_Edit {
 	 */
 	public function add_taxonomies_to_attachment_js( $response, $attachment ) {
 		$response['taxonomies'] = array();
-		foreach ( Attachment_Taxonomies_Core::instance()->get_taxonomies( 'names' ) as $taxonomy_slug ) {
+		foreach ( $this->core->get_taxonomies( 'names' ) as $taxonomy_slug ) {
 			$response['taxonomies'][ $taxonomy_slug ] = array();
 			foreach ( (array) wp_get_object_terms( $attachment->ID, $taxonomy_slug ) as $term ) {
 				$term_data = array(
@@ -140,7 +162,7 @@ final class Attachment_Taxonomy_Edit {
 	 * @return array The modified form fields array.
 	 */
 	public function remove_taxonomies_from_attachment_compat( $form_fields ) {
-		foreach ( Attachment_Taxonomies_Core::instance()->get_taxonomies( 'names' ) as $taxonomy_slug ) {
+		foreach ( $this->core->get_taxonomies( 'names' ) as $taxonomy_slug ) {
 			if ( isset( $form_fields[ $taxonomy_slug ] ) ) {
 				unset( $form_fields[ $taxonomy_slug ] );
 			}
@@ -157,7 +179,7 @@ final class Attachment_Taxonomy_Edit {
 	 * @since 1.0.0
 	 */
 	public function adjust_media_templates() {
-		if ( ! Attachment_Taxonomies_Core::instance()->has_taxonomies() ) {
+		if ( ! $this->core->has_taxonomies() ) {
 			return;
 		}
 
@@ -200,8 +222,8 @@ final class Attachment_Taxonomy_Edit {
 	 */
 	private function get_taxonomy_media_template_output() {
 		ob_start();
-		foreach ( Attachment_Taxonomies_Core::instance()->get_taxonomies( 'objects' ) as $taxonomy ) {
-			$terms        = Attachment_Taxonomies_Core::instance()->get_terms_for_taxonomy( $taxonomy->name );
+		foreach ( $this->core->get_taxonomies( 'objects' ) as $taxonomy ) {
+			$terms        = $this->core->get_terms_for_taxonomy( $taxonomy->name );
 			$user_has_cap = current_user_can( $taxonomy->cap->assign_terms );
 			?>
 			<label class="setting attachment-taxonomy-input" data-setting="taxonomy-<?php echo sanitize_html_class( $taxonomy->name ); ?>-terms">

@@ -25,6 +25,7 @@ final class Attachment_Taxonomy_Default_Terms {
 	 * The Singleton instance.
 	 *
 	 * @since 1.1.0
+	 * @deprecated 1.2.0
 	 * @static
 	 * @var Attachment_Taxonomy_Default_Terms|null
 	 */
@@ -34,23 +35,44 @@ final class Attachment_Taxonomy_Default_Terms {
 	 * Returns the Singleton instance.
 	 *
 	 * @since 1.1.0
+	 * @deprecated 1.2.0
 	 * @static
 	 *
 	 * @return Attachment_Taxonomy_Default_Terms The Singleton class instance.
 	 */
 	public static function instance() {
+		_deprecated_function( __METHOD__, 'Attachment Taxonomies 1.2.0' );
 		if ( null === self::$instance ) {
-			self::$instance = new self();
+			throw new Exception(
+				esc_html__( 'Class instance can only be retrieved once the Attachment Taxonomies plugin has been initialized.', 'attachment-taxonomies' )
+			);
 		}
 		return self::$instance;
 	}
 
 	/**
+	 * Plugin core instance.
+	 *
+	 * @since 1.2.0
+	 * @var Attachment_Taxonomies_Core
+	 */
+	private $core;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 1.1.0
+	 * @since 1.2.0 Constructor is now public with $core parameter added.
+	 *
+	 * @param Attachment_Taxonomies_Core $core Plugin core instance.
 	 */
-	private function __construct() {}
+	public function __construct( Attachment_Taxonomies_Core $core ) {
+		$this->core = $core;
+
+		if ( null === self::$instance ) {
+			self::$instance = $this;
+		}
+	}
 
 	/**
 	 * Ensures the default term for each taxonomy that supports it is set on an attachment.
@@ -65,7 +87,7 @@ final class Attachment_Taxonomy_Default_Terms {
 			return;
 		}
 
-		foreach ( Attachment_Taxonomies_Core::instance()->get_taxonomies( 'objects' ) as $taxonomy ) {
+		foreach ( $this->core->get_taxonomies( 'objects' ) as $taxonomy ) {
 			if ( 'category' !== $taxonomy->name && ( ! isset( $taxonomy->has_default ) || ! $taxonomy->has_default ) ) {
 				continue;
 			}
@@ -101,7 +123,7 @@ final class Attachment_Taxonomy_Default_Terms {
 	 * @since 1.1.0
 	 */
 	public function register_settings() {
-		foreach ( Attachment_Taxonomies_Core::instance()->get_taxonomies( 'objects' ) as $taxonomy ) {
+		foreach ( $this->core->get_taxonomies( 'objects' ) as $taxonomy ) {
 			if ( ! isset( $taxonomy->has_default ) || ! $taxonomy->has_default ) {
 				continue;
 			}
@@ -133,7 +155,7 @@ final class Attachment_Taxonomy_Default_Terms {
 	 * @since 1.1.0
 	 */
 	public function add_settings_fields() {
-		foreach ( Attachment_Taxonomies_Core::instance()->get_taxonomies( 'objects' ) as $taxonomy ) {
+		foreach ( $this->core->get_taxonomies( 'objects' ) as $taxonomy ) {
 			if ( ! isset( $taxonomy->has_default ) || ! $taxonomy->has_default ) {
 				continue;
 			}

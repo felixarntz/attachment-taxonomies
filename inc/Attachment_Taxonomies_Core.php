@@ -25,6 +25,7 @@ final class Attachment_Taxonomies_Core {
 	 * The Singleton instance.
 	 *
 	 * @since 1.0.0
+	 * @deprecated 1.2.0
 	 * @static
 	 * @var Attachment_Taxonomies_Core|null
 	 */
@@ -34,23 +35,42 @@ final class Attachment_Taxonomies_Core {
 	 * The Singleton instance.
 	 *
 	 * @since 1.0.0
+	 * @deprecated 1.2.0
 	 * @static
 	 *
 	 * @return Attachment_Taxonomies_Core The Singleton class instance.
 	 */
 	public static function instance() {
+		_deprecated_function( __METHOD__, 'Attachment Taxonomies 1.2.0' );
 		if ( null === self::$instance ) {
-			self::$instance = new self();
+			throw new Exception(
+				esc_html__( 'Class instance can only be retrieved once the Attachment Taxonomies plugin has been initialized.', 'attachment-taxonomies' )
+			);
 		}
 		return self::$instance;
 	}
 
 	/**
+	 * The plugin environment instance.
+	 *
+	 * @since 1.2.0
+	 * @var Attachment_Taxonomies_Plugin_Env
+	 */
+	private $plugin_env;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
+	 * @since 1.2.0 Constructor is now public with $plugin_env parameter added.
 	 */
-	private function __construct() {}
+	public function __construct( Attachment_Taxonomies_Plugin_Env $plugin_env ) {
+		$this->plugin_env = $plugin_env;
+
+		if ( null === self::$instance ) {
+			self::$instance = $this;
+		}
+	}
 
 	/**
 	 * Checks whether there are any attachment taxonomies registered.
@@ -175,13 +195,13 @@ final class Attachment_Taxonomies_Core {
 		 * Get script data.
 		 * Add legacy dependencies manually since they are not supported by `@wordpress/scripts` mapping.
 		 */
-		$script_data                   = require Attachment_Taxonomies::instance()->get_path( 'build/index.asset.php' );
+		$script_data                   = require $this->plugin_env->path( 'build/index.asset.php' );
 		$script_data['dependencies'][] = 'jquery';
 		$script_data['dependencies'][] = 'media-views';
 
 		wp_enqueue_script(
 			'attachment-taxonomies',
-			Attachment_Taxonomies::instance()->get_url( 'build/index.js' ),
+			$this->plugin_env->url( 'build/index.js' ),
 			$script_data['dependencies'],
 			$script_data['version'],
 			array( 'in_footer' => true )

@@ -25,6 +25,7 @@ final class Attachment_Taxonomy_Shortcode {
 	 * The Singleton instance.
 	 *
 	 * @since 1.1.0
+	 * @deprecated 1.2.0
 	 * @static
 	 * @var Attachment_Taxonomy_Shortcode|null
 	 */
@@ -34,23 +35,44 @@ final class Attachment_Taxonomy_Shortcode {
 	 * Returns the Singleton instance.
 	 *
 	 * @since 1.1.0
+	 * @deprecated 1.2.0
 	 * @static
 	 *
 	 * @return Attachment_Taxonomy_Shortcode The Singleton class instance.
 	 */
 	public static function instance() {
+		_deprecated_function( __METHOD__, 'Attachment Taxonomies 1.2.0' );
 		if ( null === self::$instance ) {
-			self::$instance = new self();
+			throw new Exception(
+				esc_html__( 'Class instance can only be retrieved once the Attachment Taxonomies plugin has been initialized.', 'attachment-taxonomies' )
+			);
 		}
 		return self::$instance;
 	}
 
 	/**
+	 * Plugin core instance.
+	 *
+	 * @since 1.2.0
+	 * @var Attachment_Taxonomies_Core
+	 */
+	private $core;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 1.1.0
+	 * @since 1.2.0 Constructor is now public with $core parameter added.
+	 *
+	 * @param Attachment_Taxonomies_Core $core Plugin core instance.
 	 */
-	private function __construct() {}
+	public function __construct( Attachment_Taxonomies_Core $core ) {
+		$this->core = $core;
+
+		if ( null === self::$instance ) {
+			self::$instance = $this;
+		}
+	}
 
 	/**
 	 * Filters the [gallery] shortcode attributes and adds support for taxonomies.
@@ -66,7 +88,7 @@ final class Attachment_Taxonomy_Shortcode {
 	 * @return array Possibly modified attribute list.
 	 */
 	public function support_gallery_taxonomy_attributes( $out, $pairs, $atts ) {
-		$taxonomy_slugs = Attachment_Taxonomies_Core::instance()->get_taxonomies();
+		$taxonomy_slugs = $this->core->get_taxonomies();
 
 		$all_term_ids = $this->get_all_term_ids( $taxonomy_slugs, $atts );
 		if ( empty( $all_term_ids ) ) {
@@ -152,7 +174,7 @@ final class Attachment_Taxonomy_Shortcode {
 		);
 		$query_args[ $query_arg ] = $items;
 
-		$term_ids = Attachment_Taxonomies_Core::instance()->get_terms_for_taxonomy( $taxonomy_slug, $query_args );
+		$term_ids = $this->core->get_terms_for_taxonomy( $taxonomy_slug, $query_args );
 		if ( ! $term_ids || is_wp_error( $term_ids ) ) {
 			return array();
 		}
