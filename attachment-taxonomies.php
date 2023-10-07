@@ -130,12 +130,6 @@ final class Attachment_Taxonomies {
 	 * @since 1.0.0
 	 */
 	public function bootstrap() {
-		if ( $this->is_mu_plugin ) {
-			load_muplugin_textdomain( 'attachment-taxonomies' );
-		} else {
-			load_plugin_textdomain( 'attachment-taxonomies' );
-		}
-
 		$core = Attachment_Taxonomies_Core::instance();
 		add_action( 'restrict_manage_posts', array( $core, 'render_taxonomy_filters' ), 10, 1 );
 		add_action( 'wp_enqueue_media', array( $core, 'enqueue_script' ) );
