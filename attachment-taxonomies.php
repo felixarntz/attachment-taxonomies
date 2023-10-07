@@ -110,15 +110,19 @@ final class Attachment_Taxonomies {
 			add_action( 'plugins_loaded', array( $this, 'bootstrap' ), 1 );
 		}
 
-		require_once __DIR__ . '/inc/Taxonomies_Core.php';
-		require_once __DIR__ . '/inc/Taxonomy_Edit.php';
-		require_once __DIR__ . '/inc/Taxonomy_Capabilities.php';
-		require_once __DIR__ . '/inc/Taxonomy_Shortcode.php';
-		require_once __DIR__ . '/inc/Taxonomy_Default_Terms.php';
-		require_once __DIR__ . '/inc/Taxonomy.php';
-		require_once __DIR__ . '/inc/Existing_Taxonomy.php';
-		require_once __DIR__ . '/inc/Category.php';
-		require_once __DIR__ . '/inc/Tag.php';
+		spl_autoload_register(
+			static function ( $class_name ) {
+				if (
+					str_starts_with( $class_name, 'Attachment_Taxonomies' ) ||
+					str_starts_with( $class_name, 'Attachment_Taxonomy' ) ||
+					in_array( $class_name, array( 'Attachment_Existing_Taxonomy', 'Attachment_Category', 'Attachment_Tag' ), true )
+				) {
+					require_once __DIR__ . "/inc/{$class_name}.php";
+				}
+			},
+			true,
+			true
+		);
 	}
 
 	/**
