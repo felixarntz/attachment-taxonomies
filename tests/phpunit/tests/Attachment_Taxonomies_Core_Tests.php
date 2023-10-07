@@ -1,6 +1,12 @@
 <?php
+/**
+ * Tests for Attachment_Taxonomies_Core
+ *
+ * @package AttachmentTaxonomies\Tests
+ * @author Felix Arntz <hello@felix-arntz.me>
+ */
 
-class AT_Tests_Core extends WP_UnitTestCase {
+class Attachment_Taxonomies_Core_Tests extends WP_UnitTestCase {
 	public function test_has_taxonomies() {
 		$taxonomies = get_object_taxonomies( 'attachment', 'names' );
 

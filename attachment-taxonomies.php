@@ -64,22 +64,12 @@ final class Attachment_Taxonomies {
 	}
 
 	/**
-	 * Whether the plugin is a must-use plugin.
+	 * The plugin environment instance.
 	 *
-	 * @since 1.0.0
-	 * @var bool
+	 * @since 1.2.0
+	 * @var Attachment_Taxonomies_Plugin_Env
 	 */
-	private $is_mu_plugin = false;
-
-	/**
-	 * The relative path to the plugin files, relative from this file's directory.
-	 *
-	 * This is empty for a regular plugin, but contains the directory name for a must-use plugin.
-	 *
-	 * @since 1.0.0
-	 * @var string
-	 */
-	private $base_path_relative = '';
+	private $plugin_env;
 
 	/**
 	 * The custom taxonomies which are added through the plugin's API.
@@ -98,37 +88,45 @@ final class Attachment_Taxonomies {
 	 * @since 1.0.0
 	 */
 	private function __construct() {
-		$file          = wp_normalize_path( __FILE__ );
-		$mu_plugin_dir = wp_normalize_path( WPMU_PLUGIN_DIR );
-		if ( preg_match( '#^' . preg_quote( $mu_plugin_dir, '#' ) . '/#', $file ) ) {
-			$this->is_mu_plugin = true;
-			if ( file_exists( $mu_plugin_dir . '/attachment-taxonomies.php' ) ) {
-				$this->base_path_relative = 'attachment-taxonomies/';
-			}
-			add_action( 'muplugins_loaded', array( $this, 'bootstrap' ), 1 );
+		/*
+		 * By default, the classes are within the 'inc' directory.
+		 * In case of a must-use plugin, they may be nested within the plugin's root directory though, in case the
+		 * plugin main file was moved one level up.
+		 */
+		if ( file_exists( __DIR__ . '/inc/Attachment_Taxonomies_Plugin_Env.php' ) ) {
+			require_once __DIR__ . '/inc/Attachment_Taxonomies_Plugin_Env.php';
 		} else {
-			add_action( 'plugins_loaded', array( $this, 'bootstrap' ), 1 );
+			require_once __DIR__ . '/attachment-taxonomies/inc/Attachment_Taxonomies_Plugin_Env.php';
 		}
 
+		$this->plugin_env = new Attachment_Taxonomies_Plugin_Env( __FILE__ );
+
+		$inc_dir = $this->plugin_env->path( 'inc/' );
 		spl_autoload_register(
-			static function ( $class_name ) {
+			static function ( $class_name ) use ( $inc_dir ) {
 				if (
 					str_starts_with( $class_name, 'Attachment_Taxonomies' ) ||
 					str_starts_with( $class_name, 'Attachment_Taxonomy' ) ||
 					in_array( $class_name, array( 'Attachment_Existing_Taxonomy', 'Attachment_Category', 'Attachment_Tag' ), true )
 				) {
-					require_once __DIR__ . "/inc/{$class_name}.php";
+					require_once "{$inc_dir}{$class_name}.php";
 				}
 			},
 			true,
 			true
 		);
+
+		if ( $this->plugin_env->is_mu_plugin() ) {
+			add_action( 'muplugins_loaded', array( $this, 'bootstrap' ), 1 );
+		} else {
+			add_action( 'plugins_loaded', array( $this, 'bootstrap' ), 1 );
+		}
 	}
 
 	/**
 	 * Bootstraps the plugin.
 	 *
-	 * The textdomain is loaded and actions and filters are hooked in.
+	 * This method adds the necessary actions and filters.
 	 * Furthermore the two custom attachment taxonomies the plugin defines by default are added.
 	 *
 	 * @since 1.0.0
@@ -264,7 +262,7 @@ final class Attachment_Taxonomies {
 	 * @return string The full path.
 	 */
 	public function get_path( $rel_path ) {
-		return plugin_dir_path( __FILE__ ) . $this->base_path_relative . ltrim( $rel_path, '/' );
+		return $this->plugin_env->path( $rel_path );
 	}
 
 	/**
@@ -278,7 +276,7 @@ final class Attachment_Taxonomies {
 	 * @return string The full URL.
 	 */
 	public function get_url( $rel_path ) {
-		return plugin_dir_url( __FILE__ ) . $this->base_path_relative . ltrim( $rel_path, '/' );
+		return $this->plugin_env->url( $rel_path );
 	}
 }
 

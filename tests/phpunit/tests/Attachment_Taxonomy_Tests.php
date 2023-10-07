@@ -1,6 +1,12 @@
 <?php
+/**
+ * Tests for Attachment_Taxonomy
+ *
+ * @package AttachmentTaxonomies\Tests
+ * @author Felix Arntz <hello@felix-arntz.me>
+ */
 
-class AT_Tests_Taxonomy extends WP_UnitTestCase {
+class Attachment_Taxonomy_Tests extends WP_UnitTestCase {
 	public function test_register() {
 		if ( function_exists( 'unregister_taxonomy' ) ) {
 			unregister_taxonomy( 'attachment_tag' );

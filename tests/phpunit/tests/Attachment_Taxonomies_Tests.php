@@ -1,6 +1,12 @@
 <?php
+/**
+ * Tests for Attachment_Taxonomies
+ *
+ * @package AttachmentTaxonomies\Tests
+ * @author Felix Arntz <hello@felix-arntz.me>
+ */
 
-class AT_Tests_Taxonomies extends WP_UnitTestCase {
+class Attachment_Taxonomies_Tests extends WP_UnitTestCase {
 	public function test_add_taxonomy() {
 		$status = Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'post_tag' ), true );
 		$this->assertTrue( $status );
