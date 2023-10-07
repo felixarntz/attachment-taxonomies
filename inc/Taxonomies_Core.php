@@ -223,16 +223,13 @@ final class Attachment_Taxonomies_Core {
 			return;
 		}
 
-		$count = 2 + count( $taxonomies );
+		$count = 1 + count( $taxonomies );
 
-		$percentage      = intval( round( 84 / $count ) );
-		$percentage_calc = intval( round( 96 / $count ) );
+		$percentage_calc = intval( floor( 100 / $count ) );
 
 		?>
 		<style type="text/css">
 			.media-modal-content .media-frame .media-toolbar-secondary > select {
-				width: <?php echo esc_attr( $percentage ); ?>% !important;
-				width: -webkit-calc(<?php echo esc_attr( $percentage_calc ); ?>% - 12px) !important;
 				width: calc(<?php echo esc_attr( $percentage_calc ); ?>% - 12px) !important;
 			}
 
