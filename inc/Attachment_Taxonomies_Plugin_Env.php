@@ -61,7 +61,9 @@ final class Attachment_Taxonomies_Plugin_Env {
 		$mu_plugin_dir = wp_normalize_path( WPMU_PLUGIN_DIR );
 		if ( preg_match( '#^' . preg_quote( $mu_plugin_dir, '#' ) . '/#', wp_normalize_path( $main_file ) ) ) {
 			$this->is_mu_plugin = true;
-			if ( file_exists( $mu_plugin_dir . '/attachment-taxonomies.php' ) ) {
+
+			// Is the plugin main file one level above the actual plugin's directory?
+			if ( file_exists( dirname( $this->main_file ) . '/attachment-taxonomies/inc/Attachment_Taxonomies_Plugin_Env.php' ) ) {
 				$this->base_path_relative = 'attachment-taxonomies/';
 			}
 		}
