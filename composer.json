@@ -1,7 +1,6 @@
 {
   "name": "felixarntz/attachment-taxonomies",
   "description": "This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.",
-  "version": "1.1.1",
   "license": "GPL-3.0",
   "type": "wordpress-plugin",
   "keywords": [
@@ -31,7 +30,8 @@
     "php": ">=7.0"
   },
   "require-dev": {
-    "phpunit/phpunit": ">4.8.20 <6.0"
+    "wp-phpunit/wp-phpunit": "^6.0",
+    "yoast/phpunit-polyfills": "^1.0"
   },
   "config": {
     "allow-plugins": {
@@ -54,6 +54,8 @@
     "phpstan": [
       "composer --working-dir=build-cs install",
       "build-cs/vendor/bin/phpstan analyse --memory-limit=2048M"
-    ]
+    ],
+    "test": "phpunit -c phpunit.xml.dist --verbose",
+    "test-multisite": "WP_MULTISITE=1 phpunit -c tests/phpunit/multisite.xml --verbose"
   }
 }
