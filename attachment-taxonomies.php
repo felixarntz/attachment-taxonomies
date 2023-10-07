@@ -192,7 +192,7 @@ final class Attachment_Taxonomies {
 	 * @return bool True if successful, otherwise false.
 	 */
 	public function add_taxonomy( $taxonomy ) {
-		if ( ! is_a( $taxonomy, 'Attachment_Taxonomy' ) ) {
+		if ( ! $taxonomy instanceof Attachment_Taxonomy ) {
 			return false;
 		}
 
