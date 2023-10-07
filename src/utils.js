@@ -56,7 +56,20 @@ export function extendAttachmentsBrowser(
 	return attachmentsBrowser.extend( {
 		// eslint-disable-next-line object-shorthand
 		createToolbar: function () {
-			attachmentsBrowser.__super__.createToolbar.apply( this, arguments );
+			if (
+				attachmentsBrowser.__super__ &&
+				attachmentsBrowser.__super__.createToolbar
+			) {
+				attachmentsBrowser.__super__.createToolbar.apply(
+					this,
+					arguments
+				);
+			} else {
+				attachmentsBrowser.prototype.createToolbar.apply(
+					this,
+					arguments
+				);
+			}
 
 			const data = taxonomies.data;
 
