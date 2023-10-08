@@ -11,6 +11,7 @@
 
 	<rule ref="rulesets/codesize.xml">
 		<exclude name="CyclomaticComplexity" />
+		<exclude name="ExcessiveClassComplexity" />
 	</rule>
 
 	<rule ref="rulesets/codesize.xml/CyclomaticComplexity">

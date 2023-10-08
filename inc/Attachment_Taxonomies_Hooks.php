@@ -47,17 +47,17 @@ final class Attachment_Taxonomies_Hooks {
 	 * @since 1.2.0
 	 */
 	public function add_all() {
-		$core = new Attachment_Taxonomies_Core( $this->plugin_env );
-		add_action( 'restrict_manage_posts', array( $core, 'render_taxonomy_filters' ), 10, 1 );
-		add_action( 'wp_enqueue_media', array( $core, 'enqueue_script' ) );
-		add_action( 'wp_enqueue_media', array( $core, 'print_styles' ) );
+		$core = new Attachment_Taxonomies_Core();
 
-		$edit = new Attachment_Taxonomy_Edit( $core );
-		add_action( 'edit_attachment', array( $edit, 'save_ajax_attachment_taxonomies' ), 10, 1 );
-		add_action( 'add_attachment', array( $edit, 'save_ajax_attachment_taxonomies' ), 10, 1 );
-		add_filter( 'wp_prepare_attachment_for_js', array( $edit, 'add_taxonomies_to_attachment_js' ), 10, 2 );
-		add_filter( 'attachment_fields_to_edit', array( $edit, 'remove_taxonomies_from_attachment_compat' ), 10, 1 );
-		add_action( 'wp_enqueue_media', array( $edit, 'adjust_media_templates' ) );
+		$admin = new Attachment_Taxonomies_Admin( $this->plugin_env, $core );
+		add_action( 'edit_attachment', array( $admin, 'save_ajax_attachment_taxonomies' ), 10, 1 );
+		add_action( 'add_attachment', array( $admin, 'save_ajax_attachment_taxonomies' ), 10, 1 );
+		add_action( 'restrict_manage_posts', array( $admin, 'render_taxonomy_filters' ), 10, 1 );
+		add_action( 'wp_enqueue_media', array( $admin, 'enqueue_script' ) );
+		add_action( 'wp_enqueue_media', array( $admin, 'print_styles' ) );
+		add_filter( 'wp_prepare_attachment_for_js', array( $admin, 'add_taxonomies_to_attachment_js' ), 10, 2 );
+		add_filter( 'attachment_fields_to_edit', array( $admin, 'remove_taxonomies_from_attachment_compat' ), 10, 1 );
+		add_action( 'wp_enqueue_media', array( $admin, 'adjust_media_templates' ) );
 
 		$capabilities = new Attachment_Taxonomy_Capabilities();
 		add_filter( 'map_meta_cap', array( $capabilities, 'map_meta_cap' ), 10, 3 );
