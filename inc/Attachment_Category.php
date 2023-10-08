@@ -61,5 +61,7 @@ final class Attachment_Category extends Attachment_Taxonomy {
 			'delete_terms' => 'delete_attachment_categories',
 			'assign_terms' => 'assign_attachment_categories',
 		),
+		'show_in_rest'          => true,
+		'rest_base'             => 'attachment_categories',
 	);
 }

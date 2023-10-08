@@ -61,5 +61,7 @@ final class Attachment_Tag extends Attachment_Taxonomy {
 			'delete_terms' => 'delete_attachment_tags',
 			'assign_terms' => 'assign_attachment_tags',
 		),
+		'show_in_rest'          => true,
+		'rest_base'             => 'attachment_tags',
 	);
 }
