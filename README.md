@@ -2,6 +2,8 @@
 [![WordPress](https://img.shields.io/wordpress/v/attachment-taxonomies.svg?maxAge=2592000)](https://wordpress.org/plugins/attachment-taxonomies/)
 [![Latest Stable Version](https://poser.pugx.org/felixarntz/attachment-taxonomies/version)](https://packagist.org/packages/felixarntz/attachment-taxonomies)
 [![License](https://poser.pugx.org/felixarntz/attachment-taxonomies/license)](https://packagist.org/packages/felixarntz/attachment-taxonomies)
+[![PHP Unit Testing](https://github.com/felixarntz/attachment-taxonomies/actions/workflows/php-test.yml/badge.svg)](https://github.com/felixarntz/attachment-taxonomies/actions/workflows/php-test.yml)
+[![E2E Testing](https://github.com/felixarntz/attachment-taxonomies/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/felixarntz/attachment-taxonomies/actions/workflows/e2e-test.yml)
 
 Attachment Taxonomies
 =====================
