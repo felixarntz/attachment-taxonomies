@@ -23,12 +23,14 @@ class Attachment_Taxonomies_Hooks_Tests extends WP_UnitTestCase {
 			'add_attachment',
 			'rest_api_init',
 			'admin_init',
+			'rest_after_insert_attachment',
 		);
 		$expected_filters = array(
 			'wp_prepare_attachment_for_js',
 			'attachment_fields_to_edit',
 			'map_meta_cap',
 			'shortcode_atts_gallery',
+			'rest_request_before_callbacks',
 		);
 
 		foreach ( $expected_actions as $action ) {

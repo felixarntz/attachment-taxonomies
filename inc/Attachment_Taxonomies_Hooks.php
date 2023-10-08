@@ -59,6 +59,10 @@ final class Attachment_Taxonomies_Hooks {
 		add_filter( 'attachment_fields_to_edit', array( $admin, 'remove_taxonomies_from_attachment_compat' ), 10, 1 );
 		add_action( 'wp_enqueue_media', array( $admin, 'adjust_media_templates' ) );
 
+		$rest = new Attachment_Taxonomies_REST( $core );
+		add_filter( 'rest_request_before_callbacks', array( $rest, 'fail_permission_check_if_cannot_assign_attachment_terms' ), 10, 3 );
+		add_action( 'rest_after_insert_attachment', array( $rest, 'handle_attachment_terms' ), 10, 2 );
+
 		$capabilities = new Attachment_Taxonomy_Capabilities();
 		add_filter( 'map_meta_cap', array( $capabilities, 'map_meta_cap' ), 10, 3 );
 
