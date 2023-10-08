@@ -43,7 +43,6 @@ final class Attachment_Taxonomies {
 	 * The Singleton instance.
 	 *
 	 * @since 1.0.0
-	 * @static
 	 * @var Attachment_Taxonomies|null
 	 */
 	private static $instance = null;
@@ -52,7 +51,6 @@ final class Attachment_Taxonomies {
 	 * Returns the Singleton instance.
 	 *
 	 * @since 1.0.0
-	 * @static
 	 *
 	 * @return Attachment_Taxonomies The Singleton class instance.
 	 */

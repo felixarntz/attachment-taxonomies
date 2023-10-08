@@ -26,7 +26,6 @@ final class Attachment_Taxonomy_Capabilities {
 	 *
 	 * @since 1.1.1
 	 * @deprecated 1.2.0
-	 * @static
 	 * @var Attachment_Taxonomy_Capabilities|null
 	 */
 	private static $instance = null;
@@ -36,7 +35,6 @@ final class Attachment_Taxonomy_Capabilities {
 	 *
 	 * @since 1.1.1
 	 * @deprecated 1.2.0
-	 * @static
 	 *
 	 * @return Attachment_Taxonomy_Capabilities The Singleton class instance.
 	 *

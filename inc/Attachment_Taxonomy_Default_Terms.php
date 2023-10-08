@@ -26,7 +26,6 @@ final class Attachment_Taxonomy_Default_Terms {
 	 *
 	 * @since 1.1.0
 	 * @deprecated 1.2.0
-	 * @static
 	 * @var Attachment_Taxonomy_Default_Terms|null
 	 */
 	private static $instance = null;
@@ -36,7 +35,6 @@ final class Attachment_Taxonomy_Default_Terms {
 	 *
 	 * @since 1.1.0
 	 * @deprecated 1.2.0
-	 * @static
 	 *
 	 * @return Attachment_Taxonomy_Default_Terms The Singleton class instance.
 	 *

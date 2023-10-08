@@ -26,7 +26,6 @@ final class Attachment_Taxonomies_Core {
 	 *
 	 * @since 1.0.0
 	 * @deprecated 1.2.0
-	 * @static
 	 * @var Attachment_Taxonomies_Core|null
 	 */
 	private static $instance = null;
@@ -36,7 +35,6 @@ final class Attachment_Taxonomies_Core {
 	 *
 	 * @since 1.0.0
 	 * @deprecated 1.2.0
-	 * @static
 	 *
 	 * @return Attachment_Taxonomies_Core The Singleton class instance.
 	 *
