@@ -1,9 +1,10 @@
-const config = require( '@wordpress/scripts/config/webpack.config.js' );
+/**
+ * WordPress dependencies
+ */
+const config = require( '@wordpress/scripts/config/webpack.config' );
 
 const { sync: glob } = require( 'fast-glob' );
-const {
-	getWebpackEntryPoints,
-} = require( '@wordpress/scripts/utils' );
+const { getWebpackEntryPoints } = require( '@wordpress/scripts/utils' );
 
 function getEntryPoints() {
 	const entryPoints = getWebpackEntryPoints();

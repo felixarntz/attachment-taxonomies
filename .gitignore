@@ -39,6 +39,7 @@ vendor/
 ## Misc
 ############
 
+artifacts/
 bin/
 tmp/
 *.tmp
