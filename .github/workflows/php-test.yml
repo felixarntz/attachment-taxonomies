@@ -87,8 +87,8 @@ jobs:
       - name: Install WordPress
         run: npm run wp-env start
 
-      - name: Running php unit tests
+      - name: Running PHPUnit tests
         run: npm run test-php
 
-      - name: Running multisite unit tests
+      - name: Running PHPUnit tests for multisite
         run: npm run test-php-multisite

@@ -1,0 +1,57 @@
+name: E2E Testing
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      - 'feature/**'
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  e2e-test:
+    name: E2E Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: styfle/cancel-workflow-action@0.11.0
+
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js (via .nvmrc)
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - name: npm install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Playwright dependencies
+        run: npx playwright install chromium --with-deps
+
+      - name: Install WordPress
+        run: npm run wp-env start
+
+      - name: Running e2e tests
+        run: npm run test-e2e
+
+      - name: Archive debug artifacts (screenshots, traces)
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+            name: failures-artifacts
+            path: artifacts/test-results
+            if-no-files-found: ignore
