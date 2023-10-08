@@ -75,6 +75,24 @@ class TermUtils {
 		);
 	}
 
+	async assignAttachmentTerms( attachmentId, terms ) {
+		const params = {};
+		for ( let { taxonomy, id, restBase } of terms ) {
+			if ( ! restBase ) {
+				restBase = await this.getRestBase( taxonomy );
+			}
+
+			params[ restBase ] = id;
+		}
+
+		const attachment = await this.requestUtils.rest( {
+			method: 'POST',
+			path: `/wp/v2/media/${ attachmentId }`,
+			params,
+		} );
+		return attachment;
+	}
+
 	createAttachmentCategory( termData ) {
 		return this.createTerm( {
 			...termData,
