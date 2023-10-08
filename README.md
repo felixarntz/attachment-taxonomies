@@ -1,10 +1,10 @@
+[![PHP Unit Testing](https://img.shields.io/github/actions/workflow/status/felixarntz/attachment-taxonomies/php-test.yml?style=for-the-badge&label=PHP%20Unit%20Testing)](https://github.com/felixarntz/attachment-taxonomies/actions/workflows/php-test.yml)
+[![E2E Testing](https://img.shields.io/github/actions/workflow/status/felixarntz/attachment-taxonomies/e2e-test.yml?style=for-the-badge&label=E2E%20Testing)](https://github.com/felixarntz/attachment-taxonomies/actions/workflows/e2e-test.yml)
+[![Packagist version](https://img.shields.io/packagist/v/felixarntz/attachment-taxonomies?style=for-the-badge)](https://packagist.org/packages/felixarntz/attachment-taxonomies)
+[![Packagist license](https://img.shields.io/packagist/l/felixarntz/attachment-taxonomies?style=for-the-badge)](https://packagist.org/packages/felixarntz/attachment-taxonomies)
 [![WordPress plugin version](https://img.shields.io/wordpress/plugin/v/attachment-taxonomies?style=for-the-badge)](https://wordpress.org/plugins/attachment-taxonomies/)
 [![WordPress tested version](https://img.shields.io/wordpress/plugin/tested/attachment-taxonomies?style=for-the-badge)](https://wordpress.org/plugins/attachment-taxonomies/)
 [![WordPress plugin downloads](https://img.shields.io/wordpress/plugin/dt/attachment-taxonomies?style=for-the-badge)](https://wordpress.org/plugins/attachment-taxonomies/)
-[![Packagist version](https://img.shields.io/packagist/v/felixarntz/attachment-taxonomies?style=for-the-badge)](https://packagist.org/packages/felixarntz/attachment-taxonomies)
-[![Packagist license](https://img.shields.io/packagist/l/felixarntz/attachment-taxonomies?style=for-the-badge)](https://packagist.org/packages/felixarntz/attachment-taxonomies)
-[![PHP Unit Testing](https://img.shields.io/github/actions/workflow/status/felixarntz/attachment-taxonomies/php-test.yml?style=for-the-badge&label=PHP%20Unit%20Testing)](https://github.com/felixarntz/attachment-taxonomies/actions/workflows/php-test.yml)
-[![E2E Testing](https://img.shields.io/github/actions/workflow/status/felixarntz/attachment-taxonomies/e2e-test.yml?style=for-the-badge&label=E2E%20Testing)](https://github.com/felixarntz/attachment-taxonomies/actions/workflows/e2e-test.yml)
 
 Attachment Taxonomies
 =====================
