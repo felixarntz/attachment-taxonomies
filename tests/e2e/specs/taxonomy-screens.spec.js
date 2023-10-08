@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies
@@ -34,18 +35,34 @@ test.describe( 'Media library filter', () => {
 		tags = undefined;
 	} );
 
-	test( 'Media library filter dropdowns are present with terms', async ( {
+	test( 'Attachment categories screen is present', async ( {
 		page,
 		admin,
 	} ) => {
-		await admin.visitAdminPage( 'upload.php' );
+		const query = addQueryArgs( '', {
+			taxonomy: 'attachment_category',
+			post_type: 'attachment',
+		} ).slice( 1 );
+		await admin.visitAdminPage( 'edit-tags.php', query );
 
-		const categoryFilters = page.locator( '#media-attachment-attachment-category-filters' );
-		await expect( categoryFilters ).toBeVisible();
-		await expect( categoryFilters.locator( 'option' ) ).toHaveCount( 3 ); // 2 categories, plus 'all'.
+		const rowTitles = page.locator( '.row-title' );
+		await expect( rowTitles ).toHaveCount( 2 );
+		await expect( rowTitles.first() ).toHaveText( 'Test Category 1' );
+		await expect( rowTitles.last() ).toHaveText( 'Test Category 2' );
+	} );
 
-		const tagFilters = page.locator( '#media-attachment-attachment-tag-filters' );
-		await expect( tagFilters ).toBeVisible();
-		await expect( tagFilters.locator( 'option' ) ).toHaveCount( 2 ); // 1 tag, plus 'all'.
+	test( 'Attachment tags screen is present', async ( {
+		page,
+		admin,
+	} ) => {
+		const query = addQueryArgs( '', {
+			taxonomy: 'attachment_tag',
+			post_type: 'attachment',
+		} ).slice( 1 );
+		await admin.visitAdminPage( 'edit-tags.php', query );
+
+		const rowTitles = page.locator( '.row-title' );
+		await expect( rowTitles ).toHaveCount( 1 );
+		await expect( rowTitles.first() ).toHaveText( 'Test Tag 1' );
 	} );
 } );
