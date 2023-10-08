@@ -14,6 +14,10 @@ const config = defineConfig( {
 	globalSetup: fileURLToPath(
 		new URL( './config/global-setup.ts', 'file:' + __filename ).href
 	),
+	use: {
+		...baseConfig.use,
+		trace: 'retain-on-failure',
+	},
 } );
 
 export default config;
