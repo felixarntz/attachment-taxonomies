@@ -21,11 +21,19 @@ test.describe( 'Media library filter', () => {
 
 	test.beforeAll( async ( { termUtils } ) => {
 		categories = {};
-		categories['Test Category 1'] = await termUtils.createAttachmentCategory( { name: 'Test Category 1' } );
-		categories['Test Category 2'] = await termUtils.createAttachmentCategory( { name: 'Test Category 2' } );
+		categories[ 'Test Category 1' ] =
+			await termUtils.createAttachmentCategory( {
+				name: 'Test Category 1',
+			} );
+		categories[ 'Test Category 2' ] =
+			await termUtils.createAttachmentCategory( {
+				name: 'Test Category 2',
+			} );
 
 		tags = {};
-		tags['Test Tag 1'] = await termUtils.createAttachmentTag( { name: 'Test Tag 1' } );
+		tags[ 'Test Tag 1' ] = await termUtils.createAttachmentTag( {
+			name: 'Test Tag 1',
+		} );
 	} );
 
 	test.afterAll( async ( { termUtils } ) => {
@@ -51,10 +59,7 @@ test.describe( 'Media library filter', () => {
 		await expect( rowTitles.last() ).toHaveText( 'Test Category 2' );
 	} );
 
-	test( 'Attachment tags screen is present', async ( {
-		page,
-		admin,
-	} ) => {
+	test( 'Attachment tags screen is present', async ( { page, admin } ) => {
 		const query = addQueryArgs( '', {
 			taxonomy: 'attachment_tag',
 			post_type: 'attachment',
