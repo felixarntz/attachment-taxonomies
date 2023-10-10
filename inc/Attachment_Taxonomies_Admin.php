@@ -109,6 +109,10 @@ final class Attachment_Taxonomies_Admin {
 		}
 
 		foreach ( $this->core->get_taxonomies( 'objects' ) as $taxonomy ) {
+			if ( ! current_user_can( $taxonomy->cap->assign_terms ) ) {
+				continue;
+			}
+
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( ! isset( $_REQUEST['changes'][ 'taxonomy-' . $taxonomy->name . '-terms' ] ) ) {
 				continue;
@@ -120,9 +124,7 @@ final class Attachment_Taxonomies_Admin {
 				$terms = array_filter( array_map( 'trim', explode( ',', $terms ) ) );
 			}
 
-			if ( current_user_can( $taxonomy->cap->assign_terms ) ) {
-				wp_set_post_terms( $attachment_id, $terms, $taxonomy->name );
-			}
+			wp_set_post_terms( $attachment_id, $terms, $taxonomy->name );
 		}
 	}
 
