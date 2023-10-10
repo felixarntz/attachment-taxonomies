@@ -35,13 +35,12 @@ function extendMediaLibrary( wpMedia, $, taxonomies ) {
 				}
 			}
 
-			const $select = $( e.target );
-			const targetSetting = $select.attr(
+			const $setting = $( e.target ).parent();
+			const targetSetting = $setting.attr(
 				'data-controls-attachment-taxonomy-setting'
 			);
 
-			$select
-				.parent()
+			$setting
 				.parent()
 				.find( `.setting[data-setting=${ targetSetting }] > input` )
 				.val( options.join( ',' ) )
