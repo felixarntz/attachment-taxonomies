@@ -26,7 +26,7 @@ function extendMediaLibrary( wpMedia, $, taxonomies ) {
 
 	$( document ).on(
 		'change',
-		'.attachment-taxonomy-select > select',
+		'.setting[data-controls-attachment-taxonomy-setting] > select',
 		function ( e ) {
 			const options = [];
 			for ( const i in e.target.options ) {
@@ -35,10 +35,15 @@ function extendMediaLibrary( wpMedia, $, taxonomies ) {
 				}
 			}
 
-			$( e.target )
+			const $select = $( e.target );
+			const targetSetting = $select.attr(
+				'data-controls-attachment-taxonomy-setting'
+			);
+
+			$select
 				.parent()
-				.prev( '.attachment-taxonomy-input' )
-				.find( 'input' )
+				.parent()
+				.find( `.setting[data-setting=${ targetSetting }] > input` )
 				.val( options.join( ',' ) )
 				.trigger( 'change' );
 		}

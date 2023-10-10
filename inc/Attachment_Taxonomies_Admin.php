@@ -236,7 +236,8 @@ final class Attachment_Taxonomies_Admin {
 				width: calc(<?php echo esc_attr( $percentage_calc ); ?>% - 12px) !important;
 			}
 
-			.attachment-taxonomy-input {
+			.attachment-details .setting.attachment-taxonomy-input,
+			.media-sidebar .setting.attachment-taxonomy-input {
 				display: none;
 			}
 
@@ -363,13 +364,15 @@ final class Attachment_Taxonomies_Admin {
 		foreach ( $this->core->get_taxonomies( 'objects' ) as $taxonomy ) {
 			$terms        = $this->core->get_terms_for_taxonomy( $taxonomy->name );
 			$user_has_cap = current_user_can( $taxonomy->cap->assign_terms );
+			$setting      = 'taxonomy-' . sanitize_html_class( $taxonomy->name ) . '-terms';
+			$id           = 'attachment-details-two-column-taxonomy-' . sanitize_html_class( $taxonomy->name ) . '-terms';
 			?>
-			<label class="setting attachment-taxonomy-input" data-setting="taxonomy-<?php echo sanitize_html_class( $taxonomy->name ); ?>-terms">
+			<span class="setting attachment-taxonomy-input" data-setting="<?php echo esc_attr( $setting ); ?>">
 				<input type="hidden" value="{{ data.taxonomies ? Object.keys(data.taxonomies.<?php echo esc_attr( $taxonomy->name ); ?>).join(',') : '' }}" />
-			</label>
-			<label class="setting attachment-taxonomy-select">
-				<span class="name"><?php echo esc_html( $taxonomy->labels->name ); ?></span>
-				<select multiple="multiple"<?php echo $user_has_cap ? '' : ' readonly'; ?>>
+			</span>
+			<span class="setting attachment-taxonomy-select" data-controls-attachment-taxonomy-setting="<?php echo esc_attr( $setting ); ?>">
+				<label for="<?php echo esc_attr( $id ); ?>" class="name"><?php echo esc_html( $taxonomy->labels->name ); ?></label>
+				<select id="<?php echo esc_attr( $id ); ?>" multiple="multiple"<?php echo $user_has_cap ? '' : ' readonly'; ?>>
 					<?php if ( $taxonomy->hierarchical ) : ?>
 						<?php foreach ( $terms as $term ) : ?>
 							<option value="<?php echo esc_attr( $term->term_id ); ?>"<?php echo $user_has_cap ? '' : ' disabled'; ?> {{ ( data.taxonomies && data.taxonomies.<?php echo esc_attr( $taxonomy->name ); ?>[<?php echo esc_attr( $term->term_id ); ?>] ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
@@ -380,7 +383,7 @@ final class Attachment_Taxonomies_Admin {
 						<?php endforeach; ?>
 					<?php endif; ?>
 				</select>
-			</label>
+			</span>
 			<?php
 		}
 		return ob_get_clean();
