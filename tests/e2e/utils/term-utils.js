@@ -23,14 +23,18 @@ class TermUtils {
 			restBase = await this.getRestBase( taxonomy );
 		}
 
+		const termData = { taxonomy };
+		if ( name ) {
+			termData.name = name;
+		}
+		if ( slug ) {
+			termData.slug = slug;
+		}
+
 		const term = await this.requestUtils.rest( {
 			method: 'POST',
 			path: `/wp/v2/${ restBase }`,
-			params: {
-				taxonomy,
-				name,
-				slug,
-			},
+			params: termData,
 		} );
 		return term;
 	}
@@ -73,6 +77,17 @@ class TermUtils {
 				} )
 			)
 		);
+	}
+
+	async getAttachmentTerms( attachmentId, taxonomy, restBase ) {
+		if ( ! restBase ) {
+			restBase = await this.getRestBase( taxonomy );
+		}
+		const attachment = await this.requestUtils.rest( {
+			method: 'GET',
+			path: `/wp/v2/media/${ attachmentId }`,
+		} );
+		return attachment[ restBase ] || [];
 	}
 
 	async assignAttachmentTerms( attachmentId, terms ) {

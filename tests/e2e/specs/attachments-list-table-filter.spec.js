@@ -86,9 +86,7 @@ test.describe( 'Attachments list table filter', () => {
 		await expect( categoryFilters ).toBeVisible();
 		await expect( categoryFilters.locator( 'option' ) ).toHaveCount( 3 ); // 2 categories, plus 'all'.
 
-		const tagFilters = page.locator(
-			'#attachment-attachment_tag-filter'
-		);
+		const tagFilters = page.locator( '#attachment-attachment_tag-filter' );
 		await expect( tagFilters ).toBeVisible();
 		await expect( tagFilters.locator( 'option' ) ).toHaveCount( 2 ); // 1 tag, plus 'all'.
 	} );
@@ -141,9 +139,7 @@ test.describe( 'Attachments list table filter', () => {
 			page.locator( '#the-list > tr:not(.no-items)' )
 		).toHaveCount( 1 );
 
-		const tagFilters = page.locator(
-			'#attachment-attachment_tag-filter'
-		);
+		const tagFilters = page.locator( '#attachment-attachment_tag-filter' );
 		const filterButton = page.locator( '#post-query-submit' );
 
 		// Selecting a tag should lead to no attachments being visible.
