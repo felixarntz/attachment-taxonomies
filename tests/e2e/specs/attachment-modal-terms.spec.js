@@ -131,7 +131,6 @@ test.describe( 'Attachment modal terms', () => {
 		).toEqual( [ tag.id ] );
 
 		// Unselect the tag and ensure it is no longer assigned to the attachment afterwards.
-		// TODO: This does not correctly unselect the single tag, its slug is still sent to admin-ajax.php.
 		await Promise.all( [
 			tagAssignment.selectOption( [] ),
 			page.waitForResponse( '/wp-admin/admin-ajax.php' ),
