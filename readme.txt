@@ -88,7 +88,12 @@ final class Attachment_Location extends Attachment_Taxonomy {
 	);
 }
 
-Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Location() );
+add_action(
+	'plugins_loaded',
+	function() {
+		Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Location() );
+	}
+);
 
 `
 
@@ -101,7 +106,12 @@ Example Code (removes the attachment taxonomy "Category"):
 `
 <?php
 
-Attachment_Taxonomies::instance()->remove_taxonomy( 'attachment_category' );
+add_action(
+	'plugins_loaded',
+	function() {
+		Attachment_Taxonomies::instance()->remove_taxonomy( 'attachment_category' );
+	}
+);
 
 `
 
@@ -116,8 +126,13 @@ Example Code (makes the regular category and tag taxonomies available for attach
 `
 <?php
 
-Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'category' ), true );
-Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'post_tag' ), true );
+add_action(
+	'plugins_loaded',
+	function() {
+		Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'category' ), true );
+		Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'post_tag' ), true );
+	}
+);
 
 ` 
 
