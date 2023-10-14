@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   e2e-test:
-    name: E2E Test
+    name: WP ${{ matrix.wordpress }}${{ matrix.experimental && ' (experimental)' || '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
