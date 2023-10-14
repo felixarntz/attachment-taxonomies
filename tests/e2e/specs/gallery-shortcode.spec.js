@@ -60,6 +60,7 @@ test.describe( 'Media library post modal', () => {
 	test.afterAll( async ( { requestUtils, termUtils } ) => {
 		await termUtils.deleteAllAttachmentTags();
 		await requestUtils.deleteAllMedia();
+		await requestUtils.deleteAllPosts();
 
 		tags = undefined;
 		attachments = undefined;
