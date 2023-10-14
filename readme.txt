@@ -11,7 +11,7 @@ Tested up to:      6.4
 Requires PHP:      7.0
 Stable tag:        1.1.1
 License:           GNU General Public License v3
-License URI:       http://www.gnu.org/licenses/gpl-3.0.html
+License URI:       https://www.gnu.org/licenses/gpl-3.0.html
 Tags:              attachment, media, taxonomy, categories, tags
 
 This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.
@@ -162,6 +162,7 @@ The plugin provides some filters to adjust taxonomy arguments and labels.
 * `attachment_taxonomy_{$taxonomy_slug}_args` where the only argument is the array of taxonomy arguments for the taxonomy defined by `$taxonomy_slug`
 * `attachment_taxonomy_labels` where first argument is the array of taxonomy labels and the second argument is the taxonomy slug that these labels apply to
 * `attachment_taxonomy_{$taxonomy_slug}_labels` where the only argument is the array of taxonomy labels for the taxonomy defined by `$taxonomy_slug`
+* `attachment_taxonomy_class_names` where the only argument is the array of class names of the taxonomies to register by default
 
 = Where should I submit my support request? =
 

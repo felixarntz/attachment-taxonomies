@@ -28,7 +28,7 @@ This plugin adds categories and tags to the WordPress media library - lightweigh
 
 ## Installation and usage
 
-You can download the latest version from the [WordPress plugin repository](http://wordpress.org/plugins/attachment-taxonomies/).
+You can download the latest version from the [WordPress plugin repository](https://wordpress.org/plugins/attachment-taxonomies/).
 
 Please see the [plugin repository instructions](https://wordpress.org/plugins/attachment-taxonomies/#installation) for detailed information on installation and usage.
 

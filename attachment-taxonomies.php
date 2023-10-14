@@ -16,7 +16,7 @@
  * Author: Felix Arntz
  * Author URI: https://felix-arntz.me
  * License: GNU General Public License v3
- * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: attachment-taxonomies
  * Tags: attachment, media, taxonomy, categories, tags
  */
