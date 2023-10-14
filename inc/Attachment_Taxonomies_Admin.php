@@ -228,14 +228,19 @@ final class Attachment_Taxonomies_Admin {
 			return;
 		}
 
-		$count = 1 + count( $taxonomies );
+		$tax_count = count( $taxonomies );
 
-		$percentage_calc = intval( floor( 100 / $count ) );
+		$percentage_calc                   = (int) floor( 100 / ( $tax_count + 1 ) );
+		$percentage_calc_with_type_filters = (int) floor( 100 / ( $tax_count + 2 ) );
 
 		?>
 		<style type="text/css">
 			.media-modal-content .media-frame .media-toolbar-secondary > select {
 				width: calc(<?php echo esc_attr( $percentage_calc ); ?>% - 12px) !important;
+			}
+
+			.media-modal-content .media-frame .media-toolbar-secondary:has(#media-attachment-filters) > select {
+				width: calc(<?php echo esc_attr( $percentage_calc_with_type_filters ); ?>% - 12px) !important;
 			}
 
 			.attachment-details .setting.attachment-taxonomy-input,
