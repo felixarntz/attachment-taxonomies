@@ -71,6 +71,12 @@ export function extendAttachmentsBrowser(
 				);
 			}
 
+			// Do not render filters when in gallery editing mode.
+			const state = this.controller.state();
+			if ( state.id && 'gallery-edit' === state.id ) {
+				return;
+			}
+
 			const data = taxonomies.data;
 
 			for ( const i in data ) {
