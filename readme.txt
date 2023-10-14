@@ -9,7 +9,7 @@ Donate link:       https://felix-arntz.me/wordpress-plugins/
 Requires at least: 6.1
 Tested up to:      6.4
 Requires PHP:      7.0
-Stable tag:        1.1.1
+Stable tag:        1.2.0
 License:           GNU General Public License v3
 License URI:       https://www.gnu.org/licenses/gpl-3.0.html
 Tags:              attachment, media, taxonomy, categories, tags
@@ -175,6 +175,21 @@ If you have ideas to improve the plugin or to solve a bug, feel free to raise an
 You can also contribute to the plugin by translating it. Simply visit [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/attachment-taxonomies) to get started.
 
 == Changelog ==
+
+= 1.2.0 =
+* Added: Add support for setting attachment terms via the REST API `wp/v2/media` endpoint.
+* Added: Add support for new `tax_relation` attribute on `gallery` shortcode to control whether to include attachments with _any_ or _all_ of the given taxonomies.
+* Enhanced: Surface the default attachment taxonomies in the REST API.
+* Tweaked: Bump the minimum required WordPress and PHP versions.
+* Tweaked: Remove deprecated parameters from 1.1.0.
+* Tweaked: Use modern test infrastructure including e2e tests, revised PHPUnit tests, and GitHub Actions to ensure long-term stability.
+* Tweaked: Modernize various aspects of legacy logic in PHP and JavaScript code.
+* Tweaked: Deprecate singleton pattern, except on plugin main class.
+* Fixed: Fix accessibility and styling issues with attachment details taxonomy selectors.
+* Fixed: Use correct widths for attachment taxonomy filter dropdowns in media library to avoid offscreen elements.
+* Fixed: Address Backbone cross-version compatibility issue leading to broken media attachments browser.
+* Fixed: Ensure taxonomy filters aren't rendered when in Edit Gallery view.
+* Fixed: Remove unnecessary call to `load_plugin_textdomain()`.
 
 = 1.1.1 =
 * Enhanced: The plugin's attachment taxonomies now use dedicated capabilities that map to core capabilities
