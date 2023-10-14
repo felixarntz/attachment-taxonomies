@@ -67,7 +67,7 @@ Note that all code samples below should be run before the `init` action hook and
 
 = How can I add more attachment taxonomies? =
 
-You can simply use the WordPress Core function [`register_taxonomy()`](https://codex.wordpress.org/Function_Reference/register_taxonomy) and specify `'attachment'` as the second parameter. As an alternative, you can create your own class for the taxonomy, extending the abstract `Attachment_Taxonomy` class provided by the plugin. Then you can add it using the method `add_taxonomy( $taxonomy )` of the class `Attachment_Taxonomies`.
+You can simply use the WordPress Core function [`register_taxonomy()`](https://developer.wordpress.org/reference/functions/register_taxonomy/) and specify `'attachment'` as the second parameter. As an alternative, you can create your own class for the taxonomy, extending the abstract `Attachment_Taxonomy` class provided by the plugin. Then you can add it using the method `add_taxonomy( $taxonomy )` of the class `Attachment_Taxonomies`.
 
 Example Code (adds an attachment taxonomy called "Location"):
 
@@ -119,7 +119,7 @@ add_action(
 
 To accomplish that, first you need to remove the two taxonomies that the plugin adds (`attachment_category` and `attachment_tag`). See above for instructions on how to do that.
 
-Then you can simply use the WordPress Core function [`register_taxonomy_for_object_type()`](https://codex.wordpress.org/Function_Reference/register_taxonomy_for_object_type) and specify `'attachment'` as the second parameter. As an alternative, you can create your own instance of the `Attachment_Existing_Taxonomy` class provided by the plugin. Then you can add it using the method `add_taxonomy( $taxonomy, $existing )` of the class `Attachment_Taxonomies`, with the second parameter set to `true`.
+Then you can simply use the WordPress Core function [`register_taxonomy_for_object_type()`](https://developer.wordpress.org/reference/functions/register_taxonomy_for_object_type/) and specify `'attachment'` as the second parameter. As an alternative, you can create your own instance of the `Attachment_Existing_Taxonomy` class provided by the plugin. Then you can add it using the method `add_taxonomy( $taxonomy )` of the class `Attachment_Taxonomies`, with the second parameter set to `true`.
 
 Example Code (makes the regular category and tag taxonomies available for attachments):
 
@@ -129,8 +129,8 @@ Example Code (makes the regular category and tag taxonomies available for attach
 add_action(
 	'plugins_loaded',
 	function() {
-		Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'category' ), true );
-		Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'post_tag' ), true );
+		Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'category' ) );
+		Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'post_tag' ) );
 	}
 );
 

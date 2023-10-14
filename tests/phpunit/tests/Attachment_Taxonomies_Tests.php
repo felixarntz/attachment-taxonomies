@@ -8,14 +8,14 @@
 
 class Attachment_Taxonomies_Tests extends WP_UnitTestCase {
 	public function test_add_taxonomy() {
-		$status = Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'post_tag' ), true );
+		$status = Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'post_tag' ) );
 		$this->assertTrue( $status );
 	}
 
 	public function test_get_taxonomy() {
-		Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'post_tag' ), true );
+		Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonomy( 'post_tag' ) );
 
-		$tax = Attachment_Taxonomies::instance()->get_taxonomy( 'post_tag', true );
+		$tax = Attachment_Taxonomies::instance()->get_taxonomy( 'post_tag' );
 		$this->assertInstanceOf( 'Attachment_Existing_Taxonomy', $tax );
 
 		$tax = Attachment_Taxonomies::instance()->get_taxonomy( 'attachment_category' );
