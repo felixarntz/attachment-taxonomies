@@ -29,12 +29,14 @@ The plugin follows WordPress Core principles and offers a lightweight alternativ
 * Allows to pick taxonomy terms for attachments from within the Attachment Selection & Edit modals
 * Adds a setting for the default attachment category
 * Enhances the `[gallery]` shortcode so that images of a specific attachment taxonomy can be included automatically
+
+= Quality attributes =
+
 * Lightweight plugin following WordPress Core principles
 * "Decisions, not Options"
 * Can easily be used as a must-use plugin
 * Provides a flexible API to add other attachment taxonomies or disable the existing ones for developers
 * Provides an easy-to-use `has_default` argument that can be used when registering an attachment taxonomy in order to automatically add a setting for the default taxonomy term
-* Developers are free to use the plugin-provided object-oriented taxonomy approach or use familiar WordPress Core functions
 
 == Installation ==
 
@@ -45,7 +47,7 @@ The plugin follows WordPress Core principles and offers a lightweight alternativ
 
 = As a must-use plugin =
 
-If you don't know what a must-use plugin is, you might wanna read its [introduction in the WordPress Codex](https://codex.wordpress.org/Must_Use_Plugins) - don't worry, that's nothing purely for developers.
+If you don't know what a must-use plugin is, you might wanna read its [introduction in the WordPress Codex](https://wordpress.org/documentation/article/must-use-plugins/).
 
 1. Upload the entire `attachment-taxonomies` folder to the `/wp-content/mu-plugins/` directory (create the directory if it doesn't exist).
 2. Move the file `/wp-content/mu-plugins/attachment-taxonomies/attachment-taxonomies.php` out of its directory to `/wp-content/mu-plugins/attachment-taxonomies.php`.
@@ -54,7 +56,10 @@ Note that, while must-use plugins have the advantage that they cannot be disable
 
 = Administration =
 
-Once the plugin is activated, you will see two new submenu items under Media (Categories and Tags). The plugin follows the WordPress Core philosophy "Decisions, not Options" - therefore there is no additional settings screen. However, the plugin is easily extendable and adjustable by developers (see [FAQ](http://wordpress.org/plugins/attachment-taxonomies/faq/)). So if the base configuration does not suit your needs, it shouldn't be too hard to change that.
+Once the plugin is activated, you will see two new submenu items under Media (Categories and Tags), where you can manage available attachment categories and tags.
+If you like, you can set a default category to apply to new attachment uploads, via using the added dropdown on the _Settings > Writing_ screen.
+
+The plugin follows the WordPress Core philosophy "Decisions, not Options" - therefore there is no additional settings screen. However, the plugin is easily extendable and adjustable by developers (see [FAQ](https://wordpress.org/plugins/attachment-taxonomies/faq/)). So if the base configuration does not suit your needs, it shouldn't be too hard to change that.
 
 == Frequently Asked Questions ==
 
@@ -139,11 +144,11 @@ The plugin provides some filters to adjust taxonomy arguments and labels.
 
 = Where should I submit my support request? =
 
-I preferably take support requests as [issues on Github](https://github.com/felixarntz/attachment-taxonomies/issues), so I would appreciate if you created an issue for your request there. However, if you don't have an account there and do not want to sign up, you can of course use the [wordpress.org support forums](https://wordpress.org/support/plugin/attachment-taxonomies) as well.
+For regular support requests, please use the [wordpress.org support forums](https://wordpress.org/support/plugin/attachment-taxonomies). If you have a technical issue with the plugin where you already have more insight on how to fix it, you can also [open an issue on GitHub instead](https://github.com/felixarntz/attachment-taxonomies/issues).
 
 = How can I contribute to the plugin? =
 
-If you're a developer and you have some ideas to improve the plugin or to solve a bug, feel free to raise an issue or submit a pull request in the [Github repository for the plugin](https://github.com/felixarntz/attachment-taxonomies).
+If you have ideas to improve the plugin or to solve a bug, feel free to raise an issue or submit a pull request in the [GitHub repository for the plugin](https://github.com/felixarntz/attachment-taxonomies). Please stick to the [contributing guidelines](https://github.com/felixarntz/attachment-taxonomies/blob/main/CONTRIBUTING.md).
 
 You can also contribute to the plugin by translating it. Simply visit [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/attachment-taxonomies) to get started.
 

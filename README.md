@@ -6,35 +6,34 @@
 [![WordPress tested version](https://img.shields.io/wordpress/plugin/tested/attachment-taxonomies?style=for-the-badge)](https://wordpress.org/plugins/attachment-taxonomies/)
 [![WordPress plugin downloads](https://img.shields.io/wordpress/plugin/dt/attachment-taxonomies?style=for-the-badge)](https://wordpress.org/plugins/attachment-taxonomies/)
 
-Attachment Taxonomies
-=====================
+# Attachment Taxonomies
 
 This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.
 
-Features
---------
+## Features
 
 * Adds categories and tags to the Media Library (independent from the regular post categories and tags)
 * Inserts filter dropdowns for attachment taxonomies into the media toolbar and media modal
 * Allows to pick taxonomy terms for attachments from within the Attachment Selection & Edit modals
+* Adds a setting for the default attachment category
+* Enhances the `[gallery]` shortcode so that images of a specific attachment taxonomy can be included automatically
+
+## Quality attributes
+
 * Lightweight plugin following WordPress Core principles
 * "Decisions, not Options"
 * Can easily be used as a must-use plugin
 * Provides a flexible API to add other attachment taxonomies or disable the existing ones for developers
-* Developers are free to use the plugin-provided object-oriented taxonomy approach or use familiar WordPress Core functions
+* Provides an easy-to-use `has_default` argument that can be used when registering an attachment taxonomy in order to automatically add a setting for the default taxonomy term
 
-Installation and Setup
-----------------------
+## Installation and usage
 
 You can download the latest version from the [WordPress plugin repository](http://wordpress.org/plugins/attachment-taxonomies/).
 
-If you like, you can also use it as a must-use plugin by moving the directory into the `wp-content/mu-plugins` directory and then moving the main file `attachment-taxonomies.php` from the plugin's directory to the must-use plugins root directory (i.e. from `wp-content/mu-plugins/attachment-taxonomies` to `wp-content/mu-plugins`). Note that, while must-use plugins have the advantage that they cannot be disabled from the admin area, they cannot be updated through WordPress, so you're recommended to keep them up to date manually.
+Please see the [plugin repository instructions](https://wordpress.org/plugins/attachment-taxonomies/#installation) for detailed information on installation and usage.
 
-Once the plugin is activated, you will see two new submenu items under Media (Categories and Tags). The plugin follows the WordPress Core philosophy "Decisions, not Options" - therefore there is no additional settings screen. However, the plugin is easily extendable and adjustable by developers, providing a flexible API. So if the base configuration does not suit your needs, it shouldn't be too hard to change that.
+## Contributions
 
-Contributions and Bugs
-----------------------
-
-If you have ideas on how to improve the plugin or if you discover a bug, I would appreciate if you shared them with me, right here on Github. In either case, please open a new issue [here](https://github.com/felixarntz/attachment-taxonomies/issues/new)!
+If you have ideas to improve the plugin or to solve a bug, feel free to raise an issue or submit a pull request right here on GitHub. Please refer to the [contributing guidelines](https://github.com/felixarntz/attachment-taxonomies/blob/main/CONTRIBUTING.md) to learn more and get started.
 
 You can also contribute to the plugin by translating it. Simply visit [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/attachment-taxonomies) to get started.
