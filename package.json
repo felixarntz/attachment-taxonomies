@@ -1,7 +1,7 @@
 {
   "name": "attachment-taxonomies",
   "description": "This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.",
-  "license": "GPL-3.0",
+  "license": "GPL-3.0-or-later",
   "keywords": [
     "wordpress",
     "plugin",

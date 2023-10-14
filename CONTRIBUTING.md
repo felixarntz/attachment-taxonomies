@@ -6,7 +6,7 @@ As with all WordPress projects, we want to ensure a welcoming environment for ev
 
 ## License
 
-The Attachment Taxonomies plugin is [licensed under the GPLv3](/license.txt), and all contributions will be released under the GPLv3 license. You maintain copyright over any contribution you make, and by submitting a pull request, you are agreeing to release that contribution under the GPLv3 license.
+The Attachment Taxonomies plugin is [licensed under the GPLv3 (or later)](/license.txt), and all contributions will be released under the GPLv3 license. You maintain copyright over any contribution you make, and by submitting a pull request, you are agreeing to release that contribution under the GPLv3 license.
 
 ## Coding standards
 
