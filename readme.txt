@@ -123,12 +123,18 @@ Attachment_Taxonomies::instance()->add_taxonomy( new Attachment_Existing_Taxonom
 
 = How do I use the enhanced version of the `[gallery]` shortcode? =
 
-The `[gallery]` shortcode can now be passed taxonomy attributes. They have to have the attachment taxonomy slug as the attribute name and a comma-separated list of term slugs or term IDs as value. You may also specify a new "limit" attribute to limit the amount of images shown. This is especially recommended if the attachment taxonomy term you are querying for contains a lot of images.
+The `[gallery]` shortcode can now be passed taxonomy attributes. They have to have the attachment taxonomy slug as the attribute name and a comma-separated list of term slugs or term IDs as value. You may also specify a new "limit" attribute to limit the amount of images shown. This is especially recommended if the attachment taxonomy term you are querying for contains a lot of images. As of version 1.2.0, the plugin furthermore supports an optional "tax_relation" attribute, which you can set to "AND" in order to show only images that satisfy _all_ of the taxonomy attributes provided on the shortcode.
 
 Example Code (shows images with attachment categories 1 or 2 or attachment tag 5 with a limit of 20 images shown):
 
 `
 [gallery attachment_category="1,2" attachment_tag="5" limit="20"]
+`
+
+Example Code (shows images with attachment categories 1 or 2 _and_ attachment tag 5):
+
+`
+[gallery attachment_category="1,2" attachment_tag="5" tax_relation="AND"]
 `
 
 Note that there is currently no UI in the backend for this, and the preview in the editor will not work properly. It will show up correctly in the frontend though.

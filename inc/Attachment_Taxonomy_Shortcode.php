@@ -108,7 +108,9 @@ final class Attachment_Taxonomy_Shortcode {
 			}
 		}
 
-		$attachment_ids = $this->get_shortcode_attachment_ids( $all_term_ids, $limit, $original_ids );
+		$tax_relation = ( isset( $atts['tax_relation'] ) && 'AND' === strtoupper( $atts['tax_relation'] ) ) ? 'AND' : 'OR';
+
+		$attachment_ids = $this->get_shortcode_attachment_ids( $all_term_ids, $limit, $original_ids, $tax_relation );
 		if ( ! empty( $attachment_ids ) ) {
 			$out['include'] = array_merge( $original_ids, $attachment_ids );
 		}
@@ -186,16 +188,18 @@ final class Attachment_Taxonomy_Shortcode {
 	 * Queries attachments with specific taxonomies and terms.
 	 *
 	 * @since 1.1.0
+	 * @since 1.2.0 The $tax_relation parameter was added.
 	 *
-	 * @param array $all_term_ids Array of `$taxonomy_slug => $term_ids` pairs.
-	 * @param int   $limit        Optional. Limit for the query. Default is -1 (no limit).
-	 * @param array $exclude_ids  Optional. Attachment IDs to exclude. Default empty array.
+	 * @param array  $all_term_ids Array of `$taxonomy_slug => $term_ids` pairs.
+	 * @param int    $limit        Optional. Limit for the query. Default is -1 (no limit).
+	 * @param array  $exclude_ids  Optional. Attachment IDs to exclude. Default empty array.
+	 * @param string $tax_relation Optional. How to combine multiple tax queries. Either 'OR' or 'AND'. Default 'OR'.
 	 * @return array Array of attachment IDs.
 	 */
-	private function get_shortcode_attachment_ids( $all_term_ids, $limit = -1, $exclude_ids = array() ) {
+	private function get_shortcode_attachment_ids( $all_term_ids, $limit = -1, $exclude_ids = array(), $tax_relation = 'OR' ) {
 		$tax_query = array();
 		if ( count( $all_term_ids ) > 1 ) {
-			$tax_query['relation'] = 'OR';
+			$tax_query['relation'] = $tax_relation;
 		}
 
 		foreach ( $all_term_ids as $taxonomy_slug => $term_ids ) {
