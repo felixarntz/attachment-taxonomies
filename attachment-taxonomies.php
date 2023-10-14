@@ -11,7 +11,7 @@
  * Plugin URI: https://wordpress.org/plugins/attachment-taxonomies/
  * Description: This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.
  * Version: 1.1.1
- * Requires at least: 6.0
+ * Requires at least: 6.1
  * Requires PHP: 7.0
  * Author: Felix Arntz
  * Author URI: https://felix-arntz.me

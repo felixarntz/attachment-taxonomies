@@ -12,7 +12,7 @@ The Attachment Taxonomies plugin is [licensed under the GPLv3 (or later)](/licen
 
 In general, all code must follow the [WordPress Coding Standards and best practices](https://developer.wordpress.org/coding-standards/). All code must furthermore satisfy the following minimum requirements (as of Attachment Taxonomies 1.2.0):
 
-- **WordPress**: The plugin's minimum required WordPress version is 6.0.
+- **WordPress**: The plugin's minimum required WordPress version is 6.1.
 - **PHP**: The plugin's minimum required PHP version is 7.0.
 
 ## Getting started with code contributions
