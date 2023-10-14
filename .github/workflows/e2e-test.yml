@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        wordpress: [ '6.0', 'latest' ]
+        wordpress: [ '6.1', 'latest' ]
         experimental: [false]
         include:
           - wordpress: 'trunk'
