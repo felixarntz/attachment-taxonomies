@@ -95,7 +95,7 @@ final class Attachment_Taxonomies_REST {
 	 * @return bool|WP_Error True if the current user can assign the provided terms, WP_Error otherwise.
 	 */
 	private function check_assign_terms_permission( $request ) {
-		$taxonomies = wp_list_filter( $this->core->get_taxonomies( 'objects' ), array( 'show_in_rest' => true ) );
+		$taxonomies = wp_list_filter( $this->core->get_all_taxonomies(), array( 'show_in_rest' => true ) );
 		foreach ( $taxonomies as $taxonomy ) {
 			$base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
 
@@ -138,7 +138,7 @@ final class Attachment_Taxonomies_REST {
 	 * @return null|WP_Error WP_Error on an error assigning any of the terms, otherwise null.
 	 */
 	private function handle_terms( $attachment_id, $request ) {
-		$taxonomies = wp_list_filter( $this->core->get_taxonomies( 'objects' ), array( 'show_in_rest' => true ) );
+		$taxonomies = wp_list_filter( $this->core->get_all_taxonomies(), array( 'show_in_rest' => true ) );
 
 		foreach ( $taxonomies as $taxonomy ) {
 			$base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;

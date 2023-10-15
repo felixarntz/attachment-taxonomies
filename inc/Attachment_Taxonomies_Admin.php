@@ -108,7 +108,7 @@ final class Attachment_Taxonomies_Admin {
 			return;
 		}
 
-		foreach ( $this->core->get_taxonomies( 'objects' ) as $taxonomy ) {
+		foreach ( $this->core->get_all_taxonomies() as $taxonomy ) {
 			if ( ! current_user_can( $taxonomy->cap->assign_terms ) ) {
 				continue;
 			}
@@ -150,7 +150,7 @@ final class Attachment_Taxonomies_Admin {
 			return;
 		}
 
-		foreach ( $this->core->get_taxonomies( 'objects' ) as $taxonomy_slug => $taxonomy ) {
+		foreach ( $this->core->get_taxonomies_to_show() as $taxonomy ) {
 			if ( ! $taxonomy->query_var ) {
 				continue;
 			}
@@ -158,10 +158,10 @@ final class Attachment_Taxonomies_Admin {
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$value = isset( $_REQUEST[ $taxonomy->query_var ] ) ? $_REQUEST[ $taxonomy->query_var ] : '';
 			?>
-			<label for="attachment-<?php echo sanitize_html_class( $taxonomy_slug ); ?>-filter" class="screen-reader-text"><?php echo esc_html( $this->get_filter_by_label( $taxonomy ) ); ?></label>
-			<select class="attachment-filters" name="<?php echo esc_attr( $taxonomy->query_var ); ?>" id="attachment-<?php echo sanitize_html_class( $taxonomy_slug ); ?>-filter">
+			<label for="attachment-<?php echo sanitize_html_class( $taxonomy->name ); ?>-filter" class="screen-reader-text"><?php echo esc_html( $this->get_filter_by_label( $taxonomy ) ); ?></label>
+			<select class="attachment-filters" name="<?php echo esc_attr( $taxonomy->query_var ); ?>" id="attachment-<?php echo sanitize_html_class( $taxonomy->name ); ?>-filter">
 				<option value="" <?php selected( '', $value ); ?>><?php echo esc_html( $taxonomy->labels->all_items ); ?></option>
-				<?php foreach ( $this->core->get_terms_for_taxonomy( $taxonomy_slug ) as $term ) : ?>
+				<?php foreach ( $this->core->get_terms_for_taxonomy( $taxonomy->name ) as $term ) : ?>
 					<option value="<?php echo esc_attr( $term->slug ); ?>" <?php selected( $term->slug, $value ); ?>><?php echo esc_html( $term->name ); ?></option>
 				<?php endforeach; ?>
 			</select>
@@ -180,7 +180,8 @@ final class Attachment_Taxonomies_Admin {
 	 * @since 1.2.0 Originally part of {@see Attachment_Taxonomies_Core}.
 	 */
 	public function enqueue_script() {
-		if ( ! $this->core->has_taxonomies() ) {
+		$taxonomies = $this->core->get_taxonomies_to_show();
+		if ( ! $taxonomies ) {
 			return;
 		}
 
@@ -218,8 +219,8 @@ final class Attachment_Taxonomies_Admin {
 	 * @since 1.2.0 Originally part of {@see Attachment_Taxonomies_Core}.
 	 */
 	public function print_styles() {
-		$taxonomies = $this->core->get_taxonomies();
-		if ( 0 === count( $taxonomies ) ) {
+		$taxonomies = $this->core->get_taxonomies_to_show();
+		if ( ! $taxonomies ) {
 			return;
 		}
 
@@ -275,19 +276,23 @@ final class Attachment_Taxonomies_Admin {
 	 */
 	public function add_taxonomies_to_attachment_js( $response, $attachment ) {
 		$response['taxonomies'] = array();
-		foreach ( $this->core->get_taxonomies( 'names' ) as $taxonomy_slug ) {
-			$response['taxonomies'][ $taxonomy_slug ] = array();
-			foreach ( (array) wp_get_object_terms( $attachment->ID, $taxonomy_slug ) as $term ) {
+		foreach ( $this->core->get_taxonomies_to_show() as $taxonomy ) {
+			$response['taxonomies'][ $taxonomy->name ] = array();
+			foreach ( (array) wp_get_object_terms( $attachment->ID, $taxonomy->name ) as $term ) {
 				$term_data = array(
 					'id'   => $term->term_id,
 					'slug' => $term->slug,
 					'name' => $term->name,
 				);
-				if ( is_taxonomy_hierarchical( $taxonomy_slug ) ) {
-					$response['taxonomies'][ $taxonomy_slug ][ $term->term_id ] = $term_data;
+				if ( is_taxonomy_hierarchical( $taxonomy->name ) ) {
+					$response['taxonomies'][ $taxonomy->name ][ $term->term_id ] = $term_data;
 				} else {
-					$response['taxonomies'][ $taxonomy_slug ][ $term->slug ] = $term_data;
+					$response['taxonomies'][ $taxonomy->name ][ $term->slug ] = $term_data;
 				}
+			}
+			// Force a JSON object if empty.
+			if ( empty( $response['taxonomies'][ $taxonomy->name ] ) ) {
+				$response['taxonomies'][ $taxonomy->name ] = new stdClass();
 			}
 		}
 		return $response;
@@ -308,9 +313,9 @@ final class Attachment_Taxonomies_Admin {
 	 * @return array The modified form fields array.
 	 */
 	public function remove_taxonomies_from_attachment_compat( $form_fields ) {
-		foreach ( $this->core->get_taxonomies( 'names' ) as $taxonomy_slug ) {
-			if ( isset( $form_fields[ $taxonomy_slug ] ) ) {
-				unset( $form_fields[ $taxonomy_slug ] );
+		foreach ( $this->core->get_all_taxonomies() as $taxonomy ) {
+			if ( isset( $form_fields[ $taxonomy->name ] ) ) {
+				unset( $form_fields[ $taxonomy->name ] );
 			}
 		}
 
@@ -325,7 +330,8 @@ final class Attachment_Taxonomies_Admin {
 	 * @since 1.0.0
 	 */
 	public function adjust_media_templates() {
-		if ( ! $this->core->has_taxonomies() ) {
+		$taxonomies = $this->core->get_taxonomies_to_show();
+		if ( ! $taxonomies ) {
 			return;
 		}
 
@@ -368,7 +374,7 @@ final class Attachment_Taxonomies_Admin {
 	 */
 	private function get_taxonomy_media_template_output() {
 		ob_start();
-		foreach ( $this->core->get_taxonomies( 'objects' ) as $taxonomy ) {
+		foreach ( $this->core->get_taxonomies_to_show() as $taxonomy ) {
 			$terms        = $this->core->get_terms_for_taxonomy( $taxonomy->name );
 			$user_has_cap = current_user_can( $taxonomy->cap->assign_terms );
 			$setting      = 'taxonomy-' . sanitize_html_class( $taxonomy->name ) . '-terms';
@@ -407,14 +413,10 @@ final class Attachment_Taxonomies_Admin {
 		$taxonomies     = array();
 		$all_items      = array();
 		$filter_by_item = array();
-		foreach ( $this->core->get_taxonomies( 'objects' ) as $taxonomy_slug => $taxonomy ) {
-			if ( ! $taxonomy->query_var ) {
-				continue;
-			}
+		foreach ( $this->core->get_taxonomies_to_show() as $taxonomy ) {
+			$js_slug = $this->make_js_slug( $taxonomy->name );
 
-			$js_slug = $this->make_js_slug( $taxonomy_slug );
-
-			$taxonomies[]               = $this->prepare_taxonomy_for_js( $taxonomy_slug, $taxonomy );
+			$taxonomies[]               = $this->prepare_taxonomy_for_js( $taxonomy );
 			$all_items[ $js_slug ]      = $taxonomy->labels->all_items;
 			$filter_by_item[ $js_slug ] = $this->get_filter_by_label( $taxonomy );
 		}
@@ -435,17 +437,16 @@ final class Attachment_Taxonomies_Admin {
 	 *
 	 * @since 1.2.0 Originally part of {@see Attachment_Taxonomies_Core}.
 	 *
-	 * @param string $taxonomy_slug The taxonomy slug.
-	 * @param object $taxonomy      The taxonomy object.
+	 * @param WP_Taxonomy $taxonomy The taxonomy object.
 	 * @return array An associative array for the taxonomy.
 	 */
-	private function prepare_taxonomy_for_js( $taxonomy_slug, $taxonomy ) {
-		$js_slug = $this->make_js_slug( $taxonomy_slug );
+	private function prepare_taxonomy_for_js( $taxonomy ) {
+		$js_slug = $this->make_js_slug( $taxonomy->name );
 
 		return array(
 			'name'     => $taxonomy->label,
 			'slug'     => $js_slug,
-			'slugId'   => str_replace( '_', '-', $taxonomy_slug ),
+			'slugId'   => str_replace( '_', '-', $taxonomy->name ),
 			'queryVar' => $taxonomy->query_var,
 			'terms'    => array_map(
 				function ( $term ) {
@@ -454,7 +455,7 @@ final class Attachment_Taxonomies_Admin {
 					}
 					return $term->to_array();
 				},
-				$this->core->get_terms_for_taxonomy( $taxonomy_slug )
+				$this->core->get_terms_for_taxonomy( $taxonomy->name )
 			),
 		);
 	}
@@ -483,7 +484,7 @@ final class Attachment_Taxonomies_Admin {
 	 *
 	 * @since 1.2.0 Originally part of {@see Attachment_Taxonomies_Core}.
 	 *
-	 * @param object $taxonomy The taxonomy object.
+	 * @param WP_Taxonomy $taxonomy The taxonomy object.
 	 * @return string The "Filter by" label for that taxonomy.
 	 */
 	private function get_filter_by_label( $taxonomy ) {

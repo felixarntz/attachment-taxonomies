@@ -87,7 +87,7 @@ final class Attachment_Taxonomy_Default_Terms {
 			return;
 		}
 
-		foreach ( $this->core->get_taxonomies( 'objects' ) as $taxonomy ) {
+		foreach ( $this->core->get_taxonomies_to_show() as $taxonomy ) {
 			if ( 'category' !== $taxonomy->name && ( ! isset( $taxonomy->has_default ) || ! $taxonomy->has_default ) ) {
 				continue;
 			}
@@ -123,7 +123,7 @@ final class Attachment_Taxonomy_Default_Terms {
 	 * @since 1.1.0
 	 */
 	public function register_settings() {
-		foreach ( $this->core->get_taxonomies( 'objects' ) as $taxonomy ) {
+		foreach ( $this->core->get_taxonomies_to_show() as $taxonomy ) {
 			if ( ! isset( $taxonomy->has_default ) || ! $taxonomy->has_default ) {
 				continue;
 			}
@@ -155,7 +155,7 @@ final class Attachment_Taxonomy_Default_Terms {
 	 * @since 1.1.0
 	 */
 	public function add_settings_fields() {
-		foreach ( $this->core->get_taxonomies( 'objects' ) as $taxonomy ) {
+		foreach ( $this->core->get_taxonomies_to_show() as $taxonomy ) {
 			if ( ! isset( $taxonomy->has_default ) || ! $taxonomy->has_default ) {
 				continue;
 			}

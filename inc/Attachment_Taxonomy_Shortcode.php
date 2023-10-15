@@ -88,7 +88,12 @@ final class Attachment_Taxonomy_Shortcode {
 	 * @return array Possibly modified attribute list.
 	 */
 	public function support_gallery_taxonomy_attributes( $out, $pairs, $atts ) {
-		$taxonomy_slugs = $this->core->get_taxonomies();
+		$taxonomy_slugs = array_map(
+			static function ( $taxonomy ) {
+				return $taxonomy->name;
+			},
+			$this->core->get_all_taxonomies()
+		);
 
 		$all_term_ids = $this->get_all_term_ids( $taxonomy_slugs, $atts );
 		if ( empty( $all_term_ids ) ) {
