@@ -187,6 +187,7 @@ You can also contribute to the plugin by translating it. Simply visit [translate
 * Tweaked: Deprecate singleton pattern, except on plugin main class.
 * Fixed: Fix accessibility and styling issues with attachment details taxonomy selectors.
 * Fixed: Use correct widths for attachment taxonomy filter dropdowns in media library to avoid offscreen elements.
+* Fixed: Only show any of the plugin's UI for taxonomies that are configured to `show_ui`.
 * Fixed: Address Backbone cross-version compatibility issue leading to broken media attachments browser.
 * Fixed: Ensure taxonomy filters aren't rendered when in Edit Gallery view.
 * Fixed: Remove unnecessary call to `load_plugin_textdomain()`.
