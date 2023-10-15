@@ -87,30 +87,6 @@ class Attachment_Taxonomies_Core_Tests extends WP_UnitTestCase {
 		$this->assertArrayNotHasKey( 'test_wo', $taxonomies );
 	}
 
-	/**
-	 * @expectedDeprecated has_taxonomies
-	 */
-	public function test_has_taxonomies() {
-		$taxonomies = get_object_taxonomies( 'attachment', 'names' );
-
-		$result = $this->instance->has_taxonomies();
-		if ( 0 < count( $taxonomies ) ) {
-			$this->assertTrue( $result );
-		} else {
-			$this->assertFalse( $result );
-		}
-	}
-
-	/**
-	 * @expectedDeprecated get_taxonomies
-	 */
-	public function test_get_taxonomies() {
-		$taxonomies = get_object_taxonomies( 'attachment', 'names' );
-
-		$result = $this->instance->get_taxonomies();
-		$this->assertEqualSets( $taxonomies, $result );
-	}
-
 	public function test_get_terms_for_taxonomy() {
 		$term1 = self::factory()->term->create( array( 'taxonomy' => 'attachment_category' ) );
 		$term2 = self::factory()->term->create( array( 'taxonomy' => 'attachment_category' ) );
