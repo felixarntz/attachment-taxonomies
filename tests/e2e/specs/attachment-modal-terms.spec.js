@@ -142,4 +142,48 @@ test.describe( 'Attachment modal terms', () => {
 			)
 		).toEqual( [] );
 	} );
+
+	test( 'Attachment modal selectors maintain value after reopening', async ( {
+		page,
+		admin,
+	} ) => {
+		const query = addQueryArgs( '', { item: attachment.id } ).slice( 1 );
+		await admin.visitAdminPage( 'upload.php', query );
+
+		let categoryAssignment = page.locator(
+			'#attachment-details-two-column-taxonomy-attachment_category-terms'
+		);
+
+		// Select the category and ensure it is selected.
+		await Promise.all( [
+			categoryAssignment.selectOption( [ `${ category.id }` ] ),
+			page.waitForResponse( '/wp-admin/admin-ajax.php' ),
+		] );
+		await expect( categoryAssignment ).toHaveValues( [
+			`${ category.id }`,
+		] );
+
+		// Close the media modal and then reopen it again.
+		await page.locator( '.media-modal .media-modal-close' ).click();
+		await page
+			.locator(
+				`.attachment[data-id="${ attachment.id }"] .js--select-attachment`
+			)
+			.click();
+
+		// Ensure that the category is still selected upon reopening.
+		categoryAssignment = page.locator(
+			'#attachment-details-two-column-taxonomy-attachment_category-terms'
+		);
+		await expect( categoryAssignment ).toHaveValues( [
+			`${ category.id }`,
+		] );
+
+		// Unselect the category and ensure it is no longer selected.
+		await Promise.all( [
+			categoryAssignment.selectOption( [] ),
+			page.waitForResponse( '/wp-admin/admin-ajax.php' ),
+		] );
+		await expect( categoryAssignment ).toHaveValues( [] );
+	} );
 } );

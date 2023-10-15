@@ -277,23 +277,22 @@ final class Attachment_Taxonomies_Admin {
 	public function add_taxonomies_to_attachment_js( $response, $attachment ) {
 		$response['taxonomies'] = array();
 		foreach ( $this->core->get_taxonomies_to_show() as $taxonomy ) {
-			$response['taxonomies'][ $taxonomy->name ] = array();
-			foreach ( (array) wp_get_object_terms( $attachment->ID, $taxonomy->name ) as $term ) {
-				$term_data = array(
-					'id'   => $term->term_id,
-					'slug' => $term->slug,
-					'name' => $term->name,
+			if ( is_taxonomy_hierarchical( $taxonomy->name ) ) {
+				$terms = array_map(
+					static function ( $term ) {
+						return (int) $term->term_id;
+					},
+					(array) wp_get_object_terms( $attachment->ID, $taxonomy->name )
 				);
-				if ( is_taxonomy_hierarchical( $taxonomy->name ) ) {
-					$response['taxonomies'][ $taxonomy->name ][ $term->term_id ] = $term_data;
-				} else {
-					$response['taxonomies'][ $taxonomy->name ][ $term->slug ] = $term_data;
-				}
+			} else {
+				$terms = array_map(
+					static function ( $term ) {
+						return $term->slug;
+					},
+					(array) wp_get_object_terms( $attachment->ID, $taxonomy->name )
+				);
 			}
-			// Force a JSON object if empty.
-			if ( empty( $response['taxonomies'][ $taxonomy->name ] ) ) {
-				$response['taxonomies'][ $taxonomy->name ] = new stdClass();
-			}
+			$response[ 'taxonomy-' . $taxonomy->name . '-terms' ] = implode( ',', $terms );
 		}
 		return $response;
 	}
@@ -381,18 +380,18 @@ final class Attachment_Taxonomies_Admin {
 			$id           = 'attachment-details-two-column-taxonomy-' . sanitize_html_class( $taxonomy->name ) . '-terms';
 			?>
 			<span class="setting attachment-taxonomy-input" data-setting="<?php echo esc_attr( $setting ); ?>">
-				<input type="hidden" value="{{ data.taxonomies ? Object.keys(data.taxonomies.<?php echo esc_attr( $taxonomy->name ); ?>).join(',') : '' }}" />
+				<input type="hidden" value="{{ data['taxonomy-<?php echo esc_attr( $taxonomy->name ); ?>-terms'] }}" />
 			</span>
 			<span class="setting attachment-taxonomy-select" data-controls-attachment-taxonomy-setting="<?php echo esc_attr( $setting ); ?>">
 				<label for="<?php echo esc_attr( $id ); ?>" class="name"><?php echo esc_html( $taxonomy->labels->name ); ?></label>
 				<select id="<?php echo esc_attr( $id ); ?>" multiple="multiple"<?php echo $user_has_cap ? '' : ' readonly'; ?>>
 					<?php if ( $taxonomy->hierarchical ) : ?>
 						<?php foreach ( $terms as $term ) : ?>
-							<option value="<?php echo esc_attr( $term->term_id ); ?>"<?php echo $user_has_cap ? '' : ' disabled'; ?> {{ ( data.taxonomies && data.taxonomies.<?php echo esc_attr( $taxonomy->name ); ?>[<?php echo esc_attr( $term->term_id ); ?>] ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
+							<option value="<?php echo esc_attr( $term->term_id ); ?>"<?php echo $user_has_cap ? '' : ' disabled'; ?> {{ ( data['taxonomy-<?php echo esc_attr( $taxonomy->name ); ?>-terms'].split( ',' ).includes( '<?php echo esc_attr( $term->term_id ); ?>' ) ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
 						<?php endforeach; ?>
 					<?php else : ?>
 						<?php foreach ( $terms as $term ) : ?>
-							<option value="<?php echo esc_attr( $term->slug ); ?>"<?php echo $user_has_cap ? '' : ' disabled'; ?> {{ ( data.taxonomies && data.taxonomies.<?php echo esc_attr( $taxonomy->name ); ?>['<?php echo esc_attr( $term->slug ); ?>'] ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
+							<option value="<?php echo esc_attr( $term->slug ); ?>"<?php echo $user_has_cap ? '' : ' disabled'; ?> {{ ( data['taxonomy-<?php echo esc_attr( $taxonomy->name ); ?>-terms'].split( ',' ).includes( '<?php echo esc_attr( $term->slug ); ?>' ) ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
 						<?php endforeach; ?>
 					<?php endif; ?>
 				</select>
