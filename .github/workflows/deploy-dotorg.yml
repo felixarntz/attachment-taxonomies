@@ -4,12 +4,6 @@ on:
   release:
     types:
       - published
-  workflow_dispatch:
-    inputs:
-      dry-run:
-        type: boolean
-        description: 'Debug mode (run without publishing).'
-        default: false
 
 jobs:
   release:
@@ -21,8 +15,6 @@ jobs:
 
       - name: WordPress plugin deploy
         uses: 10up/action-wordpress-plugin-deploy@stable
-        with:
-          dry-run: ${{ github.event.inputs.dry-run }}
         env:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
