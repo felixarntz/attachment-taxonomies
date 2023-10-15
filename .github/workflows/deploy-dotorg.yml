@@ -4,17 +4,36 @@ on:
   release:
     types:
       - published
+  workflow_dispatch:
 
 jobs:
   release:
-    name: New Release
+    name: New Release${{ github.event_name == 'workflow_dispatch' && ' (dry run)' || '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Get plugin version
+        id: get-version
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          echo "version=$(awk '/Stable tag:        /{print $NF}' readme.txt)" >> $GITHUB_OUTPUT
+
       - name: WordPress plugin deploy
         uses: 10up/action-wordpress-plugin-deploy@stable
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        with:
+          dry-run: true
+        env:
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SLUG: attachment-taxonomies
+          VERSION: ${{ steps.get-version.outputs.version }}
+
+      - name: WordPress plugin deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        if: ${{ github.event_name != 'workflow_dispatch' }}
         env:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
