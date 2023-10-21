@@ -119,7 +119,7 @@ add_action(
 
 To accomplish that, first you need to remove the two taxonomies that the plugin adds (`attachment_category` and `attachment_tag`). See above for instructions on how to do that.
 
-Then you can simply use the WordPress Core function [`register_taxonomy_for_object_type()`](https://developer.wordpress.org/reference/functions/register_taxonomy_for_object_type/) and specify `'attachment'` as the second parameter. As an alternative, you can create your own instance of the `Attachment_Existing_Taxonomy` class provided by the plugin. Then you can add it using the method `add_taxonomy( $taxonomy )` of the class `Attachment_Taxonomies`, with the second parameter set to `true`.
+Then you can simply use the WordPress Core function [`register_taxonomy_for_object_type()`](https://developer.wordpress.org/reference/functions/register_taxonomy_for_object_type/) and specify `'attachment'` as the second parameter. As an alternative, you can create your own instance of the `Attachment_Existing_Taxonomy` class provided by the plugin. Then you can add it using the method `add_taxonomy( $taxonomy )` of the class `Attachment_Taxonomies`, as seen in the example below.
 
 Example Code (makes the regular category and tag taxonomies available for attachments):
 
