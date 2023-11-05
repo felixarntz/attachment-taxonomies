@@ -12,7 +12,7 @@ Requires PHP:      7.0
 Stable tag:        1.2.1
 License:           GNU General Public License v3 (or later)
 License URI:       https://www.gnu.org/licenses/gpl-3.0.html
-Tags:              attachment, media, taxonomy, categories, tags
+Tags:              attachment, media, categories, tags, taxonomy, taxonomies
 
 This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.
 
