@@ -176,6 +176,9 @@ You can also contribute to the plugin by translating it. Simply visit [translate
 
 == Changelog ==
 
+= 1.2.1 =
+* Fixed: Uploading a new image via the Image block no longer causes a console error when opening the media library afterwards. Props lucymtc.
+
 = 1.2.0 =
 * Added: Add support for setting attachment terms via the REST API `wp/v2/media` endpoint.
 * Added: Add support for new `tax_relation` attribute on `gallery` shortcode to control whether to include attachments with _any_ or _all_ of the given taxonomies.

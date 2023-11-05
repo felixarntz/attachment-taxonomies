@@ -120,7 +120,7 @@ final class Attachment_Taxonomies_Admin {
 
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$terms = $_REQUEST['changes'][ 'taxonomy-' . $taxonomy->name . '-terms' ];
-			if ( $taxonomy->hierarchical ) {
+			if ( is_taxonomy_hierarchical( $taxonomy->name ) ) {
 				$terms = array_filter( array_map( 'trim', explode( ',', $terms ) ) );
 			}
 
@@ -378,6 +378,7 @@ final class Attachment_Taxonomies_Admin {
 			$user_has_cap = current_user_can( $taxonomy->cap->assign_terms );
 			$setting      = 'taxonomy-' . sanitize_html_class( $taxonomy->name ) . '-terms';
 			$id           = 'attachment-details-two-column-taxonomy-' . sanitize_html_class( $taxonomy->name ) . '-terms';
+			$term_field   = is_taxonomy_hierarchical( $taxonomy->name ) ? 'term_id' : 'slug';
 			?>
 			<span class="setting attachment-taxonomy-input" data-setting="<?php echo esc_attr( $setting ); ?>">
 				<input type="hidden" value="{{ data['taxonomy-<?php echo esc_attr( $taxonomy->name ); ?>-terms'] }}" />
@@ -385,15 +386,16 @@ final class Attachment_Taxonomies_Admin {
 			<span class="setting attachment-taxonomy-select" data-controls-attachment-taxonomy-setting="<?php echo esc_attr( $setting ); ?>">
 				<label for="<?php echo esc_attr( $id ); ?>" class="name"><?php echo esc_html( $taxonomy->labels->name ); ?></label>
 				<select id="<?php echo esc_attr( $id ); ?>" multiple="multiple"<?php echo $user_has_cap ? '' : ' readonly'; ?>>
-					<?php if ( $taxonomy->hierarchical ) : ?>
-						<?php foreach ( $terms as $term ) : ?>
-							<option value="<?php echo esc_attr( $term->term_id ); ?>"<?php echo $user_has_cap ? '' : ' disabled'; ?> {{ ( data['taxonomy-<?php echo esc_attr( $taxonomy->name ); ?>-terms'] && data['taxonomy-<?php echo esc_attr( $taxonomy->name ); ?>-terms'].split( ',' ).includes( '<?php echo esc_attr( $term->term_id ); ?>' ) ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
-						<?php endforeach; ?>
-					<?php else : ?>
-						<?php foreach ( $terms as $term ) : ?>
-							<option value="<?php echo esc_attr( $term->slug ); ?>"<?php echo $user_has_cap ? '' : ' disabled'; ?> {{ ( data['taxonomy-<?php echo esc_attr( $taxonomy->name ); ?>-terms'] && data['taxonomy-<?php echo esc_attr( $taxonomy->name ); ?>-terms'].split( ',' ).includes( '<?php echo esc_attr( $term->slug ); ?>' ) ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
-						<?php endforeach; ?>
-					<?php endif; ?>
+					<?php
+					foreach ( $terms as $term ) {
+						$selected_attr = " {{ ( data['taxonomy-" . esc_attr( $taxonomy->name ) . "-terms'] && data['taxonomy-" . esc_attr( $taxonomy->name ) . "-terms'].split( ',' ).includes( '" . esc_attr( $term->$term_field ) . "' ) ) ? 'selected' : '' }}";
+						?>
+						<option value="<?php echo esc_attr( $term->$term_field ); ?>"<?php echo ( $user_has_cap ? '' : ' disabled' ) . $selected_attr; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>>
+							<?php echo esc_html( $term->name ); ?>
+						</option>
+						<?php
+					}
+					?>
 				</select>
 			</span>
 			<?php

@@ -19,7 +19,7 @@ test.use( {
 	},
 } );
 
-test.describe( 'Media library post modal', () => {
+test.describe( 'Gallery shortcode', () => {
 	let tags;
 	let attachments;
 
