@@ -72,6 +72,7 @@ test.describe( 'Block editor upload', () => {
 			.getByRole( 'menuitem' )
 			.filter( { hasText: 'Open Media Library' } )
 			.click();
+		await page.locator( '.media-modal' ).getByRole( 'tab', { name: 'Media Library' } ).click();
 
 		// Run a basic check to ensure the single category and tag are present.
 		const categoryAssignment = page.locator(
