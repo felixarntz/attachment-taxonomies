@@ -387,11 +387,11 @@ final class Attachment_Taxonomies_Admin {
 				<select id="<?php echo esc_attr( $id ); ?>" multiple="multiple"<?php echo $user_has_cap ? '' : ' readonly'; ?>>
 					<?php if ( $taxonomy->hierarchical ) : ?>
 						<?php foreach ( $terms as $term ) : ?>
-							<option value="<?php echo esc_attr( $term->term_id ); ?>"<?php echo $user_has_cap ? '' : ' disabled'; ?> {{ ( data['taxonomy-<?php echo esc_attr( $taxonomy->name ); ?>-terms'].split( ',' ).includes( '<?php echo esc_attr( $term->term_id ); ?>' ) ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
+							<option value="<?php echo esc_attr( $term->term_id ); ?>"<?php echo $user_has_cap ? '' : ' disabled'; ?> {{ ( data['taxonomy-<?php echo esc_attr( $taxonomy->name ); ?>-terms'] && data['taxonomy-<?php echo esc_attr( $taxonomy->name ); ?>-terms'].split( ',' ).includes( '<?php echo esc_attr( $term->term_id ); ?>' ) ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
 						<?php endforeach; ?>
 					<?php else : ?>
 						<?php foreach ( $terms as $term ) : ?>
-							<option value="<?php echo esc_attr( $term->slug ); ?>"<?php echo $user_has_cap ? '' : ' disabled'; ?> {{ ( data['taxonomy-<?php echo esc_attr( $taxonomy->name ); ?>-terms'].split( ',' ).includes( '<?php echo esc_attr( $term->slug ); ?>' ) ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
+							<option value="<?php echo esc_attr( $term->slug ); ?>"<?php echo $user_has_cap ? '' : ' disabled'; ?> {{ ( data['taxonomy-<?php echo esc_attr( $taxonomy->name ); ?>-terms'] && data['taxonomy-<?php echo esc_attr( $taxonomy->name ); ?>-terms'].split( ',' ).includes( '<?php echo esc_attr( $term->slug ); ?>' ) ) ? 'selected' : '' }}><?php echo esc_html( $term->name ); ?></option>
 						<?php endforeach; ?>
 					<?php endif; ?>
 				</select>
