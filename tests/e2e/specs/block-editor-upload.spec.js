@@ -4,6 +4,7 @@
 const path = require( 'path' );
 const fs = require( 'fs/promises' );
 const os = require( 'os' );
+const { v4: uuid } = require( 'uuid' );
 
 /**
  * WordPress dependencies
@@ -14,6 +15,7 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
  * Internal dependencies
  */
 import TermUtils from '../utils/term-utils';
+import oneOfLocators from '../utils/one-of-locators';
 
 test.use( {
 	termUtils: async ( { requestUtils }, use ) => {
@@ -52,9 +54,12 @@ test.describe( 'Block editor upload', () => {
 
 		// Insert a new image block and upload an image.
 		await editor.insertBlock( { name: 'core/image' } );
-		const imageBlock = editor.canvas.locator(
-			'role=document[name="Block: Image"i]'
+		const imageBlock = await oneOfLocators(
+			editor.canvas.locator( 'role=document[name="Block: Image"i]' ),
+			page.locator( 'role=document[name="Block: Image"i]' )
 		);
+		await expect( imageBlock ).toBeVisible();
+
 		await imageBlockUtils.upload(
 			imageBlock.locator( 'data-testid=form-file-upload-input' )
 		);
@@ -106,14 +111,12 @@ class ImageBlockUtils {
 		const tmpDirectory = await fs.mkdtemp(
 			path.join( os.tmpdir(), 'at-test-image-' )
 		);
-		const tmpFileName = path.join(
-			tmpDirectory,
-			this.TEST_IMAGE_FILE_NAME
-		);
+		const filename = uuid();
+		const tmpFileName = path.join( tmpDirectory, filename + '.jpeg' );
 		await fs.copyFile( this.TEST_IMAGE_FILE_PATH, tmpFileName );
 
 		await inputElement.setInputFiles( tmpFileName );
 
-		return this.TEST_IMAGE_FILE_NAME;
+		return filename;
 	}
 }

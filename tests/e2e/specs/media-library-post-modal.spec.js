@@ -12,6 +12,7 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
  * Internal dependencies
  */
 import TermUtils from '../utils/term-utils';
+import oneOfLocators from '../utils/one-of-locators';
 
 test.use( {
 	termUtils: async ( { requestUtils }, use ) => {
@@ -292,8 +293,9 @@ class MediaModal {
 		await this.admin.createNewPost();
 		await this.editor.insertBlock( { name: 'core/image' } );
 
-		const imageBlock = this.editor.canvas.locator(
-			'role=document[name="Block: Image"i]'
+		const imageBlock = await oneOfLocators(
+			this.editor.canvas.locator( 'role=document[name="Block: Image"i]' ),
+			this.page.locator( 'role=document[name="Block: Image"i]' )
 		);
 		await imageBlock
 			.getByRole( 'button', { name: 'Media Library' } )
