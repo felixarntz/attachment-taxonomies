@@ -36,10 +36,10 @@ jobs:
     steps:
       - uses: styfle/cancel-workflow-action@0.11.0
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js (via .nvmrc)
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -60,7 +60,7 @@ jobs:
         run: npm run test-e2e
 
       - name: Archive debug artifacts (screenshots, traces)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
             name: failures-artifacts
