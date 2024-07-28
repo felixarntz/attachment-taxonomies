@@ -20,11 +20,11 @@
   },
   "repository": "git+https://github.com/felixarntz/attachment-taxonomies.git",
   "devDependencies": {
-    "@playwright/test": "^1.41.0",
-    "@wordpress/e2e-test-utils-playwright": "^0.17.0",
-    "@wordpress/env": "^9.1.0",
-    "@wordpress/scripts": "^27.0.0",
-    "fast-glob": "^3.2.12"
+    "@playwright/test": "^1.45.0",
+    "@wordpress/e2e-test-utils-playwright": "^1.4.0",
+    "@wordpress/env": "^10.4.0",
+    "@wordpress/scripts": "^28.4.0",
+    "fast-glob": "^3.3.2"
   },
   "scripts": {
     "build": "wp-scripts build",
