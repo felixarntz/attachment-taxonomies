@@ -48,8 +48,6 @@ jobs:
       fail-fast: true
       matrix:
         php:
-        - '7.0'
-        - '7.1'
         - '7.2'
         - '7.3'
         - '7.4'
@@ -60,6 +58,12 @@ jobs:
         multisite: [ false, true ]
         experimental: [false]
         include:
+          - php: '7.0'
+            wordpress: '6.1'
+            multisite: false
+          - php: '7.0'
+            wordpress: '6.1'
+            multisite: true
           - php: '8.0'
             wordpress: '6.1'
             multisite: false
