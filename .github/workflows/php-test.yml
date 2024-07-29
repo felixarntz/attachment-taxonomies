@@ -12,6 +12,7 @@ on:
       - '**/package.json'
       - 'package-lock.json'
       - 'phpunit.xml.dist'
+      - 'tests/phpunit/multisite.xml'
       - 'composer.json'
       - 'composer.lock'
   pull_request:
@@ -26,6 +27,7 @@ on:
       - '**/package.json'
       - 'package-lock.json'
       - 'phpunit.xml.dist'
+      - 'tests/phpunit/multisite.xml'
       - 'composer.json'
       - 'composer.lock'
     types:
