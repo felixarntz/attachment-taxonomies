@@ -38,12 +38,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Composer dependencies
-        run: composer update
-
-      - name: Prefix relevant dependencies
-        run: composer prefix-dependencies
-
       - name: Setup Node.js (.nvmrc)
         uses: actions/setup-node@v4
         with:
