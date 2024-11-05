@@ -6,7 +6,7 @@ Author:            Felix Arntz
 Author URI:        https://felix-arntz.me
 Contributors:      flixos90
 Donate link:       https://felix-arntz.me/wordpress-plugins/
-Tested up to:      6.6
+Tested up to:      6.7
 Stable tag:        1.2.1
 License:           GPLv3 or later
 License URI:       https://www.gnu.org/licenses/gpl-3.0.html
