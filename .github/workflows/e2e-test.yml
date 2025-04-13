@@ -60,10 +60,11 @@ jobs:
         run: npm run test-e2e
 
       - name: Archive debug artifacts (screenshots, traces)
-        # Do not update to v4 yet, see https://github.com/actions/upload-artifact/issues/478.
-        uses: actions/upload-artifact@v3
-        if: always()
+        uses: actions/upload-artifact/merge@v4
+        # Don't fail the job if there aren't any artifacts to merge.
+        continue-on-error: true
         with:
             name: failures-artifacts
-            path: artifacts/test-results
-            if-no-files-found: ignore
+            # Retain the merged artifacts in case of a rerun.
+            pattern: failures-artifacts*
+            delete-merged: true
