@@ -16,31 +16,38 @@ jobs:
 
       - name: Get plugin version
         id: get-version
-        if: ${{ github.event_name == 'workflow_dispatch' }}
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: |
-          echo "version=$(awk '/Stable tag:        /{print $NF}' readme.txt)" >> $GITHUB_OUTPUT
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
+            echo "version=$(awk '/Stable tag:   /{print $NF}' readme.txt)" >> $GITHUB_OUTPUT
+          else
+            VERSION="${GITHUB_REF#refs/tags/}"
+            VERSION="${VERSION#v}"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+          fi
 
-      - name: WordPress plugin deploy
+      - name: Deploy plugin to WordPress.org
+        id: wporg-deployment
         uses: 10up/action-wordpress-plugin-deploy@stable
-        if: ${{ github.event_name == 'workflow_dispatch' }}
         with:
-          dry-run: true
+          generate-zip: true
+          dry-run: ${{ github.event_name == 'workflow_dispatch' }}
         env:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-          SLUG: attachment-taxonomies
+          SLUG: ${{ github.event.repository.name }}
           VERSION: ${{ steps.get-version.outputs.version }}
 
-      - name: WordPress plugin deploy
-        uses: 10up/action-wordpress-plugin-deploy@stable
-        if: ${{ github.event_name != 'workflow_dispatch' }}
-        env:
-          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-          SLUG: attachment-taxonomies
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}
+          # This will unfortunately become a ZIP of the ZIP. See https://github.com/actions/upload-artifact/issues/39.
+          path: ${{ steps.wporg-deployment.outputs.zip-path }}
 
       - name: Upload release assets
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: ${{github.workspace}}/${{ github.event.repository.name }}.zip
+          files: ${{ steps.wporg-deployment.outputs.zip-path }}
