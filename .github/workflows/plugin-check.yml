@@ -53,3 +53,6 @@ jobs:
           exclude-checks: |
             file_type
             i18n_usage
+          exclude-directories: |
+            .github
+            tests
