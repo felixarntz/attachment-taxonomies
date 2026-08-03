@@ -93,6 +93,7 @@ final class Attachment_Taxonomies {
 		if ( file_exists( __DIR__ . '/inc/Attachment_Taxonomies_Plugin_Env.php' ) ) {
 			require_once __DIR__ . '/inc/Attachment_Taxonomies_Plugin_Env.php';
 		} else {
+			// @phpstan-ignore-next-line
 			require_once __DIR__ . '/attachment-taxonomies/inc/Attachment_Taxonomies_Plugin_Env.php';
 		}
 
