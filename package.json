@@ -22,13 +22,13 @@
     "node": ">=22.12.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.45.0",
-    "@wordpress/e2e-test-utils-playwright": "^1.4.0",
-    "@wordpress/env": "^10.4.0",
-    "@wordpress/scripts": "^30.14.0",
-    "@wordpress/url": "^4.4.0",
-    "fast-glob": "^3.3.2",
-		"uuid": "9.0.1"
+    "@playwright/test": "^1.62.1",
+    "@wordpress/e2e-test-utils-playwright": "^1.52.0",
+    "@wordpress/env": "^11.12.0",
+    "@wordpress/scripts": "^34.0.0",
+    "@wordpress/url": "^4.52.0",
+    "fast-glob": "^3.3.3",
+    "uuid": "^14.0.1"
   },
   "scripts": {
     "build": "wp-scripts build",
