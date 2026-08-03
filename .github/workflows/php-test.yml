@@ -10,7 +10,7 @@ on:
       - '**.php'
       - '.wp-env.json'
       - '**/package.json'
-      - 'package-lock.json'
+      - 'pnpm-lock.yaml'
       - 'phpunit.xml.dist'
       - 'tests/phpunit/multisite.xml'
       - 'composer.json'
@@ -25,7 +25,7 @@ on:
       - '**.php'
       - '.wp-env.json'
       - '**/package.json'
-      - 'package-lock.json'
+      - 'pnpm-lock.yaml'
       - 'phpunit.xml.dist'
       - 'tests/phpunit/multisite.xml'
       - 'composer.json'
@@ -84,26 +84,19 @@ jobs:
     continue-on-error: ${{ matrix.experimental == true }}
     steps:
       - uses: styfle/cancel-workflow-action@d07a454dad7609a92316b57b23c9ccfd4f59af66 # 0.13.1
-
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
       - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240
         with:
           php-version: ${{ matrix.php }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup Node.js (.nvmrc)
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: '.nvmrc'
-          cache: npm
-
-      - name: npm install
-        run: npm ci
-
-      - name: Install WordPress
-        run: npm run wp-env start
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm wp-env start
 
       - name: Running ${{ matrix.multisite && 'multisite' || 'single site' }} unit tests
-        run: npm run test-php${{ matrix.multisite && '-multisite' || '' }}
+        run: pnpm test-php${{ matrix.multisite && '-multisite' || '' }}
