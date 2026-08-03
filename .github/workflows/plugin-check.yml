@@ -28,12 +28,12 @@ jobs:
         - '8.3' # Currently the wordpress/plugin-check-action always uses the latest PHP version anyway.
         wordpress: [ 'latest' ] # Currently the wordpress/plugin-check-action only supports 'latest' or 'trunk'.
     steps:
-      - uses: styfle/cancel-workflow-action@0.12.1
+      - uses: styfle/cancel-workflow-action@85880fa0301c86cca9da44039ee3bb12d3bedbfa
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
 
       - name: Setup Node.js (.nvmrc)
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -45,7 +45,7 @@ jobs:
         run: npm run build
 
       - name: Run plugin check
-        uses: wordpress/plugin-check-action@v1
+        uses: wordpress/plugin-check-action@98a1788320d0add90df2d8183934ecccbc4e05d2
         with:
           wp-version: ${{ matrix.wordpress }}
           # Exclude file_type because of the dev files present in the repository.

@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
 
       - name: Get plugin version
         id: get-version
@@ -29,7 +29,7 @@ jobs:
 
       - name: Deploy plugin to WordPress.org
         id: wporg-deployment
-        uses: 10up/action-wordpress-plugin-deploy@stable
+        uses: 10up/action-wordpress-plugin-deploy@54bd289b8525fd23a5c365ec369185f2966529c2
         with:
           generate-zip: true
           dry-run: ${{ github.event_name == 'workflow_dispatch' }}
@@ -40,14 +40,14 @@ jobs:
           VERSION: ${{ steps.get-version.outputs.version }}
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: ${{ github.event.repository.name }}
           # This will unfortunately become a ZIP of the ZIP. See https://github.com/actions/upload-artifact/issues/39.
           path: ${{ steps.wporg-deployment.outputs.zip-path }}
 
       - name: Upload release assets
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: ${{ steps.wporg-deployment.outputs.zip-path }}
