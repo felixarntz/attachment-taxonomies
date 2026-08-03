@@ -28,6 +28,7 @@
     "@wordpress/scripts": "^34.0.0",
     "@wordpress/url": "^4.52.0",
     "fast-glob": "^3.3.3",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
     "uuid": "^14.0.1"
   },
   "scripts": {
