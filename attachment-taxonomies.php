@@ -11,7 +11,7 @@
  * Description: This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.
  * Version: 1.2.1
  * Requires at least: 6.1
- * Requires PHP: 7.0
+ * Requires PHP: 7.4
  * Author: Felix Arntz
  * Author URI: https://felix-arntz.me
  * License: GPLv3 or later

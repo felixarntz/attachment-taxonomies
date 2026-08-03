@@ -58,10 +58,10 @@ jobs:
         multisite: [ false, true ]
         experimental: [false]
         include:
-          - php: '7.0'
+          - php: '7.4'
             wordpress: '6.1'
             multisite: false
-          - php: '7.0'
+          - php: '7.4'
             wordpress: '6.1'
             multisite: true
           - php: '8.0'
