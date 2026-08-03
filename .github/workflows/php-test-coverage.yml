@@ -55,9 +55,9 @@ jobs:
       WP_ENV_CORE: ${{ matrix.wordpress == 'trunk' && 'WordPress/WordPress' || format( 'https://wordpress.org/wordpress-{0}.zip', matrix.wordpress ) }}
     continue-on-error: ${{ matrix.experimental == true }}
     steps:
-      - uses: styfle/cancel-workflow-action@85880fa0301c86cca9da44039ee3bb12d3bedbfa
+      - uses: styfle/cancel-workflow-action@d07a454dad7609a92316b57b23c9ccfd4f59af66 # 0.13.1
 
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240
         with:
@@ -66,7 +66,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js (.nvmrc)
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -82,7 +82,7 @@ jobs:
 
       - name: Upload ${{ matrix.multisite && 'multisite' || 'single site' }} report to Codecov
         if: ${{ matrix.format == 'clover' && github.event_name != 'pull_request' }}
-        uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: wp-code-coverage-${{ matrix.multisite && 'multisite' || 'single' }}-${{ github.sha }}.xml
@@ -91,7 +91,7 @@ jobs:
 
       - name: Upload ${{ matrix.multisite && 'multisite' || 'single site' }} HTML report as artifact
         if: ${{ matrix.format == 'html' }}
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: wp-code-coverage-${{ matrix.multisite && 'multisite' || 'single' }}-${{ github.sha }}
           path: wp-code-coverage-${{ matrix.multisite && 'multisite' || 'single' }}-${{ github.sha }}
