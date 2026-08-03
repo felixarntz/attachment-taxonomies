@@ -1,0 +1,8 @@
+allowBuilds:
+  '@parcel/watcher': false
+  core-js: false
+  core-js-pure: false
+  fs-ext-extra-prebuilt: true
+  unrs-resolver: true
+
+minimumReleaseAge: 2880 # 2 days
