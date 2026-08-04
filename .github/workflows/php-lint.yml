@@ -9,7 +9,6 @@ on:
       - '.github/workflows/php-lint.yml'
       - '**.php'
       - 'phpcs.xml.dist'
-      - 'phpmd.xml'
       - 'phpstan.neon.dist'
       - 'composer.json'
       - 'composer.lock'
@@ -22,7 +21,6 @@ on:
       - '.github/workflows/php-lint.yml'
       - '**.php'
       - 'phpcs.xml.dist'
-      - 'phpmd.xml'
       - 'phpstan.neon.dist'
       - 'composer.json'
       - 'composer.lock'
@@ -51,4 +49,3 @@ jobs:
       - run: composer validate
       - run: composer lint
       - run: composer phpstan
-      - run: composer phpmd

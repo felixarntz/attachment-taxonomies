@@ -2,7 +2,6 @@
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
     "phpcompatibility/php-compatibility": "^9.3",
-    "phpmd/phpmd": "^2.9",
     "phpstan/phpstan": "^2.2",
     "phpstan/extension-installer": "^1.2",
     "slevomat/coding-standard": "^8.9",

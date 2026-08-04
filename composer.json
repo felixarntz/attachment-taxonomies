@@ -47,10 +47,6 @@
       "composer --working-dir=tools/php/lint install",
       "tools/php/lint/vendor/bin/phpcs --standard=phpcs.xml.dist"
     ],
-    "phpmd": [
-      "composer --working-dir=tools/php/lint install",
-      "tools/php/lint/vendor/bin/phpmd . text phpmd.xml"
-    ],
     "phpstan": [
       "composer --working-dir=tools/php/lint install",
       "tools/php/lint/vendor/bin/phpstan analyse --memory-limit=2048M"

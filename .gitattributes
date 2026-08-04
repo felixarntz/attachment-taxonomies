@@ -22,7 +22,6 @@
 /package-lock.json export-ignore
 /package.json export-ignore
 /phpcs.xml.dist export-ignore
-/phpmd.xml export-ignore
 /phpstan.neon.dist export-ignore
 /phpunit.xml.dist export-ignore
 /webpack.config.js export-ignore
