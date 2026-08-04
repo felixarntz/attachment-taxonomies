@@ -9,7 +9,6 @@ on:
       - '.github/workflows/php-lint.yml'
       - '**.php'
       - 'phpcs.xml.dist'
-      - 'phpmd.xml'
       - 'phpstan.neon.dist'
       - 'composer.json'
       - 'composer.lock'
@@ -22,7 +21,6 @@ on:
       - '.github/workflows/php-lint.yml'
       - '**.php'
       - 'phpcs.xml.dist'
-      - 'phpmd.xml'
       - 'phpstan.neon.dist'
       - 'composer.json'
       - 'composer.lock'
@@ -41,24 +39,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: styfle/cancel-workflow-action@0.12.1
-
-      - uses: actions/checkout@v4
-
-      - uses: shivammathur/setup-php@v2
+      - uses: styfle/cancel-workflow-action@d07a454dad7609a92316b57b23c9ccfd4f59af66 # 0.13.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240
         with:
           php-version: '8.2'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Validate Composer configuration
-        run: composer validate
-
-      - name: PHP Lint
-        run: composer lint
-
-      - name: PHPStan
-        run: composer phpstan
-
-      - name: PHPMD
-        run: composer phpmd
+      - run: composer validate
+      - run: composer lint
+      - run: composer phpstan

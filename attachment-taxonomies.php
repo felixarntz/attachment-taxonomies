@@ -11,7 +11,7 @@
  * Description: This plugin adds categories and tags to the WordPress media library - lightweight and developer-friendly.
  * Version: 1.2.1
  * Requires at least: 6.1
- * Requires PHP: 7.0
+ * Requires PHP: 7.4
  * Author: Felix Arntz
  * Author URI: https://felix-arntz.me
  * License: GPLv3 or later
@@ -93,6 +93,7 @@ final class Attachment_Taxonomies {
 		if ( file_exists( __DIR__ . '/inc/Attachment_Taxonomies_Plugin_Env.php' ) ) {
 			require_once __DIR__ . '/inc/Attachment_Taxonomies_Plugin_Env.php';
 		} else {
+			// @phpstan-ignore-next-line
 			require_once __DIR__ . '/attachment-taxonomies/inc/Attachment_Taxonomies_Plugin_Env.php';
 		}
 

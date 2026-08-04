@@ -10,7 +10,7 @@ on:
       - '**.php'
       - '.wp-env.json'
       - '**/package.json'
-      - 'package-lock.json'
+      - 'pnpm-lock.yaml'
       - 'phpunit.xml.dist'
       - 'tests/phpunit/multisite.xml'
       - 'composer.json'
@@ -25,7 +25,7 @@ on:
       - '**.php'
       - '.wp-env.json'
       - '**/package.json'
-      - 'package-lock.json'
+      - 'pnpm-lock.yaml'
       - 'phpunit.xml.dist'
       - 'tests/phpunit/multisite.xml'
       - 'composer.json'
@@ -41,40 +41,51 @@ concurrency:
 
 jobs:
   php-test:
-    name: PHP ${{ matrix.php }} - WP ${{ matrix.wordpress }} - ${{ matrix.multisite && 'Multisite' || 'Single site' }}${{ matrix.experimental && ' (experimental)' || '' }}
+    name: PHP ${{ matrix.php }} - WP ${{ matrix.wordpress }} - ${{ matrix.multisite && 'Multisite' || 'Single site' }}${{ matrix.coverage && format(' - Coverage {0}', matrix.coverage) || '' }}${{ matrix.experimental && ' (experimental)' || '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
       fail-fast: true
       matrix:
         php:
-        - '7.2'
-        - '7.3'
         - '7.4'
         - '8.0'
-        - '8.1'
-        - '8.2'
+        - '8.5'
         wordpress: [ 'latest' ]
         multisite: [ false, true ]
+        coverage: [ false ]
         experimental: [false]
         include:
-          - php: '7.0'
+          # Oldest supported PHP and WordPress versions.
+          - php: '7.4'
             wordpress: '6.1'
             multisite: false
-          - php: '7.0'
+          - php: '7.4'
             wordpress: '6.1'
             multisite: true
-          - php: '8.0'
-            wordpress: '6.1'
-            multisite: false
-          - php: '8.0'
-            wordpress: '6.1'
-            multisite: true
+          # Coverage runs on latest WordPress version.
           - php: '8.2'
+            wordpress: 'latest'
+            multisite: false
+            coverage: 'clover'
+          - php: '8.2'
+            wordpress: 'latest'
+            multisite: true
+            coverage: 'clover'
+          - php: '8.2'
+            wordpress: 'latest'
+            multisite: false
+            coverage: 'html'
+          - php: '8.2'
+            wordpress: 'latest'
+            multisite: true
+            coverage: 'html'
+          # Experimental runs on WordPress trunk with latest PHP version.
+          - php: '8.5'
             wordpress: 'trunk'
             multisite: false
             experimental: true
-          - php: '8.2'
+          - php: '8.5'
             wordpress: 'trunk'
             multisite: true
             experimental: true
@@ -83,27 +94,42 @@ jobs:
       WP_ENV_CORE: ${{ matrix.wordpress == 'trunk' && 'WordPress/WordPress' || format( 'https://wordpress.org/wordpress-{0}.zip', matrix.wordpress ) }}
     continue-on-error: ${{ matrix.experimental == true }}
     steps:
-      - uses: styfle/cancel-workflow-action@0.12.1
-
-      - uses: actions/checkout@v4
-
-      - uses: shivammathur/setup-php@v2
+      - uses: styfle/cancel-workflow-action@d07a454dad7609a92316b57b23c9ccfd4f59af66 # 0.13.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240
         with:
           php-version: ${{ matrix.php }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup Node.js (.nvmrc)
-        uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: '.nvmrc'
-          cache: npm
-
-      - name: npm install
-        run: npm ci
-
-      - name: Install WordPress
-        run: npm run wp-env start
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm wp-env start
 
       - name: Running ${{ matrix.multisite && 'multisite' || 'single site' }} unit tests
-        run: npm run test-php${{ matrix.multisite && '-multisite' || '' }}
+        if: matrix.coverage == false
+        run: pnpm test-php${{ matrix.multisite && '-multisite' || '' }}
+
+      - name: Running ${{ matrix.multisite && 'multisite' || 'single site' }} unit tests with coverage
+        if: matrix.coverage != false
+        run: pnpm test-php${{ matrix.multisite && '-multisite' || '' }} -- --coverage-${{ 'html' == matrix.coverage && 'html' || 'clover' }} wp-code-coverage-single-${{ github.sha }}${{ 'clover' == matrix.coverage && '.xml' || '' }}
+
+      - name: Upload ${{ matrix.multisite && 'multisite' || 'single site' }} report to Codecov
+        if: ${{ matrix.coverage == 'clover' && github.event_name != 'pull_request' }}
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: wp-code-coverage-${{ matrix.multisite && 'multisite' || 'single' }}-${{ github.sha }}.xml
+          flags: ${{ matrix.multisite && 'multisite' || 'single' }},php
+          fail_ci_if_error: true
+
+      - name: Upload ${{ matrix.multisite && 'multisite' || 'single site' }} HTML report as artifact
+        if: ${{ matrix.coverage == 'html' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: wp-code-coverage-${{ matrix.multisite && 'multisite' || 'single' }}-${{ github.sha }}
+          path: wp-code-coverage-${{ matrix.multisite && 'multisite' || 'single' }}-${{ github.sha }}
+          overwrite: true

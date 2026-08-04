@@ -18,36 +18,23 @@ concurrency:
 
 jobs:
   plugin-check:
-    name: PHP ${{ matrix.php }} - WP ${{ matrix.wordpress }}
+    name: Plugin Check
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    strategy:
-      fail-fast: true
-      matrix:
-        php:
-        - '8.3' # Currently the wordpress/plugin-check-action always uses the latest PHP version anyway.
-        wordpress: [ 'latest' ] # Currently the wordpress/plugin-check-action only supports 'latest' or 'trunk'.
     steps:
-      - uses: styfle/cancel-workflow-action@0.12.1
-
-      - uses: actions/checkout@v4
-
+      - uses: styfle/cancel-workflow-action@d07a454dad7609a92316b57b23c9ccfd4f59af66 # 0.13.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
       - name: Setup Node.js (.nvmrc)
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: '.nvmrc'
-          cache: npm
-
-      - name: npm install
-        run: npm ci
-
-      - name: Build assets
-        run: npm run build
-
-      - name: Run plugin check
-        uses: wordpress/plugin-check-action@v1
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - uses: wordpress/plugin-check-action@98a1788320d0add90df2d8183934ecccbc4e05d2
         with:
-          wp-version: ${{ matrix.wordpress }}
+          wp-version: 'latest'
           # Exclude file_type because of the dev files present in the repository.
           # Exclude i18n_usage temporarily because of https://github.com/WordPress/plugin-check/issues/713.
           exclude-checks: |

@@ -14,7 +14,7 @@ on:
       - '.prettierignore'
       - '.wp-env.json'
       - '**/package.json'
-      - 'package-lock.json'
+      - 'pnpm-lock.yaml'
   pull_request:
     branches:
       - main
@@ -29,7 +29,7 @@ on:
       - '.prettierignore'
       - '.wp-env.json'
       - '**/package.json'
-      - 'package-lock.json'
+      - 'pnpm-lock.yaml'
     types:
       - opened
       - reopened
@@ -41,18 +41,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: styfle/cancel-workflow-action@0.12.1
-
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js (via .nvmrc)
-        uses: actions/setup-node@v4
+      - uses: styfle/cancel-workflow-action@d07a454dad7609a92316b57b23c9ccfd4f59af66 # 0.13.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: '.nvmrc'
-          cache: npm
-
-      - name: npm install
-        run: npm ci
-
-      - name: JS Lint
-        run: npm run lint-js
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint-js

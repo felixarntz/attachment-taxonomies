@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Download WordPress.org readme
         env:
@@ -47,7 +47,7 @@ jobs:
           diff -u /tmp/wp-org-readme.txt "./readme.txt" || true
 
       - name: Deploy readme.txt to WordPress.org
-        uses: 10up/action-wordpress-plugin-asset-update@stable
+        uses: 10up/action-wordpress-plugin-asset-update@2480306f6f693672726d08b5917ea114cb2825f7
         env:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
