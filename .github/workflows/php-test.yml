@@ -41,7 +41,7 @@ concurrency:
 
 jobs:
   php-test:
-    name: PHP ${{ matrix.php }} - WP ${{ matrix.wordpress }} - ${{ matrix.multisite && 'Multisite' || 'Single site' }}${{ matrix.coverage != 'none' && format(' - Coverage {0}', matrix.coverage) || '' }}${{ matrix.experimental && ' (experimental)' || '' }}
+    name: PHP ${{ matrix.php }} - WP ${{ matrix.wordpress }} - ${{ matrix.multisite && 'Multisite' || 'Single site' }}${{ matrix.coverage && format(' - Coverage {0}', matrix.coverage) || '' }}${{ matrix.experimental && ' (experimental)' || '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
@@ -53,7 +53,7 @@ jobs:
         - '8.5'
         wordpress: [ 'latest' ]
         multisite: [ false, true ]
-        coverage: [ 'none' ]
+        coverage: [ false ]
         experimental: [false]
         include:
           # Oldest supported PHP and WordPress versions.
@@ -110,11 +110,11 @@ jobs:
       - run: pnpm wp-env start
 
       - name: Running ${{ matrix.multisite && 'multisite' || 'single site' }} unit tests
-        if: matrix.coverage == 'none'
+        if: matrix.coverage == false
         run: pnpm test-php${{ matrix.multisite && '-multisite' || '' }}
 
       - name: Running ${{ matrix.multisite && 'multisite' || 'single site' }} unit tests with coverage
-        if: matrix.coverage != 'none'
+        if: matrix.coverage != false
         run: pnpm test-php${{ matrix.multisite && '-multisite' || '' }} -- --coverage-${{ 'html' == matrix.coverage && 'html' || 'clover' }} wp-code-coverage-single-${{ github.sha }}${{ 'clover' == matrix.coverage && '.xml' || '' }}
 
       - name: Upload ${{ matrix.multisite && 'multisite' || 'single site' }} report to Codecov
