@@ -107,7 +107,7 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
-      - run: pnpm wp-env start${{ matrix.coverage != false && ' -- --xdebug=coverage' || '' }}
+      - run: pnpm wp-env start${{ matrix.coverage != false && ' --xdebug=coverage' || '' }}
 
       - name: Running ${{ matrix.multisite && 'multisite' || 'single site' }} unit tests
         if: matrix.coverage == false
@@ -134,3 +134,4 @@ jobs:
           name: wp-code-coverage-${{ matrix.multisite && 'multisite' || 'single' }}-${{ github.sha }}
           path: wp-code-coverage-${{ matrix.multisite && 'multisite' || 'single' }}-${{ github.sha }}
           overwrite: true
+          if-no-files-found: error
