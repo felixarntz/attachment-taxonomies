@@ -119,7 +119,7 @@ final class Attachment_Taxonomies_Admin {
 			}
 
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$terms = $_REQUEST['changes'][ 'taxonomy-' . $taxonomy->name . '-terms' ];
+			$terms = sanitize_text_field( wp_unslash( $_REQUEST['changes'][ 'taxonomy-' . $taxonomy->name . '-terms' ] ) );
 			if ( is_taxonomy_hierarchical( $taxonomy->name ) ) {
 				$terms = array_filter( array_map( 'trim', explode( ',', $terms ) ) );
 			}
@@ -156,7 +156,7 @@ final class Attachment_Taxonomies_Admin {
 			}
 
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$value = isset( $_REQUEST[ $taxonomy->query_var ] ) ? $_REQUEST[ $taxonomy->query_var ] : '';
+			$value = isset( $_REQUEST[ $taxonomy->query_var ] ) ? sanitize_title( wp_unslash( $_REQUEST[ $taxonomy->query_var ] ) ) : '';
 			?>
 			<label for="attachment-<?php echo sanitize_html_class( $taxonomy->name ); ?>-filter" class="screen-reader-text"><?php echo esc_html( $this->get_filter_by_label( $taxonomy ) ); ?></label>
 			<select class="attachment-filters" name="<?php echo esc_attr( $taxonomy->query_var ); ?>" id="attachment-<?php echo sanitize_html_class( $taxonomy->name ); ?>-filter">

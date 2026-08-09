@@ -223,12 +223,14 @@ final class Attachment_Taxonomy_Shortcode {
 			'post_status'            => 'inherit',
 			'post_type'              => 'attachment',
 			'post_mime_type'         => 'image',
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Gallery shortcode must resolve attachments by taxonomy terms.
 			'tax_query'              => $tax_query,
 			'update_post_term_cache' => false,
 			'update_post_meta_cache' => false,
 		);
 
 		if ( ! empty( $exclude_ids ) ) {
+			// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- Avoid duplicating IDs already in the shortcode include list.
 			$args['post__not_in'] = $exclude_ids;
 		}
 
