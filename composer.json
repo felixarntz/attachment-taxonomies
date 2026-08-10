@@ -43,13 +43,17 @@
       "composer --working-dir=tools/php/lint install",
       "tools/php/lint/vendor/bin/phpcbf --standard=phpcs.xml.dist"
     ],
-    "lint": [
+    "phpcs": [
       "composer --working-dir=tools/php/lint install",
       "tools/php/lint/vendor/bin/phpcs --standard=phpcs.xml.dist"
     ],
     "phpstan": [
       "composer --working-dir=tools/php/lint install",
       "tools/php/lint/vendor/bin/phpstan analyse --memory-limit=2048M"
+    ],
+    "lint": [
+      "@phpcs",
+      "@phpstan"
     ],
     "test": "phpunit -c phpunit.xml.dist --verbose",
     "test-multisite": "WP_MULTISITE=1 phpunit -c tests/phpunit/multisite.xml --verbose"

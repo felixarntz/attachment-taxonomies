@@ -35,6 +35,7 @@
     "build": "wp-scripts build",
     "format-js": "wp-scripts format",
     "format-php": "wp-env run cli --env-cwd=wp-content/plugins/$(basename $(pwd)) composer format",
+    "phpcs": "wp-env run cli --env-cwd=wp-content/plugins/$(basename $(pwd)) composer phpcs",
     "phpstan": "wp-env run cli --env-cwd=wp-content/plugins/$(basename $(pwd)) composer phpstan",
     "lint-js": "wp-scripts lint-js",
     "lint-php": "wp-env run cli --env-cwd=wp-content/plugins/$(basename $(pwd)) composer lint",

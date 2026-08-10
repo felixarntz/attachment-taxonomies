@@ -47,5 +47,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: composer validate
-      - run: composer lint
+      - run: composer phpcs
       - run: composer phpstan
