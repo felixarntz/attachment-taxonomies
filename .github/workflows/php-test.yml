@@ -111,11 +111,11 @@ jobs:
 
       - name: Running ${{ matrix.multisite && 'multisite' || 'single site' }} unit tests
         if: matrix.coverage == false
-        run: pnpm test-php${{ matrix.multisite && '-multisite' || '' }}
+        run: pnpm test:php${{ matrix.multisite && '-multisite' || '' }}
 
       - name: Running ${{ matrix.multisite && 'multisite' || 'single site' }} unit tests with coverage
         if: matrix.coverage != false
-        run: pnpm test-php${{ matrix.multisite && '-multisite' || '' }} -- --coverage-${{ 'html' == matrix.coverage && 'html' || 'clover' }} wp-code-coverage-${{ matrix.multisite && 'multisite' || 'single' }}-${{ github.sha }}${{ 'clover' == matrix.coverage && '.xml' || '' }}
+        run: pnpm test:php${{ matrix.multisite && '-multisite' || '' }} -- --coverage-${{ 'html' == matrix.coverage && 'html' || 'clover' }} wp-code-coverage-${{ matrix.multisite && 'multisite' || 'single' }}-${{ github.sha }}${{ 'clover' == matrix.coverage && '.xml' || '' }}
 
       - name: Upload ${{ matrix.multisite && 'multisite' || 'single site' }} report to Codecov
         if: ${{ matrix.coverage == 'clover' && github.event_name != 'pull_request' }}

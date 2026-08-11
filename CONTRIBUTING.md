@@ -33,13 +33,4 @@ In general, all code must follow the [WordPress Coding Standards and best practi
 
 ### Useful commands
 
-* `pnpm install`: Installs local development dependencies
-* `pnpm wp-env start`: Starts the local development environment
-* `pnpm wp-env stop`: Stops the local development environment
-* `pnpm lint-php`: Lints all PHP code
-* `pnpm format-php`: Formats all PHP code
-* `pnpm test-php`: Runs PHPUnit tests for all PHP code
-* `pnpm test-php-multisite`: Runs PHPUnit tests in multisite for all PHP code
-* `pnpm lint-js`: Lints all JavaScript code
-* `pnpm format-js`: Formats all JavaScript code
-* `pnpm build`: Builds the JavaScript code from `src` into the `build` directory
+See [./AGENTS.md](./AGENTS.md#workflow-commands).
