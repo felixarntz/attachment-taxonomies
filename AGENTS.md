@@ -10,6 +10,7 @@ A WordPress plugin that adds categories and tags to the WordPress media library.
 - `pnpm install` — install JS dependencies
 - `pnpm lint` - lint JS code
 - `pnpm fix` - auto-format JS code
+- `pnpm build` - build JS code
 - `pnpm test:php` - run PHP tests (requires [dev server running](#using-the-dev-server))
 - `pnpm test:php-multisite` - run PHP tests for Multisite (requires [dev server running](#using-the-dev-server))
 - `pnpm test:e2e` - run E2E tests (requires [dev server running](#using-the-dev-server))
