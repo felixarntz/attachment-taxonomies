@@ -32,7 +32,7 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
-      - uses: wordpress/plugin-check-action@98a1788320d0add90df2d8183934ecccbc4e05d2
+      - uses: wordpress/plugin-check-action@10857da14b6c2246d15402b3e69f777edcf8c12e # 1.1.9
         with:
           wp-version: 'latest'
           # Exclude file_type because of the dev files present in the repository.
