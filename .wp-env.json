@@ -1,12 +1,16 @@
 {
   "core": null,
   "plugins": [ "." ],
+  "config": {
+    "WP_AUTO_UPDATE_CORE": false
+  },
   "env": {
     "tests": {
       "config": {
         "FS_METHOD": "direct",
         "WP_DEBUG": true,
-        "WP_DISABLE_FATAL_ERROR_HANDLER": true
+        "WP_DISABLE_FATAL_ERROR_HANDLER": true,
+        "WP_AUTO_UPDATE_CORE": false
       },
       "phpVersion": "8.2"
     }
