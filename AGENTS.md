@@ -25,3 +25,7 @@ This repo comes with a dev server configured via `@wordpress/env` (`wp-env`).
 - Access the dev site at `http://localhost:8888`.
 - WP Admin is at `http://localhost:8888/wp-admin/`. Credentials are `admin` and `password`.
 - Run `pnpm wp-env stop` to stop the dev server.
+
+## Misc Requirements
+
+- For any new `@since` annotations you add, always use `@since n.e.x.t`. This placeholder format is required so that it gets replaced with the correct version number later, once a release is ready to publish.
