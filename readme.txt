@@ -7,7 +7,7 @@ Author URI:   https://felix-arntz.me
 Contributors: flixos90
 Donate link:  https://felix-arntz.me/wordpress-plugins/
 Tested up to: 7.1
-Stable tag:   1.2.1
+Stable tag:   1.2.2
 License:      GPLv3 or later
 License URI:  https://www.gnu.org/licenses/gpl-3.0.html
 Tags:         attachment, media, categories, tags, taxonomies
@@ -173,6 +173,9 @@ If you have ideas to improve the plugin or to solve a bug, feel free to raise an
 You can also contribute to the plugin by translating it. Simply visit [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/attachment-taxonomies) to get started.
 
 == Changelog ==
+
+= 1.2.2 =
+* Enhanced: Update dependencies to latest versions, modernize repository setup, use PNPM for JS management.
 
 = 1.2.1 =
 * Fixed: Uploading a new image via the Image block no longer causes a console error when opening the media library afterwards. Props lucymtc.
